@@ -12,6 +12,16 @@
   z-index: 10000000;
 }
 
+.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+  fill: green !important; /* color elements as green */
+  stroke: green !important; /* color elements as green */
+}
+
+g.djs-element.highlight > g > polyline {
+  fill: green !important; /* color elements as green */
+  stroke: green !important;
+}
+
 body,
 html {
 

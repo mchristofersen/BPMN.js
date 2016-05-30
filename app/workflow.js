@@ -1,57 +1,60 @@
 module.exports.start = function start (){
-  global.bpmns = [];
+  global.bpmns = [global.process];
   global.varDict = {};
-  doStep("Start")
+  WF.doStep("start")
 }
 
 module.exports.doStep = function doStep(stepId) {
+  debugger;
     var step = bpmns[bpmns.length - 1][stepId];
-    var name = step['@id'];
+    var name = step['$id'];
+    canvas.addMarker(name, 'highlight');
     console.log(step);
-    switch (step['@type']) {
+    switch (step['$type']) {
         case "intermediateThrowEvent":
-            return doStep(step["signalEventDefinition"]["@signalRef"])
+            return WF.doStep(step["signalEventDefinition"]["$signalRef"])
             break;
         case "sequenceFlow":
-            return doStep(step["@targetRef"]);
+            return WF.doStep(step["$targetRef"]);
             break;
         case "exclusiveGateway":
-            return resolveXOR(step);
+            return WF.resolveXOR(step);
             break;
         case "scriptTask":
             console.log(step)
-            resolveScript(step)
-            return doStep(step['outgoing'])
+            WF.resolveScript(step)
+            return WF.doStep(step['outgoing']["__text"])
         case "endEvent":
             return;
             break;
         default:
-            return doStep(step["outgoing"]);
+            return WF.doStep(step["outgoing"]["__text"]);
             break;
     }
 }
 
 module.exports.resolveScript = function resolveScript(step){
-  var variable = step['@resultVariable']
-  var script = parseExpression(step['script']);
+  var variable = step['$resultVariable']
+  var script = WF.parseExpression(step['script']);
   varDict[variable] = eval(script)
 }
 
 module.exports.resolveXOR = function resolveXOR(xor){
   if (!Array.isArray( xor["outgoing"])){
     var signal = bpmns[bpmns.length - 1][xor["outgoing"]];
-    var expr = bpmns[bpmns.length - 1][xor["outgoing"]]["conditionExpression"]["#text"];
-    var result = parseExpression(expr);
+    var expr = signal["conditionExpression"]["__cdata"] || signal["conditionExpression"]["__cdata"];
+    var result = WF.parseExpression(expr);
+    debugger
     if (result){
-      return doStep(signal["@targetRef"])
+      return WF.doStep(signal["$targetRef"])
     }
   }else{
     for(var i=0;i<xor["outgoing"].length;i++){
       var signal = bpmns[bpmns.length - 1][xor["outgoing"][i]];
       var expr = bpmns[bpmns.length - 1][xor["outgoing"][i]]["conditionExpression"]["#text"];
-      var result = parseExpression(expr);
+      var result = WF.parseExpression(expr);
       if (result){
-        return doStep(signal["@targetRef"])
+        return WF.doStep(signal["@targetRef"])
       }
     }
 
@@ -71,4 +74,3 @@ module.exports.parseExpression = function parseExpression(expr){
     // return parseExpression(expr);
   }
 }
-module.exports = WF;

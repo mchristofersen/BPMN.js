@@ -3,8 +3,8 @@
 
    var d3 = require("d3");
 
-   var WF = require('./workflow.jsd');
-   console.log(WF);
+   global.WF = require('./workflow.js');
+   console.log(global.WF);
    global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
@@ -50,6 +50,7 @@
    // var bpmnJS = bpmnModeler.get("bpmn-js/lib/Viewer"),
    var elementRegistry = bpmnModeler.get('elementRegistry');
    var modeling = bpmnModeler.get('modeling');
+   global.canvas = bpmnModeler.get("canvas");
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
    function createNewDiagram() {
@@ -94,7 +95,7 @@
    }
 
    function openDiagram(xml) {
-       console.log(elementRegistry);
+
        $("#js-properties-panel").show();
        bpmnModeler.importXML(xml, function(err) {
            if (err) {
@@ -123,7 +124,19 @@
        container
            .removeClass('with-diagram')
            .removeClass('with-error');
+          $("#")
        $("#flowPreviews").show();
+       console.log(bpmnModeler)
+      //  var diagram = bpmnModeler.get("diagram");
+      bpmnModeler.moddle.ids.clear()
+      // bpmnModeler.clear()
+      $("#js-properties-panel").hide();
+      //  bpmnModeler._emit("diagram.destroy")
+      //  del bpmnModeler.
+
+
+
+
    }
 
    function saveSVG(done) {
@@ -227,6 +240,31 @@
            success: function(resp) {
                $("#flowPreviews").hide();
                openDiagram(resp[0].xml);
+               var X2JS = require("x2js");
+               var x2js = new X2JS({
+        attributePrefix : "$"
+    });
+    var jsonObj = x2js.xml2js( resp[0].xml );
+    var inverted = {};
+    console.log(jsonObj);
+    $.each(jsonObj.definitions.process, function (idx,elem){
+      if (Array.isArray(elem)){
+        $.each(elem,function (i,e){
+          inverted[e.$id] = e;
+          inverted[e.$id]["$type"] = idx;
+        })
+      }else if (idx=="startEvent"){
+        inverted["start"] = elem;
+        inverted["start"]["$type"] = idx;
+      }else if (!typeof elem == "object"){
+        inverted[elem.$id] = elem;
+        inverted[elem.$id]["$type"] = idx;
+      }
+    })
+    global.process = inverted;
+    console.log(inverted);
+// Access to attribute
+
            }
        });
 
