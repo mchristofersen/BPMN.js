@@ -1,15 +1,9 @@
    'use strict';
    var fs = require('fs');
 
-
-
-
    var d3 = require("d3");
 
-
-   var flowName;
-   export(flowName);
-
+   global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
    var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
@@ -58,7 +52,7 @@
 
    function createNewDiagram() {
        var name = prompt("Enter Workflow Name:");
-       flowName = name;
+       global.flowName = name;
        bpmnModeler.createDiagram(function(xml) {
            // given
            var processElement = elementRegistry.get('Process_1');
@@ -94,9 +88,8 @@
                });
        })
 
-       // PropertiesPanel.setInputValue($("#camunda-id"),name)
+       // PropertiesPanel.setInputValue($("camunda-id"),name)
    }
-
 
    function openDiagram(xml) {
 
@@ -154,7 +147,7 @@
                    url: "http://localhost:3000/flow",
                    method: "PUT",
                    data: {
-                       flowName: flowName,
+                       flowName: global.flowName,
                        xml: xml,
                        svg: svg
                    }
@@ -216,12 +209,12 @@
    // bootstrap diagram functions
 
    function getXML(flowName) {
-     flowName = flowName;
+     global.flowName = flowName;
        $.ajax({
            url: "http://localhost:3000/flow",
            method: "get",
            data: {
-               flowName: flowName
+               flowName: global.flowName
            },
            success: function(resp) {
                $("#flowPreviews").hide();
@@ -237,15 +230,14 @@
      contentType:"text/json",
      method: "GET",
      success: function (json){
-       console.log(json);
        $(document).ready(function (){
          $.each(json,function (idx,elem){
            d3.select("#flowPreviews").append("g")
                                      .html(elem.svg)
-                                     .id(elem.flowName)
+                                     .attr("id",elem.flowName)
                                      .select("svg")
                                      .on("click",function (d){
-                                       flowName = elem.flowName;
+                                       global.flowName = elem.flowName;
                                        getXML(elem.flowName);
                                      })
                                      .on("mouseenter", function (d){
@@ -271,8 +263,6 @@
    })
 
    $(document).on('ready', function() {
-
-
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();
            e.preventDefault();
@@ -296,6 +286,7 @@
        })
        $(".flowImage").click(function(e) {
            var name = $(e.sender).attr("id");
+           global.flowName =name;
            $.ajax({
                    url: "http://localhost:3000/flow",
                    method: "GET",

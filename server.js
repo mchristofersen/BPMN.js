@@ -33,7 +33,7 @@ app.post("/flow",function (req,res){
         if (!err){
           bpmn.insertOne({flowName:name,xml:xml,svg:svg,createdTime:new Date()},{w:1, keepGoing:true},function (bpms){
             bpmn.count(function (err,count){
-              res.send("There are "+count+" records");
+              res.send("success");
             })
           })
         }else{
