@@ -112,6 +112,10 @@
        });
    }
 
+   function close(){
+     getThumbnails()
+   }
+
    function closeDiagram() {
        container
            .removeClass('with-diagram')
@@ -230,6 +234,7 @@
 
 
    function getThumbnails() {
+     $("#flowPreviews").html("");
        $.ajax({
            url: "http://localhost:3000/getThumbnails",
            contentType: "text/json",
