@@ -3,6 +3,8 @@
 
    var d3 = require("d3");
 
+   var WF = require('./workflow.jsd');
+   console.log(WF);
    global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
@@ -93,6 +95,7 @@
 
    function openDiagram(xml) {
        console.log(elementRegistry);
+       $("#js-properties-panel").show();
        bpmnModeler.importXML(xml, function(err) {
            if (err) {
                container
@@ -120,7 +123,6 @@
        container
            .removeClass('with-diagram')
            .removeClass('with-error');
-       $("#js-properties-panel").hide()
        $("#flowPreviews").show();
    }
 
