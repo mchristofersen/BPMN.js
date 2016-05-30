@@ -1,0 +1,97 @@
+{
+  "name": "bpmn",
+  "prefix": "bpmn",
+  "uri": "http://ext",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "executeNow",
+      "extends": [
+        "bpmn:ScriptTask"
+      ],
+      "properties": [
+        {
+          "name": "executeNow",
+          "isAttr": true,
+          "type": "Bool"
+        },
+
+      ]
+    },
+    {
+      "name": "code",
+      "extends": [
+        "bpmn:ScriptTask"
+      ],
+      "properties": [
+        {
+          "name": "code",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+    {
+      "name": "variable",
+      "extends": [
+        "bpmn:ScriptTask"
+      ],
+      "properties": [
+        {
+          "name": "variable",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+
+    {
+      "name": "signals",
+      "extends": [
+        "bpmn:ExclusiveGateway"
+      ],
+      "properties": [
+        {
+          "name": "signals",
+          "isAttr": true,
+          "type": "List"
+        },
+
+      ]
+    },
+    {
+      "name": "expression",
+      "extends": [
+        "bpmn:SequenceFlow"
+      ],
+      "properties": [
+        {
+          "name": "expression",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+    {
+      "name": "label",
+      "extends": [
+        "bpmn:SequenceFlow"
+      ],
+      "properties": [
+        {
+          "name": "label",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+
+  ]
+}
