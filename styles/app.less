@@ -106,7 +106,7 @@ a:link {
   }
 
   a.active {
-    opacity: 1.0;
+  opacity: 1.0;
   }
 }
 
@@ -121,6 +121,8 @@ a:link {
   overflow: auto;
   &:empty {
     display: none;
+    border-left:0px;
+    display:none;
   }
   > .djs-properties-panel {
     padding-bottom: 70px;
@@ -130,7 +132,8 @@ a:link {
 
 #flowPreviews {
   position: absolute;
-  top: 0;
+  padding-top:20%;
+  top: 20%;
   left: 0;
   right: 0;
   width: 100%;

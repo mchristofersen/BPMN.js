@@ -64,35 +64,35 @@
            container
                .removeClass('with-error')
                .addClass('with-diagram');
-               bpmnModeler.saveXML({
+           bpmnModeler.saveXML({
+               format: true
+           }, function(err, xml) {
+               bpmnModeler.saveSVG({
                    format: true
-               }, function(err, xml) {
-                   bpmnModeler.saveSVG({
-                       format: true
-                   }, function(err, svg) {
-                       $.ajax({
-                           url: "http://localhost:3000/flow",
-                           method: "POST",
-                           data: {
-                               flowName: name,
-                               xml: xml,
-                               svg: svg
-                           }
-                       }).done(function(resp) {
-                           console.log(resp);
-                       })
-                       done(err, svg);
-                   });
-
-                   done(err, xml);
+               }, function(err, svg) {
+                   $.ajax({
+                       url: "http://localhost:3000/flow",
+                       method: "POST",
+                       data: {
+                           flowName: name,
+                           xml: xml,
+                           svg: svg
+                       }
+                   }).done(function(resp) {
+                       console.log(resp);
+                   })
+                   done(err, svg);
                });
+
+               done(err, xml);
+           });
        })
 
        // PropertiesPanel.setInputValue($("camunda-id"),name)
    }
 
    function openDiagram(xml) {
-
+       console.log(elementRegistry);
        bpmnModeler.importXML(xml, function(err) {
            if (err) {
                container
@@ -114,7 +114,9 @@
 
    function closeDiagram() {
        container
-           .removeClass('with-diagram');
+           .removeClass('with-diagram')
+           .removeClass('with-error');
+       $("#js-properties-panel").hide()
        $("#flowPreviews").show();
    }
 
@@ -122,16 +124,16 @@
        bpmnModeler.saveSVG({
            format: true
        }, function(err, svg) {
-          //  $.ajax({
-          //      url: "http://localhost:3000/svg",
-          //      method: "POST",
-          //      data: {
-          //          svg: svg,
-          //          flowName: flowName
-          //      }
-          //  }).done(function(resp) {
-          //      console.log(resp.message);
-          //  })
+           //  $.ajax({
+           //      url: "http://localhost:3000/svg",
+           //      method: "POST",
+           //      data: {
+           //          svg: svg,
+           //          flowName: flowName
+           //      }
+           //  }).done(function(resp) {
+           //      console.log(resp.message);
+           //  })
            done(err, svg);
        });
    }
@@ -209,7 +211,7 @@
    // bootstrap diagram functions
 
    function getXML(flowName) {
-     global.flowName = flowName;
+       global.flowName = flowName;
        $.ajax({
            url: "http://localhost:3000/flow",
            method: "get",
@@ -225,44 +227,53 @@
    }
 
 
-   $.ajax({
-     url:"http://localhost:3000/getThumbnails",
-     contentType:"text/json",
-     method: "GET",
-     success: function (json){
-       $(document).ready(function (){
-         $.each(json,function (idx,elem){
-           d3.select("#flowPreviews").append("g")
-                                     .html(elem.svg)
-                                     .attr("id",elem.flowName)
-                                     .select("svg")
-                                     .on("click",function (d){
-                                       global.flowName = elem.flowName;
-                                       getXML(elem.flowName);
-                                     })
-                                     .on("mouseenter", function (d){
-                                       d3.select(this).attr("fill","#fc6293")
-                                     })
-                                     .on("mouseleave", function (d){
-                                       d3.select(this).attr("fill","#fff")
-                                     })
-                                     // .attr({"height":500,"width":500})
-                                     // .attr("transform","scale(0.4)")
-                                     // .html(function (d){
-                                     //   var wrapping = d3.select(this).html();
-                                     //   return "<g>"+wrapping+"</g>";
-                                     // })
-                                     // .select("g")
-                                     // .append("text")
-                                     // .text(idx)
 
+
+   function getThumbnails() {
+       $.ajax({
+           url: "http://localhost:3000/getThumbnails",
+           contentType: "text/json",
+           method: "GET",
+           success: function(json) {
+               $(document).ready(function() {
+                   $.each(json, function(idx, elem) {
+                           d3.select("#flowPreviews").append("g")
+                               .html(elem.svg)
+                               .attr("id", elem.flowName)
+                               .on("click", function(d) {
+                                   global.flowName = elem.flowName;
+                                   getXML(elem.flowName);
+                               })
+                               .on("mouseenter", function(d) {
+                                   d3.select(this).attr("fill", "#fc6293")
+                               })
+                               .on("mouseleave", function(d) {
+                                   d3.select(this).attr("fill", "#fff")
+                               })
+                               .append("text")
+                               .text(elem.flowName)
+
+
+
+                           // .attr({"height":500,"width":500})
+                           // .attr("transform","scale(0.4)")
+                           // .html(function (d){
+                           //   var wrapping = d3.select(this).html();
+                           //   return "<g>"+wrapping+"</g>";
+                           // })
+                           // .select("g")
+                           // .append("text")
+                           // .text(idx)
+
+                       })
+                       // $("#flowPreviews").append(elem);
+               })
+           }
        })
-             // $("#flowPreviews").append(elem);
-       })
-     }
-   })
+   }
 
    $(document).on('ready', function() {
+       getThumbnails();
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();
            e.preventDefault();
@@ -283,10 +294,11 @@
 
        $("#js-close-diagram").click(function(e) {
            closeDiagram();
+           close();
        })
        $(".flowImage").click(function(e) {
            var name = $(e.sender).attr("id");
-           global.flowName =name;
+           global.flowName = name;
            $.ajax({
                    url: "http://localhost:3000/flow",
                    method: "GET",
