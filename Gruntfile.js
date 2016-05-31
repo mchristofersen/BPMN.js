@@ -134,7 +134,7 @@ module.exports = function(grunt) {
       },
       livereload: {
         options: {
-          open: { appName: 'chromium-browser' },
+          open: { appName: 'Firefox' },
           base: [
             '<%= config.dist %>'
           ]
