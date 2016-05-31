@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div class="content" id="js-drop-zone">
 
         <div class="message intro">
@@ -33,7 +34,20 @@
         <div class="canvas" id="js-canvas"></div>
         <div id="flowPreviews">
         </div>
-        <div id="js-properties-panel"></div>
+        <div id="js-properties-panel">
+          <btn style="width:50px;height:50px;z-index:100000;color:blue" id="hidePanel">
+              <svg height="100" width="100">
+                <g>
+                  <path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z"
+                      fill="#000000"
+                      stroke="#000000"
+                       style="stroke-width: 1;">
+                     </path>
+                  </g>
+              </svg>
+            </btn>
+        </div>
+    </div>
     </div>
 
     <ul class="buttons">
@@ -59,38 +73,39 @@
             <a id="js-execute-diagram" href title="Execute" onclick="WF.start()">
         Execute
       </a>
-      <li>
-          <a id="js-delete-diagram" href title="Delete">
+            <li>
+                <a id="js-delete-diagram" href title="Delete">
       Delete
     </a>
-        </li>
+            </li>
+
     </ul>
 
     <div id="editorOverlay" style="opacity:0;z-index:-10000;position:fixed;top:5%;left:5%;min-width:90%;min-height:90%;display:flex;flex-direction:column;align-items:stretch;">
         <div style="flex:2;display:flex;" id="header">
-            <div style="flex:1" id="lastTheme"  onclick="dotheme(-1)"></div>
-            <div  id="theme" style="align-self:center;flex:2;font-size:34px !important;font-weight:600;text-align: center;vertical-align:middle;"></div>
+            <div style="flex:1" id="lastTheme" onclick="dotheme(-1)"></div>
+            <div id="theme" style="align-self:center;flex:2;font-size:34px !important;font-weight:600;text-align: center;vertical-align:middle;"></div>
             <select id="mode" size="1" style="flex:2;align-self:center;">
 
-          <option value="ace/mode/coffee">coffee</option>
-          <option value="ace/mode/css">css</option>
-          <option value="ace/mode/handlebars">handlebars</option>
-          <option value="ace/mode/html">html</option>
-          <option value="ace/mode/html_ruby">html_ruby</option>
-          <option value="ace/mode/jade">jade</option>
-          <option value="ace/mode/javascript" selected>javascript</option>
-          <option value="ace/mode/json">json</option>
-          <option value="ace/mode/less">less</option>
-          <option value="ace/mode/markdown">markdown</option>
-          <option value="ace/mode/python">python</option>
-          <option value="ace/mode/ruby">ruby</option>
-          <option value="ace/mode/sass">sass</option>
-          <option value="ace/mode/scss">scss</option>
-          <option value="ace/mode/sh">sh</option>
-          <option value="ace/mode/sql">sql</option>
-          <option value="ace/mode/svg">svg</option>
-          <option value="ace/mode/xml">xml</option>
-        </select>
+                <option value="ace/mode/coffee">coffee</option>
+                <option value="ace/mode/css">css</option>
+                <option value="ace/mode/handlebars">handlebars</option>
+                <option value="ace/mode/html">html</option>
+                <option value="ace/mode/html_ruby">html_ruby</option>
+                <option value="ace/mode/jade">jade</option>
+                <option value="ace/mode/javascript" selected>javascript</option>
+                <option value="ace/mode/json">json</option>
+                <option value="ace/mode/less">less</option>
+                <option value="ace/mode/markdown">markdown</option>
+                <option value="ace/mode/python">python</option>
+                <option value="ace/mode/ruby">ruby</option>
+                <option value="ace/mode/sass">sass</option>
+                <option value="ace/mode/scss">scss</option>
+                <option value="ace/mode/sh">sh</option>
+                <option value="ace/mode/sql">sql</option>
+                <option value="ace/mode/svg">svg</option>
+                <option value="ace/mode/xml">xml</option>
+            </select>
             <div style="flex:1" onclick="dotheme(1)" id="nextTheme"></div>
         </div>
 
@@ -114,23 +129,23 @@
             editor.getSession().setMode(mode);
         });
         currentTheme = 0;
-        themes = ["Ambiance", "Chrome", "Clouds", "clouds_midnight", "gruvbox", "Idle_Fingers", "Low-ColorClouds", "Clouds",  "Cobalt", "Crimson_Editor", "Dawn", "Dreamweaver", "Eclipse", "GitHub", "Idle_Fingers","Kr_Theme", "Merbivore",
-            "Merbivore_Soft","Mono_Industrial", "Monokai", "Pastel_On_Dark","Solarized_Dark","Solarized_Light","TextMate", "Tomorrow","Tomorrow_Night","Tomorrow_Night_Blue","Tomorrow_Night_Bright",
-            "Tomorrow_Night_Eighties","Twilight","Vibrant", "Ink","Xcode"
-        ].map(function (theme){
+        themes = ["Ambiance", "Chrome", "Clouds", "clouds_midnight", "gruvbox", "Idle_Fingers", "Low-ColorClouds", "Clouds", "Cobalt", "Crimson_Editor", "Dawn", "Dreamweaver", "Eclipse", "GitHub", "Idle_Fingers", "Kr_Theme", "Merbivore",
+            "Merbivore_Soft", "Mono_Industrial", "Monokai", "Pastel_On_Dark", "Solarized_Dark", "Solarized_Light", "TextMate", "Tomorrow", "Tomorrow_Night", "Tomorrow_Night_Blue", "Tomorrow_Night_Bright",
+            "Tomorrow_Night_Eighties", "Twilight", "Vibrant", "Ink", "Xcode"
+        ].map(function(theme) {
 
-          return theme.toLowerCase();
+            return theme.toLowerCase();
         });
 
         function dotheme(integer) {
             currentTheme += integer;
             nextTheme = themes[currentTheme]
             editor.setTheme("ace/theme/" + nextTheme);
-            window.setTimeout(function (){
-              $("#header").css("background",$(".ace_gutter").css("background"));
-              $("#header").css("color",$(".ace_type").css("color"))
-              $("#theme").text(nextTheme);
-            },500)
+            window.setTimeout(function() {
+                $("#header").css("background", $(".ace_gutter").css("background"));
+                $("#header").css("color", $(".ace_type").css("color"))
+                $("#theme").text(nextTheme);
+            }, 500)
 
         }
 

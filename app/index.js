@@ -52,6 +52,7 @@
 
        }
    });
+   bpmnModeler.get('keyboard').bind(document);
    global.bpmnJS = bpmnModeler,
    global.elementRegistry = bpmnModeler.get('elementRegistry');
    var modeling = bpmnModeler.get('modeling');
@@ -341,6 +342,19 @@
          deleteFlow();
          console.log(e);
        })
+       $("#hidePanel > svg").click(function (e){
+         e.stopPropagation();
+         e.preventDefault();
+         console.log(e);
+         $("#js-properties-panel").animate({
+    opacity: 0.25,
+    width: 30,
+    left: "+=50",
+    height: "toggle"
+  }, 5000, function() {
+    // Animation complete.
+  });)
+       
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();
            e.preventDefault();

@@ -16,6 +16,7 @@ $("#js-execute-diagram").click(function (e){
 module.exports.doStep = function doStep(stepId) {
     setTimeout(function () {
       var step = bpmns[bpmns.length - 1][stepId];
+      console.log(step);
       var name = step['$id'];
       d3.selectAll('[data-element-id='+name+']').select("polyline, rect, circle,g > path").attr({"stroke" : "#00BCD4","fill" : "#00BCD4 !important"}).style({"stroke-opacity":1,"stroke-weight":3})
       console.log(step);
@@ -64,7 +65,7 @@ module.exports.resolveXOR = function resolveXOR(xor){
   }else{
     for(var i=0;i<xor["outgoing"].length;i++){
       var signal = bpmns[bpmns.length - 1][xor["outgoing"][i]];
-      var expr = signal["conditionExpression"]["__cdata"] || signal["conditionExpression"]["__text"];
+      var expr = signal["expression"] || signal["expression"];
       var result = WF.parseExpression(expr);
       if (result){
         return WF.doStep(signal["$targetRef"])
