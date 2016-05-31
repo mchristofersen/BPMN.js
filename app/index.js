@@ -45,6 +45,7 @@
        ],
        moddleExtensions: {
            camunda: camundaModdleDescriptor
+
        }
    });
    // var bpmnJS = bpmnModeler.get("bpmn-js/lib/Viewer"),
@@ -227,6 +228,19 @@
        registerFileDrop(container, openDiagram);
    }
 
+   function deleteFlow(){
+     $.ajax({
+         url: "http://localhost:3000/flow",
+         method: "delete",
+         data: {
+             flowName: global.flowName
+         },
+       }).done(function (resp){
+         console.log(resp);
+         closeDiagram();
+       })
+   }
+
    // bootstrap diagram functions
 
    function getXML(flowName) {
@@ -319,6 +333,10 @@
 
    $(document).on('ready', function() {
        getThumbnails();
+       $("#js-delete-diagram").click(function (e){
+         deleteFlow();
+         console.log(e);
+       })
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();
            e.preventDefault();
