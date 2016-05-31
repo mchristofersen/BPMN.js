@@ -83,6 +83,25 @@ app.get("/flow", function (req,res){
 })
 });
 
+app.delete('/flow', function (req, res) {
+  var name = req.body.flowName;
+  console.log(name);
+  db.connect("mongodb://localhost:27017/workflows", function(err, db) {
+    if(!err) {
+      db.collection('bpmn', function(err, bpmn) {
+        if (!err){
+            bpmn.deleteOne({flowName:name},function (err, result){
+              res.send(result);
+              console.log(name);
+            })
+        }else{
+          console.log(err)
+        }
+      });
+    }
+})
+});
+
 
 app.get('/save', function(req, res){
   res.send('hello world');
