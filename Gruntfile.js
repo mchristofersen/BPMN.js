@@ -127,7 +127,7 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        appName: 'chromium-browser', // name of the app that opens, ie: open, start, xdg-open
+        appName: 'Firefox', // name of the app that opens, ie: open, start, xdg-open
         port: 9013,
         livereload: 9014,
         hostname: 'localhost'
