@@ -9,7 +9,7 @@ var processProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/Pro
     eventProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/EventProps'),
     linkProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/LinkProps'),
     documentationProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/DocumentationProps'),
-    signalProps = require("./ext/SignalEntryProps"),
+    // signalProps = require("./ext/SignalEntryProps"),
     idProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/IdProps'),
     nameProps = require('bpmn-js-properties-panel/lib/provider/bpmn/parts/NameProps');
 
@@ -23,7 +23,7 @@ function createGeneralTabGroups(element, bpmnFactory, elementRegistry) {
   idProps(generalGroup, element, elementRegistry);
   nameProps(generalGroup, element);
   processProps(generalGroup, element);
-  signalProps(generalGroup,element,elementRegistry);
+  // signalProps(generalGroup,element,elementRegistry);
 
   var detailsGroup = {
     id: 'details',

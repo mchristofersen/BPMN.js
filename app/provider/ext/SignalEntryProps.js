@@ -1,27 +1,27 @@
-'use strict';
+"use strict";
+var entryFactory = require('bpmn-js-properties-panel/lib/factory/EntryFactory');
 
-var entryFactory = require('bpmn-js-properties-panel/lib/factory/EntryFactory'),
-  getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject,
-  is = require('bpmn-js/lib/util/ModelUtil').is,
-  cmdHelper = require('bpmn-js-properties-panel/lib/helper/CmdHelper');
+var is = require('bpmn-js/lib/util/ModelUtil').is;
+
+module.exports = function(group, element) {
+  // only return an entry, if the currently selected element is a start event
+  if (false) {
+    var table = entryFactory.table({
+      id : 'signals',
+      description : 'Apply a black magic spell',
+      label : 'Signals',
+      modelProperties : ['signals'],
+      getElements: function (element,node,entry,value){
+        return element.outgoing.map(function (elem){
+          return getBusinessObject(elem);
+        });
 
 
-
-module.exports = function(group, element, bpmnFactory) {
-  // Documentation
-  if (is(element, 'bpmn:ExclusiveGateway')) {
-
-  var entry = entryFactory.table({
-    id: 'signals',
-    labels: element.outgoing.map(function (elem){
-      return elem.name || elem.id
-    }),
-    modelProperties: ["Signals"],
-
-  });
-
-    group.entries.push(entry);
-
+      },
+      updateElement: function (element,properties,node,value){
+      return cmdHelper.updateProperties(element, properties);
+      }
+    });
+    return [table]
   }
-
 };

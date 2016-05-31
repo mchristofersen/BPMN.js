@@ -17,7 +17,10 @@
 
    var propertiesPanelModule = require('bpmn-js-properties-panel'),
        propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
-       camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+       camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda'),
+       extModdleDescriptor = require('./descriptors/ext.json');
+       console.log(extModdleDescriptor)
+
    var CmdHelper = require("bpmn-js-properties-panel/lib/helper/CmdHelper");
 
    var container = $('#js-drop-zone');
@@ -44,12 +47,13 @@
            propertiesProviderModule
        ],
        moddleExtensions: {
-           camunda: camundaModdleDescriptor
+           camunda: camundaModdleDescriptor,
+           ext:extModdleDescriptor
 
        }
    });
-   // var bpmnJS = bpmnModeler.get("bpmn-js/lib/Viewer"),
-   var elementRegistry = bpmnModeler.get('elementRegistry');
+   global.bpmnJS = bpmnModeler,
+   global.elementRegistry = bpmnModeler.get('elementRegistry');
    var modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
