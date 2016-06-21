@@ -8,7 +8,7 @@
    global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
-  //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
+   //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
 
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
@@ -19,7 +19,7 @@
        propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
        camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda'),
        extModdleDescriptor = require('./descriptors/ext.json');
-       console.log(extModdleDescriptor)
+   console.log(extModdleDescriptor)
 
    var CmdHelper = require("bpmn-js-properties-panel/lib/helper/CmdHelper");
 
@@ -48,13 +48,13 @@
        ],
        moddleExtensions: {
            camunda: camundaModdleDescriptor,
-           ext:extModdleDescriptor
+           ext: extModdleDescriptor
 
        }
    });
    bpmnModeler.get('keyboard').bind(document);
    global.bpmnJS = bpmnModeler,
-   global.elementRegistry = bpmnModeler.get('elementRegistry');
+       global.elementRegistry = bpmnModeler.get('elementRegistry');
    var modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
@@ -122,23 +122,23 @@
        });
    }
 
-   function close(){
-     getThumbnails()
+   function close() {
+       getThumbnails()
    }
 
    function closeDiagram() {
        container
            .removeClass('with-diagram')
            .removeClass('with-error');
-          $("#")
+       $("#")
        $("#flowPreviews").show();
        console.log(bpmnModeler)
-      //  var diagram = bpmnModeler.get("diagram");
-      bpmnModeler.moddle.ids.clear()
-      // bpmnModeler.clear()
-      $("#js-properties-panel").hide();
-      //  bpmnModeler._emit("diagram.destroy")
-      //  del bpmnModeler.
+           //  var diagram = bpmnModeler.get("diagram");
+       bpmnModeler.moddle.ids.clear()
+           // bpmnModeler.clear()
+       $("#js-properties-panel").hide();
+       //  bpmnModeler._emit("diagram.destroy")
+       //  del bpmnModeler.
 
 
 
@@ -233,16 +233,16 @@
        registerFileDrop(container, openDiagram);
    }
 
-   function deleteFlow(){
-     $.ajax({
-         url: "http://localhost:3000/flow",
-         method: "delete",
-         data: {
-             flowName: global.flowName
-         },
-       }).done(function (resp){
-         console.log(resp);
-         closeDiagram();
+   function deleteFlow() {
+       $.ajax({
+           url: "http://localhost:3000/flow",
+           method: "delete",
+           data: {
+               flowName: global.flowName
+           },
+       }).done(function(resp) {
+           console.log(resp);
+           closeDiagram();
        })
    }
 
@@ -261,28 +261,28 @@
                openDiagram(resp[0].xml);
                var X2JS = require("x2js");
                var x2js = new X2JS({
-        attributePrefix : "$"
-    });
-    var jsonObj = x2js.xml2js( resp[0].xml );
-    var inverted = {};
-    console.log(jsonObj);
-    $.each(jsonObj.definitions.process, function (idx,elem){
-      if (Array.isArray(elem)){
-        $.each(elem,function (i,e){
-          inverted[e.$id] = e;
-          inverted[e.$id]["$type"] = idx;
-        })
-      }else if (idx=="startEvent"){
-        inverted["start"] = elem;
-        inverted["start"]["$type"] = idx;
-      }else if (!typeof elem == "object"){
-        inverted[elem.$id] = elem;
-        inverted[elem.$id]["$type"] = idx;
-      }
-    })
-    global.process = inverted;
-    console.log(inverted);
-// Access to attribute
+                   attributePrefix: "$"
+               });
+               var jsonObj = x2js.xml2js(resp[0].xml);
+               var inverted = {};
+               console.log(jsonObj);
+               $.each(jsonObj.definitions.process, function(idx, elem) {
+                   if (Array.isArray(elem)) {
+                       $.each(elem, function(i, e) {
+                           inverted[e.$id] = e;
+                           inverted[e.$id]["$type"] = idx;
+                       })
+                   } else if (idx == "startEvent") {
+                       inverted["start"] = elem;
+                       inverted["start"]["$type"] = idx;
+                   } else if (!typeof elem == "object") {
+                       inverted[elem.$id] = elem;
+                       inverted[elem.$id]["$type"] = idx;
+                   }
+               })
+               global.process = inverted;
+               console.log(inverted);
+               // Access to attribute
 
            }
        });
@@ -293,7 +293,7 @@
 
 
    function getThumbnails() {
-     $("#flowPreviews").html("");
+       $("#flowPreviews").html("");
        $.ajax({
            url: "http://localhost:3000/getThumbnails",
            contentType: "text/json",
@@ -336,25 +336,32 @@
        })
    }
 
+   function l(mess){
+     console.log(mess);
+   }
+
+   function togglePropertyPanel(e){
+     l(e.charCode);
+     if (e.charCode == 112 && !($("input").is(":focus"))){
+       $("#js-properties-panel").toggle();
+     });
+ }
+
    $(document).on('ready', function() {
        getThumbnails();
-       $("#js-delete-diagram").click(function (e){
-         deleteFlow();
-         console.log(e);
+       $("#js-delete-diagram").click(function(e) {
+           deleteFlow();
+           console.log(e);
        })
-       $("#hidePanel > svg").click(function (e){
-         e.stopPropagation();
-         e.preventDefault();
-         console.log(e);
-         $("#js-properties-panel").animate({
-    opacity: 0.25,
-    width: 30,
-    left: "+=50",
-    height: "toggle"
-  }, 5000, function() {
-    // Animation complete.
-  });)
-       
+       $("#hidePanel > svg").click(function(e) {
+               e.stopPropagation();
+               e.preventDefault();
+               $("#js-properties-panel").animate({
+                   width: "0%"
+               }, 1000)
+       });
+       $(document).on("keypress",togglePropertyPanel(e))
+
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();
            e.preventDefault();
