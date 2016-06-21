@@ -20,6 +20,20 @@
         },
 
       ]
+    },
+    {
+      "name": "html",
+      "extends": [
+        "bpmn:UserTask"
+      ],
+      "properties": [
+        {
+          "name": "html",
+          "isAttr": true,
+          "type": "text"
+        },
+
+      ]
     }
   ]
 }

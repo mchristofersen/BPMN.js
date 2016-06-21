@@ -19,7 +19,6 @@
        propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
        camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda'),
        extModdleDescriptor = require('./descriptors/ext.json');
-   console.log(extModdleDescriptor)
 
    var CmdHelper = require("bpmn-js-properties-panel/lib/helper/CmdHelper");
 
@@ -267,6 +266,7 @@
                var inverted = {};
                console.log(jsonObj);
                $.each(jsonObj.definitions.process, function(idx, elem) {
+                 console.log(elem);
                    if (Array.isArray(elem)) {
                        $.each(elem, function(i, e) {
                            inverted[e.$id] = e;
@@ -278,10 +278,12 @@
                    } else if (!typeof elem == "object") {
                        inverted[elem.$id] = elem;
                        inverted[elem.$id]["$type"] = idx;
+                   }else if (typeof elem == "object") {
+                     inverted[elem.$id] = elem;
+                     inverted[elem.$id]["$type"] = idx;
                    }
                })
                global.process = inverted;
-               console.log(inverted);
                // Access to attribute
 
            }
@@ -336,31 +338,31 @@
        })
    }
 
-   function l(mess){
-     console.log(mess);
+   function l(mess) {
+       console.log(mess);
    }
 
-   function togglePropertyPanel(e){
-     l(e.charCode);
-     if (e.charCode == 112 && !($("input").is(":focus"))){
-       $("#js-properties-panel").toggle();
-     });
- }
+
+
 
    $(document).on('ready', function() {
        getThumbnails();
        $("#js-delete-diagram").click(function(e) {
            deleteFlow();
-           console.log(e);
-       })
-       $("#hidePanel > svg").click(function(e) {
-               e.stopPropagation();
-               e.preventDefault();
-               $("#js-properties-panel").animate({
-                   width: "0%"
-               }, 1000)
        });
-       $(document).on("keypress",togglePropertyPanel(e))
+       $("#hidePanel > svg").click(function(e) {
+           e.stopPropagation();
+           e.preventDefault();
+           $("#js-properties-panel").animate({
+               width: "0%"
+           }, 1000)
+       });
+       $(document).on("keypress", function (e) {
+         l(e);
+           if (e.charCode == 112) {
+               $("#js-properties-panel").toggle();
+           };
+       })
 
        $('#js-create-diagram').click(function(e) {
            e.stopPropagation();

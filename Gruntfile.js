@@ -10,11 +10,29 @@ module.exports = function(grunt) {
   function resolvePath(project, file) {
     return path.join(path.dirname(require.resolve(project)), file);
   }
+  grunt.loadNpmTasks('grunt-bell');
+  grunt.loadNpmTasks('grunt-notify');
 
   // project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
+    notify: {
+      watch: {
+        options: {
+          title: 'Task Complete',  // optional
+          message: 'build complete', //required
+        }
+      }
+    },
+    notify_hooks: {
+    options: {
+      enabled: true,
+      max_jshint_notifications: 1, // maximum number of notifications from jshint output
+      title: "BPMN", // defaults to the name in package.json, or will use project directory's name
+      success: true, // whether successful grunt executions should be notified automatically
+      duration: 1 // the duration of notification in seconds, for `notify-send only
+    }
+  },
     config: {
       sources: 'app',
       dist: 'dist'
@@ -101,7 +119,7 @@ module.exports = function(grunt) {
     watch: {
       samples: {
         files: [ '<%= config.sources %>/**/*.*' ],
-        tasks: [ 'copy:app' ]
+        tasks: [ 'copy:app' , 'hasfailed']
       },
 
       less: {
@@ -144,7 +162,6 @@ module.exports = function(grunt) {
   });
 
   // tasks
-
   grunt.registerTask('build', [ 'copy', 'less', 'browserify:app' ]);
 
   grunt.registerTask('auto-build', [
@@ -152,8 +169,20 @@ module.exports = function(grunt) {
     'less',
     'browserify:watch',
     'connect:livereload',
-    'watch'
-  ]);
+    'watch',
+    'notify_hooks'
+    ]);
 
-  grunt.registerTask('default', [ 'jshint', 'build' ]);
+  grunt.registerTask('hasfailed', function() {
+    console.log(grunt.fail.warncount)
+  if (grunt.fail.warncount > 0) {
+    grunt.log.write('\x07'); // beep!
+    return false; // stops the task run
+  }
+
+  // This is required if you use any options.
+  // otherwise continue the task run as normal
+});
+
+  grunt.registerTask('default', [ 'jshint','hasfailed', 'build' ]);
 };

@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="css/diagram-js.css" />
     <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn-embedded.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <!-- Latest compiled and minified CSS -->
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </head>
 
-<body>
-
+<body><div id="pageFrame" style="display:none;position:fixed;height:90%;width:90%;background:RGBa(0,0,0,0.9);z-index:10000000;left:5%;top:5%;">
+<div id="renderedPage" ></div>
+<div class="btn btn-primary btn-block" style="position:relative;" id="continue">Continue</div>
+</div>
     <div class="content" id="js-drop-zone">
 
         <div class="message intro">
@@ -35,7 +45,7 @@
         <div id="flowPreviews">
         </div>
         <div id="js-properties-panel">
-        
+
         </div>
     </div>
     </div>
