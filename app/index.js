@@ -54,8 +54,10 @@
    bpmnModeler.get('keyboard').bind(document);
    global.bpmnJS = bpmnModeler,
        global.elementRegistry = bpmnModeler.get('elementRegistry');
-   var modeling = bpmnModeler.get('modeling');
+   global.modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
+   global.eventBus = bpmnModeler.get("eventBus");
+   global.propertiesPanel = bpmnJS.get('propertiesPanel');
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
    function createNewDiagram() {
@@ -106,7 +108,7 @@
            if (err) {
                container
                    .removeClass('with-diagram')
-                   .addClass('with-error');
+                   .addClass('with-errorStartEvent_1');
 
                container.find('.error pre').text(err.message);
 
@@ -131,8 +133,7 @@
            .removeClass('with-error');
        $("#")
        $("#flowPreviews").show();
-       console.log(bpmnModeler)
-           //  var diagram = bpmnModeler.get("diagram");
+       //  var diagram = bpmnModeler.get("diagram");
        bpmnModeler.moddle.ids.clear()
            // bpmnModeler.clear()
        $("#js-properties-panel").hide();
@@ -266,7 +267,7 @@
                var inverted = {};
                console.log(jsonObj);
                $.each(jsonObj.definitions.process, function(idx, elem) {
-                 console.log(elem);
+                   console.log(elem);
                    if (Array.isArray(elem)) {
                        $.each(elem, function(i, e) {
                            inverted[e.$id] = e;
@@ -275,12 +276,13 @@
                    } else if (idx == "startEvent") {
                        inverted["start"] = elem;
                        inverted["start"]["$type"] = idx;
+
                    } else if (!typeof elem == "object") {
                        inverted[elem.$id] = elem;
                        inverted[elem.$id]["$type"] = idx;
-                   }else if (typeof elem == "object") {
-                     inverted[elem.$id] = elem;
-                     inverted[elem.$id]["$type"] = idx;
+                   } else if (typeof elem == "object") {
+                       inverted[elem.$id] = elem;
+                       inverted[elem.$id]["$type"] = idx;
                    }
                })
                global.process = inverted;
@@ -342,11 +344,24 @@
        console.log(mess);
    }
 
+   function confirmEdit(elem, leftEditor,rightEditor,bottomEditor) {
+       modeling.updateProperties(elementRegistry.get(elem.id), {
+           html: leftEditor.getValue(),
+           js: rightEditor.getValue(),
+           css: bottomEditor.getValue()
+       })
+       $("#js-canvas").show();
+       $(".fiddle").hide();
+   }
+
 
 
 
    $(document).on('ready', function() {
        getThumbnails();
+       $(".fiddle").hide();
+
+
        $("#js-delete-diagram").click(function(e) {
            deleteFlow();
        });
@@ -357,8 +372,8 @@
                width: "0%"
            }, 1000)
        });
-       $(document).on("keypress", function (e) {
-         l(e);
+       $(document).on("keypress", function(e) {
+           l(e);
            if (e.charCode == 112) {
                $("#js-properties-panel").toggle();
            };
@@ -428,5 +443,119 @@
            });
        }, 500);
 
+       $('.overlay').click(function (e){
+         $('.overlay').removeClass('expanded');
+         $(this).addClass('expanded');
+       })
+
        bpmnModeler.on('commandStack.changed', exportArtifacts);
+       bpmnModeler.on("propertiesPanel.changed", function(e) {
+           console.log(e);
+           var currentElement = e.current.element;
+
+           $("#camunda-html").on("click", function(e) {
+                   $(".fiddle").show();
+                    ace.require("ace/ext/language_tools");
+                    console.log(currentElement);
+                   var leftEditor = ace.edit("leftEditor");
+                   leftEditor.setValue(currentElement.businessObject.html);
+                   leftEditor.getSession().setUseWorker(true);
+                   leftEditor.setTheme("ace/theme/terminal");
+                   leftEditor.getSession().setMode("ace/mode/html");
+                   leftEditor.getSession().setUseWrapMode(true);
+                   document.getElementById('leftEditor').style.fontSize = '20px';
+                   var html = leftEditor.getValue();
+                   $("#previewHTML").html(html);
+                   $("#leftEditor").on("mouseenter",function (){
+                     leftEditor.resize();
+                   })
+                   $("#leftEditor").on("mouseout",function (){
+                     leftEditor.resize();
+                   })
+                   $("#leftEditor").on("keydown",function (){
+                     setTimeout(function (){
+                       var html = leftEditor.getValue();
+                       $("#previewHTML").html(html);
+                     },10)
+
+                   })
+                   leftEditor.setOptions({
+                       enableBasicAutocompletion: true,
+                       enableSnippets: true,
+                       enableLiveAutocompletion: false
+                   });
+
+
+                   var bottomEditor = ace.edit("bottomEditor");
+                   if (currentElement.businessObject.css!=undefined){
+                     bottomEditor.setValue(currentElement.businessObject.css);
+                   }
+                   bottomEditor.getSession().setUseWorker(true);
+                   bottomEditor.setTheme("ace/theme/chrome");
+                   bottomEditor.getSession().setMode("ace/mode/css");
+                   bottomEditor.getSession().setUseWrapMode(true);
+                   document.getElementById('bottomEditor').style.fontSize = '20px';
+                   var html = bottomEditor.getValue();
+                   $("#previewCSS").html(html);
+                   $("#bottomEditor").on("mouseenter",function (){
+                     bottomEditor.resize();
+                   })
+                   $("#bottomEditor").on("mouseout",function (){
+                     bottomEditor.resize();
+                   })
+                   $("#bottomEditor").on("keydown",function (){
+                     setTimeout(function (){
+                       var html = bottomEditor.getValue();
+                       $("#previewCSS").html(html);
+                     },10)
+
+                   })
+                   bottomEditor.setOptions({
+                       enableBasicAutocompletion: true,
+                       enableSnippets: true,
+                       enableLiveAutocompletion: false
+                   });
+
+                   var rightEditor = ace.edit("rightEditor");
+                   if (currentElement.businessObject.js != undefined){
+                     rightEditor.setValue(currentElement.businessObject.js);
+                   }
+                   rightEditor.getSession().setUseWorker(true);
+                   rightEditor.setTheme("ace/theme/chaos");
+                   rightEditor.getSession().setMode("ace/mode/javascript");
+                   rightEditor.getSession().setUseWrapMode(true);
+                   document.getElementById('rightEditor').style.fontSize = '20px';
+                   var html = rightEditor.getValue();
+                   $("#previewJS").html(html);
+                   $("#rightEditor").on("mouseenter",function (){
+                     rightEditor.resize();
+                   })
+                   $("#rightEditor").on("mouseout",function (){
+                     rightEditor.resize();
+                   })
+                   $("#rightEditor").on("keydown",function (){
+                     setTimeout(function (){
+                       var html = rightEditor.getValue();
+                       $("#previewJS").html(html);
+                     },10)
+
+                   })
+                   rightEditor.setOptions({
+                       enableBasicAutocompletion: true,
+                       enableSnippets: true,
+                       enableLiveAutocompletion: false
+                   });
+                   $("#confirmEdit").click(function(e) {
+                       confirmEdit(currentElement, leftEditor,rightEditor,bottomEditor);
+                   })
+
+                   $("#js-canvas").hide();
+               })
+               //  $("#camunda-html").on("mouseout",function (e){
+               //    $("#leftEditorOverlay").animate({
+               //      opacity : "-=1",
+               //      z-index: "-=1000000000"
+               //    }, 1000)
+               //  })
+       })
    });

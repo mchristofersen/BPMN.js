@@ -19,8 +19,17 @@ module.exports.doStep = function (stepId) {
   console.log(stepId);
     setTimeout(function () {
       var step = bpmns[bpmns.length - 1][stepId];
+      if (stepId =="start"){
+        stepId =  bpmns[bpmns.length - 1]["start"]["$id"];
+      }
+      var shape = d3.selectAll("[data-element-id="+stepId+"] > .djs-visual").selectAll("rect,path,circle,polygon,polyline").attr("stroke","green");
+      // console.log(shape);
+      // if (shape[0][0]!=null && step.$type != "sequenceFlow"){
+      //   var transform = d3.transform(d3.select("[data-element-id="+stepId+"]").attr("transform"));
+      //   d3.select(".djs-container > svg > g").append("circle")
+      //   .attr({cx:transform.translate[0],cy:transform.translate[1],r:5,fill:"green"})
+      // }
       var name = step['$id'];
-      d3.selectAll('[data-element-id='+name+']').select("polyline, rect, circle,g > path").attr({"stroke" : "#00BCD4","fill" : "#00BCD4 !important"}).style({"stroke-opacity":0.5,"stroke-weight":3})
       switch (step['$type']) {
           case "intermediateThrowEvent":
               return WF.doStep(step["signalEventDefinition"]["$signalRef"])
@@ -50,6 +59,10 @@ module.exports.doStep = function (stepId) {
 }
 
 module.exports.renderPage = function (html){
+  var matches = html.match(/\$[a-zA-Z0-9]+(?!['"])/);
+  $.each(matches, function (idx,elem){
+    html = html.replace(new RegExp("\\"+elem,"g"), varDict[elem]);
+  })
   $("#renderedPage").html(html).parent().show();
   $("#continue").click(function (e){
     var f = $("form").serializeArray();
@@ -88,7 +101,7 @@ module.exports.resolveXOR = function (xor){
     var parsed = WF.parseExpression(expr);
     var result = eval(parsed);
     if (result){
-      return WF.doStep(signal["$targetRef"])
+      return WF.doStep(signal["$id"])
     }
   }else{
     for(var i=0;i<xor["outgoing"].length;i++){
@@ -96,7 +109,7 @@ module.exports.resolveXOR = function (xor){
       var expr = signal["$ext:expression"];
       var result = eval(WF.parseExpression(expr));
       if (result){
-        return WF.doStep(signal["$targetRef"])
+        return WF.doStep(signal["$id"])
       }
     }
 

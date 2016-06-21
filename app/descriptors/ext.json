@@ -34,6 +34,34 @@
         },
 
       ]
+    },
+    {
+      "name": "css",
+      "extends": [
+        "bpmn:UserTask"
+      ],
+      "properties": [
+        {
+          "name": "css",
+          "isAttr": true,
+          "type": "text"
+        },
+
+      ]
+    },
+    {
+      "name": "js",
+      "extends": [
+        "bpmn:UserTask"
+      ],
+      "properties": [
+        {
+          "name": "js",
+          "isAttr": true,
+          "type": "text"
+        },
+
+      ]
     }
   ]
 }

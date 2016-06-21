@@ -2,6 +2,104 @@
   box-sizing: border-box;
 }
 
+.overlay {
+  &#previewOverlay,&#cssOverlay{
+    transition-property: top, height
+  }
+  &#jsOverlay,&#htmlOverlay{
+    transition-property: left, width, right
+  }
+  transition-duration: 0.25s;
+  transition-timing-function: ease-in;
+  z-index: 10;
+}
+
+.fiddle  {
+  background: RGBa(255,255,255,0.9);
+  // &> #previewPane {
+  //   height: 100%;
+  //   width: 100%;
+  //   background: "white";
+  // }
+  &> #previewOverlay {
+    height: 100%;
+    width: 100%;
+    top: -96%;
+    left: 0%;
+    display:flex;
+    flex-direction: column;
+    &.expanded{
+      top: 0;
+      height: 96%;
+      width:92%;
+      left:4%;
+      z-index: 100;
+    }
+  }
+  &> #htmlOverlay.expanded {
+    width: 96%;
+    left: 0;
+    z-index: 100;
+    height: 92%;
+    top:4%;
+    z-index: 100;
+  }
+  &> #htmlOverlay {
+    left: -96%;
+    display:flex;
+    width:100%;
+    height: 100%;
+    top:0%;
+  }
+  &> #jsOverlay.expanded {
+    right: 0;
+    top:4%;
+    width: 96%;
+    height:92%;
+    z-index: 100;
+  }
+  &> #jsOverlay {
+    right: -96%;
+    display:flex;
+    width:100%;
+    height:100%;
+    top:0%;
+  }
+
+  &> #cssOverlay.expanded {
+    top: 4%;
+    height: 96%;
+    left:2%;
+    width: 92%;
+    z-index: 100;
+  }
+  &> #cssOverlay {
+    top: 96%;
+    left: 0%;
+    width: 100%;
+  }
+  &> #cancelEdit  {
+    left:1%;
+    width:15%;
+    height: 75%;
+    position:relative;;
+    padding: 0px;
+  }
+
+  &> #confirmEdit {
+    right:1%;
+    width:15%;
+    height: 75%;
+    position:relative;;
+    padding: 0px;
+  }
+}
+
+#previewPane {
+  background: "white";
+}
+
+
 #codeEditor {
   opacity: 0;
   z-index: -100000
