@@ -50,8 +50,8 @@
    bpmnJS = bpmnModeler,
        elementRegistry = bpmnModeler.get('elementRegistry');
    modeling = bpmnModeler.get('modeling');
-   global.canvas = bpmnModeler.get("canvas");
-   global.eventBus = bpmnModeler.get("eventBus");
+   canvas = bpmnModeler.get("canvas");
+   eventBus = bpmnModeler.get("eventBus");
    global.propertiesPanel = bpmnJS.get('propertiesPanel');
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
