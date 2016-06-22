@@ -5,12 +5,7 @@
    var beautify = ace.require("ace/ext/beautify");
 
 
-   global.WF = require('./workflow.js');
-   global.flowName;
-   // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
-   //     sequenceFlow = sequenceFlowElement.businessObject;
-   //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
-
+   WF = require('./workflow.js');
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;
@@ -52,17 +47,17 @@
        }
    });
    bpmnModeler.get('keyboard').bind(document);
-   global.bpmnJS = bpmnModeler,
-       global.elementRegistry = bpmnModeler.get('elementRegistry');
-   global.modeling = bpmnModeler.get('modeling');
-   global.canvas = bpmnModeler.get("canvas");
-   global.eventBus = bpmnModeler.get("eventBus");
-   global.propertiesPanel = bpmnJS.get('propertiesPanel');
+   bpmnJS = bpmnModeler,
+       elementRegistry = bpmnModeler.get('elementRegistry');
+   modeling = bpmnModeler.get('modeling');
+   canvas = bpmnModeler.get("canvas");
+   eventBus = bpmnModeler.get("eventBus");
+   propertiesPanel = bpmnJS.get('propertiesPanel');
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
    function createNewDiagram() {
        var name = prompt("Enter Workflow Name:");
-       global.flowName = name;
+       flowName = name;
        bpmnModeler.createDiagram(function(xml) {
            // given
            var processElement = elementRegistry.get('Process_1');
@@ -176,7 +171,7 @@
                    url: "http://localhost:3000/flow",
                    method: "PUT",
                    data: {
-                       flowName: global.flowName,
+                       flowName: flowName,
                        xml: xml,
                        svg: svg
                    }
@@ -240,7 +235,7 @@
            url: "http://localhost:3000/flow",
            method: "delete",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
        }).done(function(resp) {
            console.log(resp);
@@ -280,20 +275,20 @@
                inverted[elem.$id]["$type"] = idx;
            }
        })
-       global.process = inverted;
+       process = inverted;
        // Access to attribute
 
 
    }
 
 
-   global.getXML = function(flowName) {
-       global.flowName = flowName;
+   getXML = function(flowName) {
+       flowName = flowName;
        $.ajax({
            url: "http://localhost:3000/flow",
            method: "get",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
            success: function (resp){
              processXML(resp)
@@ -320,7 +315,7 @@
                                .html(elem.svg)
                                .attr("id", elem.flowName)
                                .on("click", function(d) {
-                                   global.flowName = elem.flowName;
+                                   flowName = elem.flowName;
                                    getXML(elem.flowName);
                                })
                                .on("mouseenter", function(d) {
@@ -426,7 +421,7 @@
        })
        $(".flowImage").click(function(e) {
            var name = $(e.sender).attr("id");
-           global.flowName = name;
+           flowName = name;
            $.ajax({
                    url: "http://localhost:3000/flow",
                    method: "GET",
