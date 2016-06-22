@@ -57,7 +57,7 @@
 
    function createNewDiagram() {
        var name = prompt("Enter Workflow Name:");
-       global.flowName = name;
+       flowName = name;
        bpmnModeler.createDiagram(function(xml) {
            // given
            var processElement = elementRegistry.get('Process_1');
