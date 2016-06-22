@@ -5,7 +5,7 @@
    var beautify = ace.require("ace/ext/beautify");
 
 
-   globalWF = require('./workflow.js');
+   WF = require('./workflow.js');
    global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
