@@ -3,13 +3,35 @@
 
 <head>
     <title>bpmn-js-properties-panel extension demo</title>
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
+    <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ext-beautify.js"></script>
+    <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ext-language_tools.js"></script>
     <link rel="stylesheet" href="css/diagram-js.css" />
     <link rel="stylesheet" href="vendor/bpmn-font/css/bpmn-embedded.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css" > -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/material.css">
+    <link rel="stylesheet" href="css/ripples.css">
+    <script src="js/material.js"></script>
+    <script src="js/ripples.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-mfizz.css">
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
+    <div id="pageFrame" style="display:none;position:fixed;height:90%;width:90%;background:RGBa(0,0,0,0.9);z-index:10000000;left:5%;top:5%;">
+        <div id="renderedPage"></div>
+        <div class="btn btn-primary btn-block"  id="continue">Continue</div>
+    </div>
     <div class="content" id="js-drop-zone">
 
         <div class="message intro">
@@ -33,7 +55,10 @@
         <div class="canvas" id="js-canvas"></div>
         <div id="flowPreviews">
         </div>
-        <div id="js-properties-panel"></div>
+        <div id="js-properties-panel">
+
+        </div>
+    </div>
     </div>
 
     <ul class="buttons">
@@ -55,77 +80,116 @@
         Close
       </a>
         </li>
+        <li>
+            <a id="js-execute-diagram" href title="Execute">
+        Execute
+      </a>
+            <li>
+                <a id="js-delete-diagram" href title="Delete">
+      Delete
+    </a>
+            </li>
+
     </ul>
+    <div class="fiddle" style="position:fixed;top:0;height:5%;width:100%;display:flex;z-index:1000000000" id="header">
+        <div class="btn btn-success btn-raised" id="confirmEdit"><i class="material-icons">save</i></div>
+        <div class="btn btn-primary btn-raised" id="runButton" aria-label="Left Align">
+            <i class="icon-shell"></i>
+        </div>
+        <div class="btn btn-danger btn-raised" id="cancelEdit" onclick='$("#js-canvas").show();
+        $(".fiddle").hide();'><i class="icon-fire-alt"></i></div>
 
-    <div style="opacity:0;z-index:-10000;position:fixed;top:5%;left:5%;min-width:90%;min-height:90%;display:flex;flex-direction:column;align-items:stretch;">
-        <div style="flex:2;display:flex;" id="header">
-            <div style="flex:1" id="lastTheme"  onclick="dotheme(-1)"></div>
-            <div  id="theme" style="align-self:center;flex:2;font-size:34px !important;font-weight:600;text-align: center;vertical-align:middle;"></div>
-            <select id="mode" size="1" style="flex:2;align-self:center;">
+        <!-- <select id="mode" size="1" style="flex:2;align-self:center;">
 
-          <option value="ace/mode/coffee">coffee</option>
-          <option value="ace/mode/css">css</option>
-          <option value="ace/mode/handlebars">handlebars</option>
-          <option value="ace/mode/html">html</option>
-          <option value="ace/mode/html_ruby">html_ruby</option>
-          <option value="ace/mode/jade">jade</option>
-          <option value="ace/mode/javascript" selected>javascript</option>
-          <option value="ace/mode/json">json</option>
-          <option value="ace/mode/less">less</option>
-          <option value="ace/mode/markdown">markdown</option>
-          <option value="ace/mode/python">python</option>
-          <option value="ace/mode/ruby">ruby</option>
-          <option value="ace/mode/sass">sass</option>
-          <option value="ace/mode/scss">scss</option>
-          <option value="ace/mode/sh">sh</option>
-          <option value="ace/mode/sql">sql</option>
-          <option value="ace/mode/svg">svg</option>
-          <option value="ace/mode/xml">xml</option>
-        </select>
-            <div style="flex:1" onclick="dotheme(1)" id="nextTheme"></div>
+            <option value="ace/mode/coffee">coffee</option>
+            <option value="ace/mode/css">css</option>
+            <option value="ace/mode/handlebars">handlebars</option>
+            <option value="ace/mode/html">html</option>
+            <option value="ace/mode/html_ruby">html_ruby</option>
+            <option value="ace/mode/jade">jade</option>
+            <option value="ace/mode/javascript" selected>javascript</option>
+            <option value="ace/mode/json">json</option>
+            <option value="ace/mode/less">less</option>
+            <option value="ace/mode/markdown">markdown</option>
+            <option value="ace/mode/python">python</option>
+            <option value="ace/mode/ruby">ruby</option>
+            <option value="ace/mode/sass">sass</option>
+            <option value="ace/mode/scss">scss</option>
+            <option value="ace/mode/sh">sh</option>
+            <option value="ace/mode/sql">sql</option>
+            <option value="ace/mode/svg">svg</option>
+            <option value="ace/mode/xml">xml</option>
+        </select> -->
+    </div>
+    <div class="fiddle" style="position:fixed;width:100%;height:95%;top:5%;left:0;z-index:100;">
+        <div id="htmlOverlay" class="overlay expanded" style="position:absolute;">
+
+
+            <div id="leftEditor" style="width:96%;height:100%;">
+            </div>
+            <div id="leftEditorCurtain" class="btn btn-danger btn-raised curtain">
+                <i class="icon-html"></i>
+            </div>
+        </div>
+        <div id="previewOverlay" class="overlay" style="position:absolute;">
+            <div id="previewPane" style="width:100%;height:96%;">
+                <div id="previewJS"></div>
+                <style id="previewCSS"></style>
+                <div id="previewHTML"></div>
+
+
+            </div>
+            <div id="previewPaneCurtain" class="btn btn-secondary btn-raised curtain">
+                <i class="icon-script"></i>
+            </div>
+
         </div>
 
-        <div id="editor" style="flex:20;min-width:400px;">function foo(items) { var i; for (i = 0; i &lt; items.length; i++) { alert("Ace Rocks " + items[i]); } }
+        <div id="jsOverlay" class="overlay" style="position:absolute;">
+            <div id="rightEditorCurtain" class="btn btn-warning btn-raised curtain"><i class="icon-nodejs"></i></div>
+
+
+            <div id="rightEditor" style="height: 100%;width:96%;">
+            </div>
+        </div>
+        <div id="cssOverlay" class="overlay" style="position:absolute;height: 100%">
+            <div id="bottomEditorCurtain" class="btn btn-info btn-raised curtain"><i class="icon-css"></i></div>
+
+            <div id="bottomEditor" style="width:100%;height:96%;">
+            </div>
+
         </div>
     </div>
     <script src="index.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js"></script>
+
 
     <script>
-        var editor = ace.edit("editor");
-        editor.getSession().setUseWorker(false);
-        editor.setTheme("ace/theme/chaos");
-        editor.getSession().setMode("ace/mode/html");
-        document.getElementById('editor').style.fontSize = '16px';
-
-        $('#mode').on('change', function(ev) {
-            var mode = $('option:selected').attr('value');
-            //console.log(mode)
-            editor.getSession().setMode(mode);
-        });
+        // $('#mode').on('change', function(ev) {
+        //     var mode = $('option:selected').attr('value');
+        //     //console.log(mode)
+        //     editor.getSession().setMode(mode);
+        // });
         currentTheme = 0;
-        themes = ["Ambiance", "Chrome", "Clouds", "clouds_midnight", "gruvbox", "Idle_Fingers", "Low-ColorClouds", "Clouds",  "Cobalt", "Crimson_Editor", "Dawn", "Dreamweaver", "Eclipse", "GitHub", "Idle_Fingers","Kr_Theme", "Merbivore",
-            "Merbivore_Soft","Mono_Industrial", "Monokai", "Pastel_On_Dark","Solarized_Dark","Solarized_Light","TextMate", "Tomorrow","Tomorrow_Night","Tomorrow_Night_Blue","Tomorrow_Night_Bright",
-            "Tomorrow_Night_Eighties","Twilight","Vibrant", "Ink","Xcode"
-        ].map(function (theme){
-
-          return theme.toLowerCase();
-        });
+        // themes = ["Ambiance", "Chrome", "Clouds", "clouds_midnight", "gruvbox", "Idle_Fingers", "Low-ColorClouds", "Clouds", "Cobalt", "Crimson_Editor", "Dawn", "Dreamweaver", "Eclipse", "GitHub", "Idle_Fingers", "Kr_Theme", "Merbivore",
+        //     "Merbivore_Soft", "Mono_Industrial", "Monokai", "Pastel_On_Dark", "Solarized_Dark", "Solarized_Light", "TextMate", "Tomorrow", "Tomorrow_Night", "Tomorrow_Night_Blue", "Tomorrow_Night_Bright",
+        //     "Tomorrow_Night_Eighties", "Twilight", "Vibrant", "Ink", "Xcode"
+        // ].map(function(theme) {
+        //
+        //     return theme.toLowerCase();
+        // });
 
         function dotheme(integer) {
             currentTheme += integer;
             nextTheme = themes[currentTheme]
             editor.setTheme("ace/theme/" + nextTheme);
-            window.setTimeout(function (){
-              $("#header").css("background",$(".ace_gutter").css("background"));
-              $("#header").css("color",$(".ace_type").css("color"))
-              $("#theme").text(nextTheme);
-            },500)
+            window.setTimeout(function() {
+                $("#header").css("background", $(".ace_gutter").css("background"));
+                $("#header").css("color", $(".ace_type").css("color"))
+                $("#theme").text(nextTheme);
+            }, 500)
 
         }
-
-        dotheme(0);
+        $.material.init()
     </script>
 
 

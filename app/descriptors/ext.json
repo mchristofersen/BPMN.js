@@ -1,69 +1,12 @@
 {
-  "name": "bpmn",
-  "prefix": "bpmn",
+  "name": "ext",
+  "prefix": "ext",
   "uri": "http://ext",
   "xml": {
     "tagAlias": "lowerCase"
   },
   "associations": [],
   "types": [
-    {
-      "name": "executeNow",
-      "extends": [
-        "bpmn:ScriptTask"
-      ],
-      "properties": [
-        {
-          "name": "executeNow",
-          "isAttr": true,
-          "type": "Bool"
-        },
-
-      ]
-    },
-    {
-      "name": "code",
-      "extends": [
-        "bpmn:ScriptTask"
-      ],
-      "properties": [
-        {
-          "name": "code",
-          "isAttr": true,
-          "type": "String"
-        },
-
-      ]
-    },
-    {
-      "name": "variable",
-      "extends": [
-        "bpmn:ScriptTask"
-      ],
-      "properties": [
-        {
-          "name": "variable",
-          "isAttr": true,
-          "type": "String"
-        },
-
-      ]
-    },
-
-    {
-      "name": "signals",
-      "extends": [
-        "bpmn:ExclusiveGateway"
-      ],
-      "properties": [
-        {
-          "name": "signals",
-          "isAttr": true,
-          "type": "List"
-        },
-
-      ]
-    },
     {
       "name": "expression",
       "extends": [
@@ -79,19 +22,46 @@
       ]
     },
     {
-      "name": "label",
+      "name": "html",
       "extends": [
-        "bpmn:SequenceFlow"
+        "bpmn:UserTask"
       ],
       "properties": [
         {
-          "name": "label",
+          "name": "html",
           "isAttr": true,
-          "type": "String"
+          "type": "text"
         },
 
       ]
     },
+    {
+      "name": "css",
+      "extends": [
+        "bpmn:UserTask"
+      ],
+      "properties": [
+        {
+          "name": "css",
+          "isAttr": true,
+          "type": "text"
+        },
 
+      ]
+    },
+    {
+      "name": "js",
+      "extends": [
+        "bpmn:UserTask","bpmn:Task"
+      ],
+      "properties": [
+        {
+          "name": "js",
+          "isAttr": true,
+          "type": "text"
+        },
+
+      ]
+    }
   ]
 }

@@ -33,7 +33,7 @@ app.post("/flow",function (req,res){
         if (!err){
           bpmn.insertOne({flowName:name,xml:xml,svg:svg,createdTime:new Date()},{w:1, keepGoing:true},function (bpms){
             bpmn.count(function (err,count){
-              res.send("There are "+count+" records");
+              res.send("success");
             })
           })
         }else{
@@ -49,13 +49,14 @@ app.put("/flow",function (req,res){
   var name = req.body.flowName;
   var xml = req.body.xml;
   var svg = req.body.svg;
-  console.log(req.body.flowName);
   db.connect("mongodb://localhost:27017/workflows", function(err, db) {
     if(!err) {
       db.createCollection('bpmn', function(err, bpmn) {
         if (!err){
           bpmn.updateOne({flowName:name},  {flowName:name,xml:xml, svg:svg},{upsert:true, w: 1});
-          res.send("success")
+          res.send("success");
+          console.log("SAVED:  "+name);
+
         }else{
           console.log(err)
         }
@@ -66,14 +67,32 @@ app.put("/flow",function (req,res){
 
 app.get("/flow", function (req,res){
   var name = req.query.flowName;
-  console.log(name);
+  console.log("Requested:  " + name);
   db.connect("mongodb://localhost:27017/workflows", function(err, db) {
     if(!err) {
       db.collection('bpmn', function(err, bpmn) {
         if (!err){
             bpmn.find({flowName:name}).project({xml:1}).toArray(function (err, result){
               res.send(result);
-              console.log(err);
+            })
+        }else{
+          console.log(err)
+        }
+      });
+    }
+})
+});
+
+app.delete('/flow', function (req, res) {
+  var name = req.body.flowName;
+  console.log(name);
+  db.connect("mongodb://localhost:27017/workflows", function(err, db) {
+    if(!err) {
+      db.collection('bpmn', function(err, bpmn) {
+        if (!err){
+            bpmn.deleteOne({flowName:name},function (err, result){
+              res.send(result);
+              console.log(name);
             })
         }else{
           console.log(err)

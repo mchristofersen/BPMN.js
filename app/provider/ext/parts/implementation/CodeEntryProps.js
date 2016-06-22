@@ -12,10 +12,10 @@ module.exports = function(group, element, bpmnFactory) {
   if (is(element, 'bpmn:ScriptTask')) {
 
   var entry = entryFactory.textArea({
-    id: 'code',
+    id: 'script',
     description: '',
-    label: 'code',
-    modelProperty: 'code',
+    label: 'Script',
+    modelProperty: 'script',
     expandable: true,
     minRows: 5,
 
