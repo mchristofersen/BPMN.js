@@ -171,7 +171,7 @@
                    url: "http://localhost:3000/flow",
                    method: "PUT",
                    data: {
-                       flowName: global.flowName,
+                       flowName: flowName,
                        xml: xml,
                        svg: svg
                    }
