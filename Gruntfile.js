@@ -203,7 +203,6 @@ module.exports = function(grunt) {
   grunt.registerTask('auto-build', [
     'copy',
     'less',
-    'server',
     'browserify:watch',
     'connect:livereload',
     'watch',
