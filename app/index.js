@@ -421,7 +421,7 @@
        })
        $(".flowImage").click(function(e) {
            var name = $(e.sender).attr("id");
-           global.flowName = name;
+           flowName = name;
            $.ajax({
                    url: "http://localhost:3000/flow",
                    method: "GET",
