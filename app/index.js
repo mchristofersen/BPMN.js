@@ -275,7 +275,7 @@
                inverted[elem.$id]["$type"] = idx;
            }
        })
-       global.process = inverted;
+       process = inverted;
        // Access to attribute
 
 
