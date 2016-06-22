@@ -169,7 +169,7 @@ module.exports = function(grunt) {
 
       connect: {
         options: {
-          livereload: 8081
+          livereload: 9014
         },
         files: [
           '<%= config.sources %>/**/*.css'
@@ -180,14 +180,14 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        appName: 'chromium-browser', // name of the app that opens, ie: open, start, xdg-open
-        port: 8080,
-        livereload: 8081,
-        hostname: '0.0.0.0'
+        appName: 'Chrome', // name of the app that opens, ie: open, start, xdg-open
+        port: 9013,
+        livereload: 9014,
+        hostname: '144.156.225.80'
       },
       livereload: {
         options: {
-          open: { appName: 'chromium-browser' },
+          open: { appName: 'Chrome' },
           base: [
             '<%= config.dist %>'
           ]
@@ -205,7 +205,7 @@ module.exports = function(grunt) {
     'less',
     'browserify:watch',
     'connect:livereload',
-        'server',
+        // 'server',
     'watch',
     'notify_hooks'
     ]);

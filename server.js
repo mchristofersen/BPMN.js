@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 var express = require('express');
 var app = express();
@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 var db = require("mongodb").MongoClient;
-
+console.log(db);
 
 app.get("/getThumbnails",function (req,res){
   db.connect("mongodb://localhost:27017/workflows", function(err, db) {

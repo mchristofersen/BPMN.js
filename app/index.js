@@ -1,18 +1,16 @@
-  
+
    var fs = require('fs');
 
    var d3 = require("d3");
    var beautify = ace.require("ace/ext/beautify");
 
 
-   global.WF = require('./workflow.js');
+  //  global.WF = require('./workflow.js');
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
    //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
 
-=======
-   WF = require('./workflow.js');
->>>>>>> 11b8eca5e9d36259e247c64bfb74ada3efbcfb72
+   global.WF = require('./workflow.js');
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;
@@ -56,10 +54,10 @@
    bpmnModeler.get('keyboard').bind(document);
    bpmnJS = bpmnModeler,
        elementRegistry = bpmnModeler.get('elementRegistry');
-   modeling = bpmnModeler.get('modeling');
-   canvas = bpmnModeler.get("canvas");
-   eventBus = bpmnModeler.get("eventBus");
-   propertiesPanel = bpmnJS.get('propertiesPanel');
+   global.modeling = bpmnModeler.get('modeling');
+   global.canvas = bpmnModeler.get("canvas");
+   global.eventBus = bpmnModeler.get("eventBus");
+   global.propertiesPanel = bpmnJS.get('propertiesPanel');
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
    function createNewDiagram() {
@@ -67,7 +65,7 @@
        flowName = name;
        bpmnModeler.createDiagram(function(xml) {
            // given
-           var processElement = elementRegistry.get('Process_1');
+           var processElement = elementRegistry.getAll().;
 
            // when
            modeling.updateProperties(processElement, {
