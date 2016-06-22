@@ -288,7 +288,7 @@
            url: "http://localhost:3000/flow",
            method: "get",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
            success: function (resp){
              processXML(resp)
