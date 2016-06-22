@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "A properties panel extension example",
   "main": "app/index.js",
-  "scripts": {
+   "engines" : {"node":"~6.2.0",
+		 "npm" : "~1.0.20" } ,
+"scripts": {
     "all": "grunt",
     "dev": "grunt auto-build"
   },
