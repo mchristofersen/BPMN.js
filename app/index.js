@@ -283,7 +283,7 @@
 
 
    getXML = function(flowName) {
-       global.flowName = flowName;
+       flowName = flowName;
        $.ajax({
            url: "http://localhost:3000/flow",
            method: "get",
