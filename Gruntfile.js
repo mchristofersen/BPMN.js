@@ -205,6 +205,7 @@ module.exports = function(grunt) {
     'less',
     'browserify:watch',
     'connect:livereload',
+        'server',
     'watch',
     'notify_hooks'
     ]);
