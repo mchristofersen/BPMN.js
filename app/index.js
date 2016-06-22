@@ -6,7 +6,6 @@
 
 
    WF = require('./workflow.js');
-   global.flowName;
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
    //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
