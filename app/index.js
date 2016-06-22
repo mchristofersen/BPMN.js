@@ -5,7 +5,15 @@
    var beautify = ace.require("ace/ext/beautify");
 
 
+<<<<<<< HEAD
+   global.WF = require('./workflow.js');
+   // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
+   //     sequenceFlow = sequenceFlowElement.businessObject;
+   //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
+
+=======
    WF = require('./workflow.js');
+>>>>>>> 11b8eca5e9d36259e247c64bfb74ada3efbcfb72
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;

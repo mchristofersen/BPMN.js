@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "description": "A properties panel extension example",
   "main": "app/index.js",
-   "engines" : {"node":"~6.2.0",
-		 "npm" : "~1.0.20" } ,
-"scripts": {
+  "engines": {
+    "node": "~6.2.0",
+    "npm": "~1.0.20"
+  },
+  "scripts": {
     "all": "grunt",
     "dev": "grunt auto-build"
   },
@@ -42,6 +44,7 @@
     "load-grunt-tasks": "~0.3.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "bootstrap-material-design": "^0.5.10",
     "bpmn-js": "^0.15.2",
     "bpmn-js-properties-panel": "^0.7.0",
