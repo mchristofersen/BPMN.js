@@ -79,6 +79,24 @@ module.exports = function(grunt) {
           }
         ]
       },
+      material:{
+        files: [
+          {
+            src: 'node_modules/bootstrap-material-design/dist/js/material.js',
+            dest: '<%= config.dist %>/js/material.js'
+          },
+          {
+            src: 'node_modules/bootstrap-material-design/dist/js/ripples.js',
+            dest: '<%= config.dist %>/js/ripples.js'
+          },
+          {expand: true,
+            flatten: true,
+            cwd: "styles",
+            src: "**",
+            dest: 'dist/css/'
+          }
+        ]
+      },
       bpmn_js: {
         files: [
           {
@@ -111,14 +129,17 @@ module.exports = function(grunt) {
 
       styles: {
         files: {
-          'dist/css/app.css': 'styles/app.less'
+          'dist/css/app.css': 'styles/app.less',
+          'dist/css/bootstrap.css':'node_modules/bootstrap/less/bootstrap.less',
+          'dist/css/material.css':'node_modules/bootstrap-material-design/less/bootstrap-material-design.less',
+          'dist/css/ripples.css':'node_modules/bootstrap-material-design/less/ripples.less'
         }
       }
     },
 
     watch: {
       samples: {
-        files: [ '<%= config.sources %>/**/*.*' ],
+        files: [ '<%= config.sources %>/**/*.*','node_modules/bootstrap-material-design/less/*.less' ],
         tasks: [ 'copy:app' , 'hasfailed']
       },
 
@@ -145,14 +166,14 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        appName: 'Firefox', // name of the app that opens, ie: open, start, xdg-open
+        appName: 'chromium-browser', // name of the app that opens, ie: open, start, xdg-open
         port: 9013,
         livereload: 9014,
         hostname: 'localhost'
       },
       livereload: {
         options: {
-          open: { appName: 'Firefox' },
+          open: { appName: 'chromium-browser' },
           base: [
             '<%= config.dist %>'
           ]

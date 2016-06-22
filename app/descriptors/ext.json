@@ -52,7 +52,7 @@
     {
       "name": "js",
       "extends": [
-        "bpmn:UserTask"
+        "bpmn:UserTask","bpmn:Task"
       ],
       "properties": [
         {
