@@ -49,7 +49,7 @@
    bpmnModeler.get('keyboard').bind(document);
    bpmnJS = bpmnModeler,
        elementRegistry = bpmnModeler.get('elementRegistry');
-   global.modeling = bpmnModeler.get('modeling');
+   modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
    global.eventBus = bpmnModeler.get("eventBus");
    global.propertiesPanel = bpmnJS.get('propertiesPanel');
