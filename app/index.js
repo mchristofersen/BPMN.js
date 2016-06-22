@@ -235,7 +235,7 @@
            url: "http://localhost:3000/flow",
            method: "delete",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
        }).done(function(resp) {
            console.log(resp);
