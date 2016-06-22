@@ -16,23 +16,7 @@ module.exports = function(grunt) {
   // project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    notify: {
-      watch: {
-        options: {
-          title: 'Task Complete',  // optional
-          message: 'build complete', //required
-        }
-      }
-    },
-    notify_hooks: {
-    options: {
-      enabled: true,
-      max_jshint_notifications: 1, // maximum number of notifications from jshint output
-      title: "BPMN", // defaults to the name in package.json, or will use project directory's name
-      success: true, // whether successful grunt executions should be notified automatically
-      duration: 1 // the duration of notification in seconds, for `notify-send only
-    }
-  },
+    
     config: {
       sources: 'app',
       dist: 'dist'
