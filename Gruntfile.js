@@ -169,7 +169,7 @@ module.exports = function(grunt) {
 
       connect: {
         options: {
-          livereload: 9014
+          livereload: 8081
         },
         files: [
           '<%= config.sources %>/**/*.css'
@@ -181,9 +181,9 @@ module.exports = function(grunt) {
     connect: {
       options: {
         appName: 'chromium-browser', // name of the app that opens, ie: open, start, xdg-open
-        port: 9013,
-        livereload: 9014,
-        hostname: 'localhost'
+        port: 8080,
+        livereload: 8081,
+        hostname: '0.0.0.0'
       },
       livereload: {
         options: {
@@ -203,9 +203,9 @@ module.exports = function(grunt) {
   grunt.registerTask('auto-build', [
     'copy',
     'less',
-    'server',
     'browserify:watch',
     'connect:livereload',
+        'server',
     'watch',
     'notify_hooks'
     ]);
