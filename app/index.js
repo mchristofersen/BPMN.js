@@ -6,7 +6,6 @@
 
 
    WF = require('./workflow.js');
-
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;
