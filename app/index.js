@@ -47,7 +47,7 @@
        }
    });
    bpmnModeler.get('keyboard').bind(document);
-   global.bpmnJS = bpmnModeler,
+   gbpmnJS = bpmnModeler,
        global.elementRegistry = bpmnModeler.get('elementRegistry');
    global.modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
