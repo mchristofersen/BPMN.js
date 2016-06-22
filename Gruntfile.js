@@ -169,7 +169,7 @@ module.exports = function(grunt) {
 
       connect: {
         options: {
-          livereload: 9014
+          livereload: 8081
         },
         files: [
           '<%= config.sources %>/**/*.css'
