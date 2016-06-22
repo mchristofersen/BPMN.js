@@ -315,7 +315,7 @@
                                .html(elem.svg)
                                .attr("id", elem.flowName)
                                .on("click", function(d) {
-                                   global.flowName = elem.flowName;
+                                   flowName = elem.flowName;
                                    getXML(elem.flowName);
                                })
                                .on("mouseenter", function(d) {
