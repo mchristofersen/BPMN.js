@@ -1,0 +1,140 @@
+{
+  "_args": [
+    [
+      {
+        "name": "diagram-js",
+        "raw": "diagram-js@^0.15.0",
+        "rawSpec": "^0.15.0",
+        "scope": null,
+        "spec": ">=0.15.0 <0.16.0",
+        "type": "range"
+      },
+      "/home/donmiguel/workspace/BPMN"
+    ]
+  ],
+  "_from": "diagram-js@>=0.15.0 <0.16.0",
+  "_id": "diagram-js@0.15.2",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/diagram-js",
+  "_nodeVersion": "4.3.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/diagram-js-0.15.2.tgz_1463661198703_0.9057879673782736"
+  },
+  "_npmUser": {
+    "email": "bpmnio@camunda.com",
+    "name": "bpmn-io"
+  },
+  "_npmVersion": "3.8.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "diagram-js",
+    "raw": "diagram-js@^0.15.0",
+    "rawSpec": "^0.15.0",
+    "scope": null,
+    "spec": ">=0.15.0 <0.16.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/",
+    "/bpmn-js",
+    "/diagram-js-direct-editing"
+  ],
+  "_resolved": "https://registry.npmjs.org/diagram-js/-/diagram-js-0.15.2.tgz",
+  "_shasum": "cd84611fa31206696c0f66c2f55ae2c7bc047a3e",
+  "_shrinkwrap": null,
+  "_spec": "diagram-js@^0.15.0",
+  "_where": "/home/donmiguel/workspace/BPMN",
+  "author": {
+    "name": "bpmn.io"
+  },
+  "bugs": {
+    "url": "https://github.com/bpmn-io/diagram-js/issues"
+  },
+  "dependencies": {
+    "didi": "^0.1.0",
+    "eve": "^0.4.2",
+    "hammerjs": "^2.0.1",
+    "inherits": "^2.0.1",
+    "lodash": "^3.0.1",
+    "min-dom": "^0.2.0",
+    "object-refs": "^0.1.1",
+    "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
+  },
+  "description": "A modeling framework for the web",
+  "devDependencies": {
+    "brfs": "~1.2.0",
+    "browserify": "^13.0.0",
+    "chai": "~2.2.0",
+    "grunt": "~0.4.4",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.7.2",
+    "grunt-karma": "^0.12.0",
+    "grunt-release": "^0.7.0",
+    "jquery": "^2.1.0",
+    "jsondiffpatch": "^0.1.26",
+    "karma": "^0.13.0",
+    "karma-browserify": "^5.0.1",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-ie-launcher": "^0.2.0",
+    "karma-mocha": "~0.1.10",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-sinon-chai": "~0.3.0",
+    "karma-spec-reporter": "0.0.25",
+    "load-grunt-tasks": "^0.3.0",
+    "mocha": "^2.2.5",
+    "mocha-test-container-support": "~0.1.0",
+    "phantomjs": "^1.9.19",
+    "sinon": "~1.14.1",
+    "sinon-chai": "~2.7.0",
+    "time-grunt": "^0.3.0",
+    "watchify": "^3.7.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "cd84611fa31206696c0f66c2f55ae2c7bc047a3e",
+    "tarball": "https://registry.npmjs.org/diagram-js/-/diagram-js-0.15.2.tgz"
+  },
+  "gitHead": "fb2af61cac5d3052addf7fce8107e2cbf25205fc",
+  "homepage": "https://github.com/bpmn-io/diagram-js#readme",
+  "keywords": [
+    "modeler",
+    "modeling",
+    "canvas",
+    "diagram-js"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "email": "git_nikku@nixis.de",
+      "name": "nikku"
+    },
+    {
+      "email": "0xdead10cc@gmx.de",
+      "name": "iso50"
+    },
+    {
+      "email": "bpmnio@camunda.com",
+      "name": "bpmn-io"
+    },
+    {
+      "email": "ricardo.matias0@gmail.com",
+      "name": "ricardomatias"
+    }
+  ],
+  "name": "diagram-js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bpmn-io/diagram-js.git"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "version": "0.15.2"
+}
