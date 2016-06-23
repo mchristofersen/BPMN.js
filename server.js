@@ -110,3 +110,4 @@ app.get('/save', function(req, res){
 app.use("/static",express.static(__dirname +"/public"))
 
 app.listen(3000);
+console.log('Express server listening on port 3000');
