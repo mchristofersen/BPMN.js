@@ -155,7 +155,7 @@ module.exports.parseExpression = function(expr) {
     var matches = [...new Set(list)];
     $.each(matches, function(idx, elem) {
         if (typeof varDict[elem] == "string") {
-            expr = expr.replace(new RegExp(elem, "g"), '"' + varDict[elem] + '"');
+            expr = expr.replace(new RegExp("\\"+elem, "g"), '"' + varDict[elem] + '"');
         } else {
             expr = expr.replace(new RegExp("\\" + elem, "g"), 'varDict["' + elem + '"]');
         }

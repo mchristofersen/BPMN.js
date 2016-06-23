@@ -359,7 +359,7 @@
        var bus = elem.businessObject;
        debugger;
        if (bus.$type == "bpmn:UserTask") {
-           modeling.updateProperties(bus, {
+           modeling.updateProperties(elem, {
                html: leftEditor.getValue() || "",
                js: rightEditor.getValue() || "",
                css: bottomEditor.getValue() || ""
