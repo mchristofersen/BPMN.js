@@ -31,6 +31,8 @@
   "dependencies": {
     "bootstrap-material-design": "^0.5.10",
     "bpmn-js": "^0.15.2",
+    "bpmn-js-cli": "^0.14.0",
+    "bpmn-js-differ": "^0.2.0",
     "bpmn-js-properties-panel": "^0.7.0",
     "camunda-bpmn-moddle": "^0.5.1",
     "d3": "^3.5.17",

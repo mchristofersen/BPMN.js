@@ -18,10 +18,10 @@ $("#js-execute-diagram").click(function(e) {
 module.exports.doStep = function(stepId) {
     setTimeout(function() {
         var step = bpmns[bpmns.length - 1][stepId];
-        if (stepId == "start" ) {
+        if (stepId == "start") {
             stepId = bpmns[bpmns.length - 1]["start"]["$id"];
-        }else if (step["$type"] == "intermediateCatchEvent"){
-          stepId = bpmns[bpmns.length - 1][stepId]["$id"];
+        } else if (step["$type"] == "intermediateCatchEvent") {
+            stepId = bpmns[bpmns.length - 1][stepId]["$id"];
         }
         var shape = d3.selectAll("[data-element-id=" + stepId + "] > .djs-visual").selectAll("rect,path,circle,polygon,polyline").attr("stroke", "green");
         var name = step['$id'];
@@ -47,9 +47,9 @@ module.exports.doStep = function(stepId) {
                 return WF.renderPage(step)
                 break;
             case "task":
-                WF.interpolateJS(step)
-                WF.prepareJSForEval(step)
-                eval(step["$ext:js"]);
+                var expr = step["$ext:js"];
+                expr = WF.parseExpression(expr)
+                eval(expr);
                 return WF.doStep(step["outgoing"]["__text"])
                 break;
             default:
@@ -60,29 +60,44 @@ module.exports.doStep = function(stepId) {
 
 }
 
-module.exports.interpolateJS = function (step, arr){
-  var re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
-  var match;
-  while (match = re.exec(step["$ext:js"])) {
-    step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\$\{\\" + match[1]+"\}", "g"),varDict[match[1]])
-  }
-  $.each(arr, function (idx, type){
-    re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
-    match;
-    while (match = re.exec(step[type])) {
-      step[type] = step[type].replace(new RegExp("\\$\{\\" + match[1]+"\}", "g"),varDict[match[1]])
-    }  })
+module.exports.interpolateJS = function(step, arr) {
+    var re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
+    var match;
+    while (match = re.exec(step["$ext:js"])) {
+        step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+    }
+    $.each(arr, function(idx, type) {
+        re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
+        match;
+        while (match = re.exec(step[type])) {
+            step[type] = step[type].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+        }
+    })
 
-  return step
+    return step
 }
 
-module.exports.prepareJSForEval = function (step){
-  matches = step["$ext:js"].match(/\$[a-zA-Z0-9]+/g);
-  $.each(matches, function(idx, elem) {
-      if (varDict[elem] != undefined) {
-          step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\" + elem), `varDict["${elem}"]`);
-      }
-  })
+module.exports.prepareJSForEval = function(step) {
+    matches = step["$ext:js"].match(/\$[a-zA-Z0-9]+/g);
+    $.each(matches, function(idx, elem) {
+        if (varDict[elem] != undefined) {
+            step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\" + elem), `varDict["${elem}"]`);
+        }
+    })
+    return step
+}
+
+module.exports.parseHTML = function(step) {
+  re = /\$\{(\$[a-zA-Z0-9]+)\}/g;
+  var match;
+  while (match = re.exec(step["$ext:html"])) {
+      step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+  }
+  re = /\$\{(\%[a-zA-Z0-9]+)\}/g;
+  var match;
+  while (match = re.exec(step["$ext:html"])) {
+      step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+  }
   return step
 }
 
@@ -94,16 +109,11 @@ module.exports.renderPage = function(step) {
     //         step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\" + elem, "g"), varDict[elem]);
     //     }
     // })
-    step = WF.interpolateJS(step,['$ext:html'])
+    step = WF.parseHTML(step)
     step = WF.prepareJSForEval(step)
     html = `${step["$ext:html"]}<style>${step["$ext:css"]}</style><script>${step["$ext:js"]}</script>`;
     $("#renderedPage").html(html).parent().show();
-    $("#continue").click(function(e) {
-        var f = $("form").serializeArray();
-        WF.handleForm(f);
-        $("#renderedPage").parent().hide();
-        WF.doStep(suspendedStep["outgoing"]["__text"])
-    })
+
 }
 
 module.exports.handleForm = function(form) {
@@ -141,7 +151,8 @@ module.exports.resolveXOR = function(xor) {
         for (var i = 0; i < xor["outgoing"].length; i++) {
             var signal = bpmns[bpmns.length - 1][xor["outgoing"][i]];
             var expr = signal["$ext:expression"];
-            var result = eval(WF.parseExpression(expr));
+            expr = WF.parseExpression(expr);
+            var result = eval(expr);
             if (result) {
                 return WF.doStep(signal["$id"])
             }
@@ -151,15 +162,29 @@ module.exports.resolveXOR = function(xor) {
 }
 
 module.exports.parseExpression = function(expr) {
-    var list = expr.match(/[$][a-zA-Z]+/g);
+    var list = expr.match(/\{\$[$][a-zA-Z]+\}/g);
     var matches = [...new Set(list)];
-    $.each(matches, function(idx, elem) {
-        if (typeof varDict[elem] == "string") {
-            expr = expr.replace(new RegExp("\\"+elem, "g"), '"' + varDict[elem] + '"');
-        } else {
-            expr = expr.replace(new RegExp("\\" + elem, "g"), 'varDict["' + elem + '"]');
-        }
-    })
+    if (list) {
+        $.each(matches, function(idx, elem) {
+            expr = expr.replace(new RegExp("\\" + elem, "g"), 'varDict["' + elem + '"]"');
+
+        })
+    }
+    list = expr.match(/[$][a-zA-Z]+\.?/g);
+    matches = [...new Set(list)];
+    if (list != null) {
+        $.each(matches, function(idx, elem) {
+            var nonLiteral = elem.match(/[$][a-zA-Z]+(?=\.)/g);
+            if (nonLiteral) {
+                expr = expr.replace(new RegExp("\\" + nonLiteral[0], "g"), `varDict["${nonLiteral[0]}"]`);
+            } else {
+                expr = expr.replace(new RegExp("\\" + elem, "g"), varDict[elem]);
+            }
+
+
+        })
+    }
+
     return expr
 
 }

@@ -1,19 +1,21 @@
-   'use strict';
+
    var fs = require('fs');
 
    var d3 = require("d3");
    var beautify = ace.require("ace/ext/beautify");
 
 
-   global.WF = require('./workflow.js');
-   global.flowName;
+  //  global.WF = require('./workflow.js');
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
    //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
 
+   global.WF = require('./workflow.js');
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;
+
+   var differ = require('bpmn-js-differ');
 
    var propertiesPanelModule = require('bpmn-js-properties-panel'),
        propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
@@ -25,6 +27,7 @@
    var container = $('#js-drop-zone');
 
    var canvas = $('#js-canvas');
+   var CliModule = require('bpmn-js-cli');
 
    // var MongoClient = require('mongodb').MongoClient
    //   , Server = require('mongodb').Server;
@@ -43,8 +46,10 @@
        },
        additionalModules: [
            propertiesPanelModule,
-           propertiesProviderModule
+           propertiesProviderModule,
+           CliModule
        ],
+       cli: { bindTo: 'cli' },
        moddleExtensions: {
            camunda: camundaModdleDescriptor,
            ext: extModdleDescriptor
@@ -52,8 +57,8 @@
        }
    });
    bpmnModeler.get('keyboard').bind(document);
-   global.bpmnJS = bpmnModeler,
-       global.elementRegistry = bpmnModeler.get('elementRegistry');
+   bpmnJS = bpmnModeler,
+       elementRegistry = bpmnModeler.get('elementRegistry');
    global.modeling = bpmnModeler.get('modeling');
    global.canvas = bpmnModeler.get("canvas");
    global.eventBus = bpmnModeler.get("eventBus");
@@ -62,10 +67,10 @@
 
    function createNewDiagram() {
        var name = prompt("Enter Workflow Name:");
-       global.flowName = name;
+       flowName = name;
        bpmnModeler.createDiagram(function(xml) {
            // given
-           var processElement = elementRegistry.get('Process_1');
+           var processElement = elementRegistry.get("Process_1");
 
            // when
            modeling.updateProperties(processElement, {
@@ -91,10 +96,10 @@
                    }).done(function(resp) {
                        console.log(resp);
                    })
-                   done(err, svg);
+                  //  done(err, svg);
                });
 
-               done(err, xml);
+              //  done(err, xml);
            });
        })
 
@@ -102,26 +107,52 @@
    }
 
    function openDiagram(xml) {
+      if (!xml){
+        global.flowName = prompt("Enter Workflow Name");
+        bpmnModeler.createDiagram(function(err) {
+          var processElement = elementRegistry.get("Process_1");
 
+          // when
+          modeling.updateProperties(processElement, {
+              id: flowName
+          });
+            if (err) {
+                container
+                    .removeClass('with-diagram')
+                    .addClass('with-errorStartEvent_1');
+
+                container.find('.error pre').text(err.message);
+
+                console.error(err);
+            } else {
+                container
+                    .removeClass('with-error')
+                    .addClass('with-diagram');
+
+            }
+          });
+      }else {
+        bpmnModeler.importXML(xml, function(err) {
+            if (err) {
+                container
+                    .removeClass('with-diagram')
+                    .addClass('with-errorStartEvent_1');
+
+                container.find('.error pre').text(err.message);
+
+                console.error(err);
+            } else {
+                container
+                    .removeClass('with-error')
+                    .addClass('with-diagram');
+
+            }
+
+
+        });
+      }
        $("#js-properties-panel").show();
-       bpmnModeler.importXML(xml, function(err) {
-           if (err) {
-               container
-                   .removeClass('with-diagram')
-                   .addClass('with-errorStartEvent_1');
 
-               container.find('.error pre').text(err.message);
-
-               console.error(err);
-           } else {
-               container
-                   .removeClass('with-error')
-                   .addClass('with-diagram');
-
-           }
-
-
-       });
 
    }
 
@@ -173,17 +204,17 @@
                format: true
            }, function(err, svg) {
                $.ajax({
-                   url: "http://localhost:3000/flow",
-                   method: "PUT",
+                   url: "http://localhost:3000/update",
+                   method: "POST",
                    data: {
-                       flowName: global.flowName,
+                       flowName: flowName,
                        xml: xml,
                        svg: svg
                    }
                }).done(function(resp) {
                    processXML([{xml:xml}])
                })
-               done(err, svg);
+              //  done(err, svg);
            });
 
            done(err, xml);
@@ -204,9 +235,17 @@
 
            reader.onload = function(e) {
 
-               var xml = e.target.result;
+               var json = e.target.result;
+               try {
+                 flow = JSON.parse(json);
+                 $("#flowPreviews").hide();
+                 callback(false)
+               }
+               catch (err){
+                 console.log(err)
+                 callback(xml);
+               }
 
-               callback(xml);
            };
 
            reader.readAsText(file);
@@ -240,7 +279,7 @@
            url: "http://localhost:3000/flow",
            method: "delete",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
        }).done(function(resp) {
            console.log(resp);
@@ -260,10 +299,20 @@
        console.log(jsonObj);
        $.each(jsonObj.definitions.process, function(idx, elem) {
            if (Array.isArray(elem)) {
-               $.each(elem, function(i, e) {
-                   inverted[e.$id] = e;
-                   inverted[e.$id]["$type"] = idx;
-               })
+             $.each(elem, function(i, e) {
+               if (idx == "intermediateCatchEvent") {
+                   inverted[e["signalEventDefinition"]["$signalRef"]] = e;
+                   inverted[e["signalEventDefinition"]["$signalRef"]]["$type"] = idx;
+
+
+               } else {
+                 inverted[e.$id] = e;
+                 inverted[e.$id]["$type"] = idx;
+
+               }
+             })
+
+
            } else if (idx == "startEvent") {
                inverted["start"] = elem;
                inverted["start"]["$type"] = idx;
@@ -280,20 +329,20 @@
                inverted[elem.$id]["$type"] = idx;
            }
        })
-       global.process = inverted;
+       process = inverted;
        // Access to attribute
 
 
    }
 
 
-   global.getXML = function(flowName) {
-       global.flowName = flowName;
+   getXML = function(flowName) {
+       flowName = flowName;
        $.ajax({
            url: "http://localhost:3000/flow",
            method: "get",
            data: {
-               flowName: global.flowName
+               flowName: flowName
            },
            success: function (resp){
              processXML(resp)
@@ -320,7 +369,7 @@
                                .html(elem.svg)
                                .attr("id", elem.flowName)
                                .on("click", function(d) {
-                                   global.flowName = elem.flowName;
+                                   flowName = elem.flowName;
                                    getXML(elem.flowName);
                                })
                                .on("mouseenter", function(d) {
@@ -369,6 +418,7 @@
                js: rightEditor.getValue()
            })
        }
+       $("#confirmEdit").unbind("click");
        $("#js-canvas").show();
        $(".fiddle").hide();
    }
@@ -376,12 +426,19 @@
    function cancelEdit() {
        $("#js-canvas").show();
        $(".fiddle").hide();
+       $("#confirmEdit").unbind("click");
    }
 
 
 
 
    $(document).on('ready', function() {
+     $("#continue").click(function(e) {
+         var f = $("form").serializeArray();
+         WF.handleForm(f);
+         $("#renderedPage").parent().hide();
+         WF.doStep(suspendedStep["outgoing"]["__text"])
+     })
        getThumbnails();
        $(".fiddle").hide();
 
@@ -426,7 +483,7 @@
        })
        $(".flowImage").click(function(e) {
            var name = $(e.sender).attr("id");
-           global.flowName = name;
+           flowName = name;
            $.ajax({
                    url: "http://localhost:3000/flow",
                    method: "GET",
@@ -462,8 +519,8 @@
            });
 
            saveDiagram(function(err, xml) {
-               setEncoded(downloadLink, 'top.bpmn', err ? null : xml);
-           });
+      setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
+    });
        }, 500);
 
        $('.overlay').click(function(e) {

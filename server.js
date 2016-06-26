@@ -45,7 +45,7 @@ app.post("/flow",function (req,res){
   });
 })
 
-app.put("/flow",function (req,res){
+app.post("/update",function (req,res){
   var name = req.body.flowName;
   var xml = req.body.xml;
   var svg = req.body.svg;
