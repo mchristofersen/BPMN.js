@@ -1,21 +1,24 @@
-
+    console.log("init");
    var fs = require('fs');
 
    var d3 = require("d3");
    var beautify = ace.require("ace/ext/beautify");
 
-
+    console.log("why does it work here?");
   //  global.WF = require('./workflow.js');
    // var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
    //     sequenceFlow = sequenceFlowElement.businessObject;
    //  var PropertiesPanel = require('bpmn-js-properties-panel/lib/PropertiesPanel');
 
-   global.WF = require('./workflow.js');
+   WF = require('./workflow.js');
+   userTaskResolver = require('./userTaskResolver.js');
+   node_manager = require("./lib/node-manager")
+
    var $ = require('jquery'),
        Modeler = require('bpmn-js/lib/Modeler');
    var parseString = require('xml2js').parseString;
 
-   var differ = require('bpmn-js-differ');
+  //  var differ = require('bpmn-js-differ');
 
    var propertiesPanelModule = require('bpmn-js-properties-panel'),
        propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
@@ -59,10 +62,10 @@
    bpmnModeler.get('keyboard').bind(document);
    bpmnJS = bpmnModeler,
        elementRegistry = bpmnModeler.get('elementRegistry');
-   global.modeling = bpmnModeler.get('modeling');
-   global.canvas = bpmnModeler.get("canvas");
-   global.eventBus = bpmnModeler.get("eventBus");
-   global.propertiesPanel = bpmnJS.get('propertiesPanel');
+   var modeling = bpmnModeler.get('modeling');
+   var canvas = bpmnModeler.get("canvas");
+   var eventBus = bpmnModeler.get("eventBus");
+   var propertiesPanel = bpmnJS.get('propertiesPanel');
    // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
    function createNewDiagram() {

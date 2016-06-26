@@ -1,0 +1,24 @@
+{
+  "name": "Extension",
+  "prefix": "Extension",
+  "uri": "http://Extension",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "executeNow",
+      "extends": [
+        "bpmn:scriptTask"
+      ],
+      "properties": [
+        {
+          "name": "executeNow",
+          "isAttr": true,
+          "type": "Bool"
+        },
+      ]
+    },
+  ]
+}

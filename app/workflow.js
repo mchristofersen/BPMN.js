@@ -1,14 +1,17 @@
 module.exports.start = function() {
-    global.bpmns = [global.process];
+    WF.bpmns = [global.process];
     global.varDict = {};
-    global.suspendedStep = null;
+    var suspendedStep = null;
+    node_manager.init(global.process);
     WF.doStep("start")
+    console.log("noice")
 }
 
-var $ = require("jquery"),
-    d3 = require("d3");
 
-global.d3 = d3;
+
+var $ = require("jquery"),
+    d3 = require("d3"),
+    userTaskResolver = require("./userTaskResolver");
 
 $("#js-execute-diagram").click(function(e) {
     WF.context = {};
@@ -17,11 +20,11 @@ $("#js-execute-diagram").click(function(e) {
 
 module.exports.doStep = function(stepId) {
     setTimeout(function() {
-        var step = bpmns[bpmns.length - 1][stepId];
+        var step = WF.bpmns[WF.bpmns.length - 1][stepId];
         if (stepId == "start") {
-            stepId = bpmns[bpmns.length - 1]["start"]["$id"];
+            stepId = WF.bpmns[WF.bpmns.length - 1]["start"]["$id"];
         } else if (step["$type"] == "intermediateCatchEvent") {
-            stepId = bpmns[bpmns.length - 1][stepId]["$id"];
+            stepId = WF.bpmns[WF.bpmns.length - 1][stepId]["$id"];
         }
         var shape = d3.selectAll("[data-element-id=" + stepId + "] > .djs-visual").selectAll("rect,path,circle,polygon,polyline").attr("stroke", "green");
         var name = step['$id'];
@@ -44,7 +47,7 @@ module.exports.doStep = function(stepId) {
                 break;
             case "userTask":
                 suspendedStep = step;
-                return WF.renderPage(step)
+                return userTaskResolver.renderPage(step)
                 break;
             case "task":
                 var expr = step["$ext:js"];
@@ -140,7 +143,7 @@ module.exports.resolveScript = function(step) {
 
 module.exports.resolveXOR = function(xor) {
     if (!Array.isArray(xor["outgoing"])) {
-        var signal = bpmns[bpmns.length - 1][xor["outgoing"]];
+        var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"]];
         var expr = signal["conditionExpression"]["__cdata"] || signal["conditionExpression"]["__text"];
         var parsed = WF.parseExpression(expr);
         var result = eval(parsed);
@@ -149,7 +152,7 @@ module.exports.resolveXOR = function(xor) {
         }
     } else {
         for (var i = 0; i < xor["outgoing"].length; i++) {
-            var signal = bpmns[bpmns.length - 1][xor["outgoing"][i]];
+            var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"][i]];
             var expr = signal["$ext:expression"];
             expr = WF.parseExpression(expr);
             var result = eval(expr);

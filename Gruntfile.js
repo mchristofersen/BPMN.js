@@ -180,14 +180,14 @@ module.exports = function(grunt) {
 
     connect: {
       options: {
-        appName: 'Chrome', // name of the app that opens, ie: open, start, xdg-open
+        appName: 'chromium-browser', // name of the app that opens, ie: open, start, xdg-open
         port: 9013,
         livereload: 9014,
         hostname: 'localhost'
       },
       livereload: {
         options: {
-          open: { appName: 'Chrome' },
+          open: { appName: 'chromium-browser' },
           base: [
             '<%= config.dist %>'
           ]
