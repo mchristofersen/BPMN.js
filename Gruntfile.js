@@ -43,7 +43,7 @@ module.exports = function(grunt) {
       max_jshint_notifications: 1, // maximum number of notifications from jshint output
       title: "BPMN", // defaults to the name in package.json, or will use project directory's name
       success: true, // whether successful grunt executions should be notified automatically
-      duration: 1 // the duration of notification in seconds, for `notify-send only
+      duration:0.25
     }
   },
     config: {
@@ -151,6 +151,12 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      express: {
+     files:  [ 'server.js' ],
+     tasks:  [ 'express:dev' ],
+     options: {
+       spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
+     }},
       samples: {
         files: [ '<%= config.sources %>/**/*.*','node_modules/bootstrap-material-design/less/*.less' ],
         tasks: [ 'copy:app' , 'hasfailed']
@@ -221,5 +227,5 @@ module.exports = function(grunt) {
   // otherwise continue the task run as normal
 });
 
-  grunt.registerTask('default', [ 'jshint','hasfailed','server', 'build' ]);
+  grunt.registerTask('default', [ 'jshint','notify_hooks','server', 'build' ]);
 };

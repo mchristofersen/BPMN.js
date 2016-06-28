@@ -1,0 +1,78 @@
+{
+  "name": "camunda-bpmn-moddle",
+  "version": "0.5.1",
+  "description": "Camunda moddle extensions for BPMN 2.0",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camunda/camunda-bpmn-moddle.git"
+  },
+  "keywords": [
+    "bpmn",
+    "moddle",
+    "bpmn20",
+    "camunda",
+    "meta-model"
+  ],
+  "author": {
+    "name": "Nico Rehwaldt",
+    "url": "https://github.com/nikku"
+  },
+  "contributors": [
+    {
+      "name": "bpmn.io contributors",
+      "url": "https://github.com/bpmn-io"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "async": "^1.5.0",
+    "bpmn-moddle": "^0.11.0",
+    "chai": "^1.9.1",
+    "glob": "^6.0.1",
+    "grunt": "^0.4.2",
+    "grunt-contrib-jshint": "^0.7.2",
+    "grunt-contrib-watch": "^0.5.0",
+    "grunt-mocha-test": "^0.11.0",
+    "grunt-release": "^0.13.0",
+    "jsondiffpatch": "^0.1.4",
+    "load-grunt-tasks": "^0.3.0",
+    "xsd-schema-validator": "^0.3.0"
+  },
+  "gitHead": "bad297dc34178505453920f87a89ef70e4fe706f",
+  "bugs": {
+    "url": "https://github.com/camunda/camunda-bpmn-moddle/issues"
+  },
+  "homepage": "https://github.com/camunda/camunda-bpmn-moddle#readme",
+  "_id": "camunda-bpmn-moddle@0.5.1",
+  "_shasum": "98ebfcff8f48aa046dc467648a4cfeac51f7e12c",
+  "_from": "camunda-bpmn-moddle@>=0.5.1 <0.6.0",
+  "_npmVersion": "3.8.5",
+  "_nodeVersion": "4.3.1",
+  "_npmUser": {
+    "name": "nikku",
+    "email": "git_nikku@nixis.de"
+  },
+  "dist": {
+    "shasum": "98ebfcff8f48aa046dc467648a4cfeac51f7e12c",
+    "tarball": "https://registry.npmjs.org/camunda-bpmn-moddle/-/camunda-bpmn-moddle-0.5.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "bpmn-io",
+      "email": "bpmnio@camunda.com"
+    },
+    {
+      "name": "nikku",
+      "email": "git_nikku@nixis.de"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/camunda-bpmn-moddle-0.5.1.tgz_1462827386374_0.5614046445116401"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/camunda-bpmn-moddle/-/camunda-bpmn-moddle-0.5.1.tgz"
+}

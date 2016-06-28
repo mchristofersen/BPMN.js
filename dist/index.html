@@ -28,37 +28,57 @@
 </head>
 
 <body>
-    <div id="pageFrame" style="display:none;position:fixed;height:90%;width:90%;background:#ffffff;z-index:10000000;left:5%;top:5%;">
-        <div id="renderedPage"></div>
-        <div class="btn btn-primary btn-block"  id="continue">Continue</div>
+    <div id="differ" style="display:none;">
+      <div id="diffHeader" class="btn-group btn-group-justified btn-group-raised">
+              <a href="javascript:void(0)" class="btn btn-primary btn-raised" id="finalizeMerge" >Merge</a>
+            <a href="javascript:void(0)" class="btn btn-danger btn-raised" id="cancelMerge" onclick='bus.fire("editor.confirm",[])'>close</a>
+          </div>
+      <div id="leftDiff"></div>
+
+      <div id="rightDiff">
+      </div>
     </div>
-    <div class="content" id="js-drop-zone">
-
-        <div class="message intro">
-
-            <div class="note" style="position:fixed;top:20px;">
-                Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
-            </div>
+    <div id="mainPage">
+        <div id="pageFrame" style="display:none;position:fixed;height:90%;width:90%;background:#ffffff;z-index:10000000;left:5%;top:5%;">
+            <div id="renderedPage"></div>
+            <div class="btn btn-primary btn-block" id="continue">Continue</div>
         </div>
+        <div class="content" id="js-drop-zone">
 
-        <div class="message error">
-            <div class="note">
-                <p>Ooops, we could not display the BPMN 2.0 diagram.</p>
+            <div class="message intro">
 
-                <div class="details">
-                    <span>cause of the problem</span>
-                    <pre></pre>
+                <div class="note" style="position:fixed;top:0;">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active" id="branchesTab"><a>Branches</a></li>
+                        <li role="presentation" id="flowsTab"><a>Flows</a></li>
+
+                        Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <div class="canvas" id="js-canvas"></div>
-        <div id="flowPreviews">
-        </div>
-        <div id="js-properties-panel">
+            <div class="message error">
+                <div class="note">
+                    <p>Ooops, we could not display the BPMN 2.0 diagram.</p>
 
+                    <div class="details">
+                        <span>cause of the problem</span>
+                        <pre></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="canvas" id="js-canvas"></div>
+            <div id="flows">
+
+                <div id="flowBranches"></div>
+                <div id="flowPreviews" style="display:none;">
+                </div>
+            </div>
+            <div id="js-properties-panel">
+
+            </div>
         </div>
-    </div>
     </div>
 
     <ul class="buttons">
@@ -76,19 +96,20 @@
       </a>
         </li>
         <li>
-            <a id="js-close-diagram" href title="Close">
+            <a id="js-close-diagram" class="active btn btn-warning" title="Close">
         Close
       </a>
         </li>
         <li>
-            <a id="js-execute-diagram" href title="Execute">
+            <a id="js-execute-diagram" class="active btn btn-primary" title="Execute">
         Execute
       </a>
             <li>
-                <a id="js-delete-diagram" href title="Delete">
+                <a id="js-delete-diagram" class="active btn btn-danger" title="Delete">
       Delete
     </a>
             </li>
+            
 
     </ul>
     <div class="fiddle" style="display:none;position:fixed;top:0;height:5%;width:100%;display:flex;z-index:1000000000" id="header">
@@ -191,8 +212,8 @@
         }
         $.material.init()
     </script>
-
-
+    </div>
+</body>
 
 
 </html>
