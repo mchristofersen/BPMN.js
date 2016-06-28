@@ -1,62 +1,128 @@
+
 module.exports.start = function() {
-    WF.bpmns = [global.process];
-    global.varDict = {};
+  // if (true){
+  //   WF.bpmns.push(process);
+  // }
+  WF.bpmns = [WF.rootFlow];
     var suspendedStep = null;
-    node_manager.init(global.process);
+    node_manager.init(process);
     WF.doStep("start")
-    console.log("noice")
 }
 
 
 
 var $ = require("jquery"),
     d3 = require("d3"),
-    userTaskResolver = require("./userTaskResolver");
+    userTaskResolver = require("./userTaskResolver"),
+    taskResolver = require("./taskResolver");
 
 $("#js-execute-diagram").click(function(e) {
-    WF.context = {};
-    WF.start()
+  if (isBranch){
+    $.getJSON("http://localhost:3000/branch",{flowName:bpmnModeler.get("canvas").getRootElement().id,user:user},function (resp){
+      var xml = resp[0]["xml"];
+      varDict = {$log:[]}
+      var process = WF.processXML(resp)
+      WF.bpmns = [process]
+      WF.doStep("start")
+    })
+  }else{
+    $.getJSON("http://localhost:3000/flow",{flowName:bpmnModeler.get("canvas").getRootElement().id},function (resp){
+      var xml = resp[0]["xml"];
+      varDict = {$log:[]}
+      var process = WF.processXML(resp)
+      WF.bpmns = [process]
+      WF.doStep("start")
+    })
+  }
+
 })
 
 module.exports.doStep = function(stepId) {
     setTimeout(function() {
         var step = WF.bpmns[WF.bpmns.length - 1][stepId];
+        varDict.$log.push(`${WF.bpmns[WF.bpmns.length - 1]["$flowName"]}__${stepId}`);
         if (stepId == "start") {
-            stepId = WF.bpmns[WF.bpmns.length - 1]["start"]["$id"];
-        } else if (step["$type"] == "intermediateCatchEvent") {
-            stepId = WF.bpmns[WF.bpmns.length - 1][stepId]["$id"];
+            stepId = WF.bpmns[WF.bpmns.length - 1]["start"]["id"];
+        } else if (step["$type"] == "bpmns:IntermediateCatchEvent") {
+            stepId = WF.bpmns[WF.bpmns.length - 1][stepId]["id"];
+            l(stepId)
         }
-        var shape = d3.selectAll("[data-element-id=" + stepId + "] > .djs-visual").selectAll("rect,path,circle,polygon,polyline").attr("stroke", "green");
-        var name = step['$id'];
+        var shape = d3.selectAll("[data-element-id=" + stepId + "] > .djs-visual").selectAll("rect,path,circle,polygon,polyline").attr("stroke", "#B2DFDB");
+        var name = step['id'];
         switch (step['$type']) {
-            case "intermediateThrowEvent":
-                return WF.doStep(step["signalEventDefinition"]["$signalRef"])
+            case "bpmn:IntermediateThrowEvent":
+                return WF.doStep(step.eventDefinitions[0]["signalRef"]["id"])
                 break;
-            case "sequenceFlow":
-                return WF.doStep(step["$targetRef"]);
+            case "bpmn:SequenceFlow":
+                return WF.doStep(step["targetRef"]["id"]);
                 break;
-            case "exclusiveGateway":
+            case "bpmn:ExclusiveGateway":
                 return WF.resolveXOR(step);
                 break;
-            case "scriptTask":
+            case "bpmn:ScriptTask":
                 WF.resolveScript(step)
-                return WF.doStep(step['outgoing']["__text"]);
+                return WF.doStep(step['outgoing'][0]["id"]);
                 break;
-            case "endEvent":
-                return;
+            case "bpmn:EndEvent":
+              var ele = WF.bpmns[WF.bpmns.length-1][step["id"]].flowId;
+                if (ele){
+                      $.getJSON("http://localhost:3000/flow",{flowName:ele},function (resp){
+                        var xml = resp[0]["xml"];
+                        var process = WF.processXML(resp)
+                        WF.bpmns = [process]
+                        WF.doStep("start")
+                      })
+                      return
+
+
+
+                }
+                else if (WF.bpmns.length == 1){
+                  suspendedStep = null;
+                    return alert("The workflow has ended");
+                }else {
+                  var popped = WF.bpmns.pop();
+                  if (Array.isArray(WF.bpmns[WF.bpmns.length - 1]["suspendedStep"]["outgoing"]) && step["name"] != null){
+                    var rescue;
+                    $.each(WF.bpmns[WF.bpmns.length - 1]["suspendedStep"]["outgoing"],function (idx,elem){
+                      if (elem["name"] == step["name"]){
+                          rescue = elem["id"]
+
+                      }
+
+                    })
+                    return WF.doStep(rescue);
+                    // return alert("signal not found!");
+                  }
+
+                }
+
                 break;
-            case "userTask":
+            case "bpmn:UserTask":
                 suspendedStep = step;
                 return userTaskResolver.renderPage(step)
                 break;
-            case "task":
-                var expr = step["$ext:js"];
-                expr = WF.parseExpression(expr)
-                eval(expr);
-                return WF.doStep(step["outgoing"]["__text"])
+            case "bpmn:Task":
+                taskResolver.exec(step);
+                return WF.doStep(step["outgoing"][0]["id"])
                 break;
+            case "bpmn:ServiceTask":
+                suspendedStep = step;
+                eval(step["js"]);
+                return;
+                break
+            case "bpmn:SubProcess":
+                var flowName = step['flowId']
+                $.getJSON("http://localhost:3000/flow",{flowName:step["flowId"]},function (resp){
+                  var xml = resp[0]["xml"];
+                  WF.bpmns[WF.bpmns.length - 1].suspendedStep = step
+                  var process = WF.processXML(resp)
+                  WF.bpmns.push(process)
+                  WF.doStep("start")
+                })
+                return;
             default:
-                return WF.doStep(step["outgoing"]["__text"]);
+                return WF.doStep(step["outgoing"][0]["id"]);
                 break;
         }
     }, 10);
@@ -66,8 +132,8 @@ module.exports.doStep = function(stepId) {
 module.exports.interpolateJS = function(step, arr) {
     var re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
     var match;
-    while (match = re.exec(step["$ext:js"])) {
-        step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+    while (match = re.exec(step["js"])) {
+        step["js"] = step["js"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
     }
     $.each(arr, function(idx, type) {
         re = /\$\{(\$[a-zA-Z0-9]*?)\}/g;
@@ -81,40 +147,40 @@ module.exports.interpolateJS = function(step, arr) {
 }
 
 module.exports.prepareJSForEval = function(step) {
-    matches = step["$ext:js"].match(/\$[a-zA-Z0-9]+/g);
+    matches = step["js"].match(/\$[a-zA-Z0-9]+/g);
     $.each(matches, function(idx, elem) {
         if (varDict[elem] != undefined) {
-            step["$ext:js"] = step["$ext:js"].replace(new RegExp("\\" + elem), `varDict["${elem}"]`);
+            step["js"] = step["js"].replace(new RegExp("\\" + elem), `varDict["${elem}"]`);
         }
     })
     return step
 }
 
 module.exports.parseHTML = function(step) {
-  re = /\$\{(\$[a-zA-Z0-9]+)\}/g;
-  var match;
-  while (match = re.exec(step["$ext:html"])) {
-      step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
-  }
-  re = /\$\{(\%[a-zA-Z0-9]+)\}/g;
-  var match;
-  while (match = re.exec(step["$ext:html"])) {
-      step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
-  }
-  return step
+    re = /\$\{(\$[a-zA-Z0-9]+)\}/g;
+    var match;
+    while (match = re.exec(step["html"])) {
+        step["html"] = step["html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+    }
+    re = /\$\{(\%[a-zA-Z0-9]+)\}/g;
+    var match;
+    while (match = re.exec(step["html"])) {
+        step["html"] = step["html"].replace(new RegExp("\\$\{\\" + match[1] + "\}", "g"), varDict[match[1]])
+    }
+    return step
 }
 
 module.exports.renderPage = function(step) {
-    // var matches = step["$ext:html"].match(/\$[a-zA-Z0-9]+(?!['"])/g);
+    // var matches = step["html"].match(/\$[a-zA-Z0-9]+(?!['"])/g);
     // var html = '';
     // $.each(matches, function(idx, elem) {
     //     if (varDict[elem] != undefined) {
-    //         step["$ext:html"] = step["$ext:html"].replace(new RegExp("\\" + elem, "g"), varDict[elem]);
+    //         step["html"] = step["html"].replace(new RegExp("\\" + elem, "g"), varDict[elem]);
     //     }
     // })
     step = WF.parseHTML(step)
     step = WF.prepareJSForEval(step)
-    html = `${step["$ext:html"]}<style>${step["$ext:css"]}</style><script>${step["$ext:js"]}</script>`;
+    html = `${step["html"]}<style>${step["css"]}</style><script>${step["js"]}</script>`;
     $("#renderedPage").html(html).parent().show();
 
 }
@@ -124,7 +190,7 @@ module.exports.handleForm = function(form) {
     if (formName == "" || formName == undefined) {
         return
     } else {
-        varDict["$" + formName] = {};
+        varDict["$" + formName] = varDict["$" + formName] || {};
     }
     $.each(form, function(idx, elem) {
         if (/\$[a-zA-Z0-9]+/.test(elem.name)) {
@@ -136,28 +202,28 @@ module.exports.handleForm = function(form) {
 }
 
 module.exports.resolveScript = function(step) {
-    var variable = step['$camunda:resultVariable']
-    var script = step['script']["__cdata"] == undefined ? WF.parseExpression(step['script']["__text"]) : WF.parseExpression(step['script']["__cdata"]);
+    var variable = step['resultVariable']
+    var script = step['script']
     varDict[variable] = eval(script)
 }
 
 module.exports.resolveXOR = function(xor) {
     if (!Array.isArray(xor["outgoing"])) {
-        var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"]];
-        var expr = signal["conditionExpression"]["__cdata"] || signal["conditionExpression"]["__text"];
+        var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"][0]["id"]];
+        var expr = signal["expression"];
         var parsed = WF.parseExpression(expr);
         var result = eval(parsed);
         if (result) {
-            return WF.doStep(signal["$id"])
+            return WF.doStep(signal["id"])
         }
     } else {
         for (var i = 0; i < xor["outgoing"].length; i++) {
-            var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"][i]];
-            var expr = signal["$ext:expression"];
+            var signal = WF.bpmns[WF.bpmns.length - 1][xor["outgoing"][i]["id"]];
+            var expr = signal["expression"];
             expr = WF.parseExpression(expr);
             var result = eval(expr);
             if (result) {
-                return WF.doStep(signal["$id"])
+                return WF.doStep(signal["id"])
             }
         }
 
@@ -165,6 +231,9 @@ module.exports.resolveXOR = function(xor) {
 }
 
 module.exports.parseExpression = function(expr) {
+  if (!expr){
+    return ""
+  }
     var list = expr.match(/\{\$[$][a-zA-Z]+\}/g);
     var matches = [...new Set(list)];
     if (list) {
@@ -173,18 +242,12 @@ module.exports.parseExpression = function(expr) {
 
         })
     }
-    list = expr.match(/[$][a-zA-Z]+\.?/g);
+    list = expr.match(/[$][a-zA-Z]+/g);
     matches = [...new Set(list)];
     if (list != null) {
         $.each(matches, function(idx, elem) {
-            var nonLiteral = elem.match(/[$][a-zA-Z]+(?=\.)/g);
-            if (nonLiteral) {
-                expr = expr.replace(new RegExp("\\" + nonLiteral[0], "g"), `varDict["${nonLiteral[0]}"]`);
-            } else {
-                expr = expr.replace(new RegExp("\\" + elem, "g"), varDict[elem]);
-            }
-
-
+            // var nonLiteral = elem.match(/[$][a-zA-Z]+(?=\.)/g);
+            expr = expr.replace(new RegExp("\\" + elem,"g"), `varDict["${elem}"]`);
         })
     }
 

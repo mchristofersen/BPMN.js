@@ -8,6 +8,35 @@
   "associations": [],
   "types": [
     {
+      "name": "signalName",
+      "extends": [
+        "bpmn:ExclusiveGateway"
+      ],
+      "properties": [
+        {
+          "name": "signalName",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+
+    {
+      "name": "flowId",
+      "extends": [
+        "bpmn:SignalEventDefinition"
+      ],
+      "properties": [
+        {
+          "name": "flowId",
+          "isAttr": true,
+          "type": "String"
+        },
+
+      ]
+    },
+    {
       "name": "expression",
       "extends": [
         "bpmn:SequenceFlow"
@@ -62,6 +91,21 @@
         },
 
       ]
+    },
+    {
+      "name": "flowId",
+      "extends": [
+        "bpmn:SubProcess","bpmn:EndEvent"
+      ],
+      "properties": [
+        {
+          "name": "flowId",
+          "isAttr": true,
+          "type": "Dropdown"
+        },
+
+      ]
     }
+
   ]
 }

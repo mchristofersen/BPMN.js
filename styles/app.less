@@ -1,443 +1,572 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
+.ui-helper-hidden-accessible {
+  display:none!important;
+}
+.nav-tabs {
+  background: #00796B !important;
+  vertical-align:center;
+
+}
+g.preview > svg {
+    width: 100% !important;
+    height: 25%;
+}
 .expanded > .curtain {
-  width:5%;
-  height:5%;
+    width: 5%;
+    height: 5%;
 }
-
 .overlay {
-  &#previewOverlay,&#cssOverlay{
-    transition-property: top, height
-  }
-  &#jsOverlay,&#htmlOverlay{
-    transition-property: left, width, right
-  }
-  transition-duration: 0.25s;
-  transition-timing-function: ease-in;
-  z-index: 10;
+    &#cssOverlay,
+    &#previewOverlay {
+        transition-property: top, height;
+    }
+    &#htmlOverlay,
+    &#jsOverlay {
+        transition-property: left, width, right;
+    }
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in;
+    z-index: 10;
 }
-
-.fiddle  {
-  background: RGBa(255,255,255,0.9);
-  // &> #previewPane {
-  //   height: 100%;
-  //   width: 100%;
-  //   background: "white";
-  // }
-  &> #previewOverlay {
-    height: 95%;
-    width: 100%;
-    top: -90%;
-    left: 0%;
-    display:flex;
-    flex-direction: column;
-    &> .curtain {
-      height:5%;
-      width:100%;
+.fiddle {
+    background: RGBa(255,255,255,0.9);
+    // &> #previewPane {
+    //   height: 100%;
+    //   width: 100%;
+    //   background: "white";
+    // }
+    & > #previewOverlay {
+        height: 95%;
+        width: 100%;
+        top: -90%;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        & > .curtain {
+            height: 5%;
+            width: 100%;
+        }
+        &.expanded {
+            top: 0;
+            height: 95%;
+            width: 90%;
+            left: 5%;
+            z-index: 100;
+            & > .curtain {
+                height: 5%;
+            }
+            &:not(:hover) > #previewPane {
+                border: 5px solid #9C27B0;
+            }
+            &:hover > #previewPane {
+                border: 5px solid #F5F5F5;
+            }
+        }
     }
-    &.expanded{
-      top: 0%;
-      height: 95%;
-      width:90%;
-      left:5%;
-      z-index: 100;
-      &> .curtain {
-        height:5%;
-      }
-      &:not(:hover) > #previewPane {
-        border: 5px solid #9C27B0;
-      }
-      &:hover >#previewPane {
-        border: 5px solid #F5F5F5;
-      }
+    & > #htmlOverlay.expanded {
+        width: 95%;
+        left: 0;
+        z-index: 100;
+        height: 90%;
+        top: 5%;
+        z-index: 100;
+        & > .curtain {
+            width: 5%;
+        }
+        &:not(:hover) > #leftEditor {
+            border: 5px solid #C2185B;
+        }
+        &:hover > #leftEditor {
+            border: 5px solid #F5F5F5;
+        }
     }
-  }
-  &> #htmlOverlay.expanded {
-    width: 95%;
-    left: 0;
-    z-index: 100;
-    height: 90%;
-    top:5%;
-    z-index: 100;
-    &> .curtain {
-      width:5%;
+    & > #htmlOverlay {
+        left: -90%;
+        display: flex;
+        width: 95%;
+        height: 100%;
+        top: 0;
+        & > .curtain {
+            height: 100%;
+            width: 5%;
+        }
     }
-    &:not(:hover) >#leftEditor {
-      border: 5px solid #C2185B;
+    & > #jsOverlay.expanded {
+        right: 0;
+        top: 5%;
+        width: 95%;
+        height: 90%;
+        z-index: 100;
+        & > .curtain {
+            width: 5%;
+        }
+        &:not(:hover) > #rightEditor {
+            border: 5px solid #FBC02D;
+        }
+        &:hover > #rightEditor {
+            border: 5px solid #F5F5F5;
+        }
     }
-    &:hover >#leftEditor {
-      border: 5px solid #F5F5F5;
+    & > #jsOverlay {
+        right: -90%;
+        display: flex;
+        width: 95%;
+        height: 100%;
+        top: 0;
+        & > .curtain {
+            height: 100%;
+            width: 5%;
+        }
     }
-  }
-  &> #htmlOverlay {
-    left: -90%;
-    display:flex;
-    width:95%;
-    height: 100%;
-    top:0%;
-    &> .curtain {
-      height:100%;
-      width:5%;
+    & > #cssOverlay.expanded {
+        top: 5%;
+        height: 90%;
+        left: 5%;
+        width: 90%;
+        z-index: 100;
+        & > .curtain {
+            height: 5%;
+        }
+        &:not(:hover) > #bottomEditor {
+            border: 5px solid #3F51B5;
+        }
+        &:hover > #bottomEditor {
+            border: 5px solid #F5F5F5;
+        }
     }
-  }
-  &> #jsOverlay.expanded {
-    right: 0;
-    top:5%;
-    width: 95%;
-    height:90%;
-    z-index: 100;
-    &> .curtain {
-      width:5%;
+    & > #cssOverlay {
+        top: 95%;
+        height: 90%;
+        left: 0;
+        width: 100%;
+        & > .curtain {
+            height: 5%;
+            width: 100%;
+        }
     }
-    &:not(:hover) > #rightEditor {
-      border: 5px solid #FBC02D;
+    & > .overlay > div > i.icon-shell,
+    i.icon-css,
+    i.icon-fire-alt,
+    i.icon-script {
+        font-size: 2.5em;
+        margin-top: 5px;
     }
-    &:hover >#rightEditor {
-      border: 5px solid #F5F5F5;
+    & > .btn-primary,
+    .btn-danger,
+    .btn-success,
+    .btn-warning {
+        margin: 1px;
+        padding: 0;
+        & > i.icon-shell,
+        i.icon-css,
+        i.icon-fire-alt,
+        i.icon-script {
+            font-size: 2.5em;
+            margin-top: 2px;
+        }
+        & > i,
+        span {
+            font-size: 3em;
+            font-weight: 900;
+            font-stretch: ultra-expanded;
+            &:not(:hover) > i,
+            span {
+                color: white;
+            }
+        }
     }
-  }
-  &> #jsOverlay {
-    right: -90%;
-    display:flex;
-    width:95%;
-    height:100%;
-    top:0%;
-    &> .curtain {
-      height:100%;
-      width:5%;
+    & > #cancelEdit {
+        flex: 2;
+        padding: 0;
     }
-  }
-
-  &> #cssOverlay.expanded {
-    top: 5%;
-    height: 90%;
-    left:5%;
-    width: 90%;
-    z-index: 100;
-    &> .curtain {
-      height:5%;
+    & > #confirmEdit {
+        flex: 2;
+        padding: 0;
     }
-    &:not(:hover) > #bottomEditor {
-      border: 5px solid #3F51B5;
+    & > #runButton {
+        flex: 4;
+        padding: 0;
     }
-    &:hover >#bottomEditor {
-      border: 5px solid #F5F5F5;
-    }
-  }
-  &> #cssOverlay {
-    top: 95%;
-    height:90%;
-    left: 0%;
-    width: 100%;
-    &> .curtain {
-      height:5%;
-      width:100%;
-    }
-  }
-  &> .overlay > div > i.icon-shell,i.icon-script,i.icon-fire-alt,i.icon-css {
-    font-size:2.5em;
-    margin-top: 5px;
-  }
-  &> .btn-primary,.btn-success,.btn-warning,.btn-danger {
-    margin: 1px;
-    padding:0;
-    &> i.icon-shell,i.icon-script,i.icon-fire-alt,i.icon-css {
-      font-size:2.5em;
-      margin-top: 2px;
-    }
-    &>  i,span {
-    font-size: 3em;
-    font-weight: 900;
-    font-stretch: ultra-expanded;
-    &:not(:hover) > i,span{
-      color:white;
-    }
-
-  }
-    }
-  &> #cancelEdit  {
-    flex:2;
-    padding: 0px;
-  }
-
-  &> #confirmEdit {
-    flex:2;
-    padding: 0px;
-  }
-  &> #runButton {
-    flex:4;
-    padding: 0px;
-
-  }
 }
-
 #continue {
-  position: absolute;;
-  bottom:0;
-  right:0;
-  width:100%;
-  margin-bottom:0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom: 0;
 }
-
 div.btn.btn-warning.curtain {
-  background: #FF9800;
-  color: #F5F5F5;
-  &:hover {
-    background: #F5F5F5;
-    color: #FF9800;
-  }
-  &.focused
-  {
-    background: #F5F5F5;
-    color: #FF9800;
-  }
+    background: #FF9800;
+    color: #F5F5F5;
+    &:hover {
+        background: #F5F5F5;
+        color: #FF9800;
+    }
+    &.focused {
+        background: #F5F5F5;
+        color: #FF9800;
+    }
 }
-
 div.btn.btn-danger.curtain {
-  background: #C2185B;
-  color: #F5F5F5;
-  &:hover {
-    background: #F5F5F5;
-    color: #C2185B;
-  }
-  &.focused {
-    background: #F5F5F5;
-    color: #C2185B;
-  }
+    background: #C2185B;
+    color: #F5F5F5;
+    &:hover {
+        background: #F5F5F5;
+        color: #C2185B;
+    }
+    &.focused {
+        background: #F5F5F5;
+        color: #C2185B;
+    }
 }
-
 div.btn.btn-secondary.curtain {
-  background: #9C27B0;
-  color:#F5F5F5;
-  &:hover{
-    background: #F5F5F5;
-    color: #9C27B0;
-  }
-  &.focused {
-    background: #F5F5F5;
-    color: #9C27B0;
-  }
+    background: #9C27B0;
+    color: #F5F5F5;
+    &:hover {
+        background: #F5F5F5;
+        color: #9C27B0;
+    }
+    &.focused {
+        background: #F5F5F5;
+        color: #9C27B0;
+    }
 }
-
 div.btn.btn-info.curtain {
-  background: #3F51B5;
-  color:#F5F5F5;
-  &:hover {
-    background: #F5F5F5;
-    color: #3F51B5;
-  }
-  &.focused {
-    background: #F5F5F5;
-    color: #3F51B5;
-  }
+    background: #3F51B5;
+    color: #F5F5F5;
+    &:hover {
+        background: #F5F5F5;
+        color: #3F51B5;
+    }
+    &.focused {
+        background: #F5F5F5;
+        color: #3F51B5;
+    }
 }
-
 // .overlay.expanded:hover {
 //   background:#F5F5F5;
 // }
 
-.curtain {
-  display:flex !important;
-  justify-content: center;
-  align-content:center;
-  color:white;
-  margin: 0 !important;
-  &> i {
-    // font-size: 3em;
-    align-self: center;
-    vertical-align: middle;
-    position: relative;
-    text-indent: 5px;
-    font-weight:800;
+#leftDiff,#rightDiff {
+  border:3px solid black;
+  border-radius: 3px;
+}
 
+#differ,#mainPage {
+  display:flex;
+  position:fixed;
+  flex-direction:column;
+  &> #diffHeader {
+    flex:1 !important;
+    min-height: 5% !important;
   }
+  &> div{
+    flex: 10;
+    background: transparent;
+    min-height:45%
+    height: 100%;
+    width: 100%;
+    &> .bjs-container {
+      position: absolute !important;
+    }
+  }
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background: #ffffff;
 }
 
+.highlight-overlay {
+  background-color: green; /* color elements as green */
+  opacity: 0.4;
+  border-radius: 5px;
+  pointer-events: none; /* no pointer events, allows clicking through onto the element */
+}
 
-
-
-
+.curtain {
+    display: flex !important;
+    justify-content: center;
+    align-content: center;
+    color: white;
+    margin: 0 !important;
+    & > i {
+        // font-size: 3em;
+        align-self: center;
+        vertical-align: middle;
+        position: relative;
+        text-indent: 5px;
+        font-weight: 800;
+    }
+}
 #previewPane {
-  background: "white";
+    background: "white";
 }
-
-
 #codeEditor {
-  opacity: 0;
-  z-index: -100000
+    opacity: 0;
+    z-index: -100000;
 }
-
 #codeEditor.show {
-  opacity: 1;
-  z-index: 10000000;
+    opacity: 1;
+    z-index: 10000000;
 }
-
 #renderedPage {
-  background: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 95%;
+    background: white;
+    overflow: auto;
 }
-
 .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
-  fill: green !important; /* color elements as green */
-  stroke: green !important; /* color elements as green */
+    fill: green !important;
+    /* color elements as green */
+    stroke: green !important;
+    /* color elements as green */
 }
-
 g.djs-element.highlight > polyline {
-  fill: green !important; /* color elements as green */
-  stroke: green !important;
-  stroke-opacity: 1;
-  stroke-weight: 2;
+    fill: green !important;
+    /* color elements as green */
+    stroke: green !important;
+    stroke-opacity: 1;
+    stroke-weight: 2;
 }
-
 body,
 html {
-
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-  font-size: 12px;
-
-  height: 100%;
-  max-height: 100%;
-  padding: 0;
-  margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    height: 100%;
+    max-height: 100%;
+    padding: 0;
+    margin: 0;
 }
-
 a:link {
-  text-decoration: none;
+    text-decoration: none;
+}
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: 10%;
+    > .message {
+        width: 100%;
+        height: 10%;
+        text-align: center;
+        display: table;
+        z-index: 10000;
+        font-size: 24px;
+        color: #111;
+        .note {
+            vertical-align: middle;
+            text-align: center;
+            display: table-cell;
+        }
+        .error {
+            .details {
+                max-width: 500px;
+                font-size: 12px;
+                margin: 20px auto;
+                text-align: left;
+            }
+            pre {
+                border: solid 1px #CCC;
+                background: #EEE;
+                padding: 10px;
+            }
+        }
+    }
+    &.with-diagram .intro,
+    &.with-error .intro,
+    &:not(.with-error) .error {
+        display: none;
+    }
+    .canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+     &.with-error .canvas,
+    .canvas {
+        visibility: hidden;
+    }
+    &.with-diagram .canvas {
+        visibility: visible;
+    }
+}
+.buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    > li {
+        display: inline-block;
+        margin-right: 10px;
+        > a {
+            background: #DDD;
+            border: solid 1px #666;
+            display: inline-block;
+            padding: 5px;
+        }
+    }
+    a {
+        opacity: 0.8;
+    }
+    a.active {
+        opacity: 1.0;
+    }
 }
 
-.content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding-top:10%;
-
-  > .message {
-    width: 100%;
-    height: 10%;
-    text-align: center;
-    display: table;
-    z-index: 10000;
-    font-size: 24px;
-    color: #111;
-
-    .note {
-      vertical-align: middle;
-      text-align: center;
-      display: table-cell;
-    }
-
-    .error {
-      .details {
-        max-width: 500px;
-        font-size: 12px;
-        margin: 20px auto;
-        text-align: left;
-      }
-
-      pre {
-        border: solid 1px #CCC;
-        background: #EEE;
-        padding: 10px;
-      }
+.ui-autocomplete {
+  background: white;
+  color: black;
+  list-style: none;
+  & > li {
+    &>a {
+      color: black !important;
+      font-size: 1em;
     }
   }
-  &:not(.with-error) .error,
-  &.with-error .intro,
-  &.with-diagram .intro {
-    display: none;
-  }
+}
 
-  .canvas {
+#js-create-diagram {
+    color: #FFEB3B;
+}
+#js-properties-panel {
     position: absolute;
     top: 0;
+    bottom: 0;
+    transition: all 300ms;
+    width: 260px;
+    right:0px;
+    z-index: 10;
+    border-left: 1px solid #ccc;
+    overflow: auto;
+    &:empty {
+        display: none;
+        border-left: 0;
+        display: none;
+    }
+    &:hover {
+      right: 0;
+    }
+    > .djs-properties-panel {
+        padding-bottom: 70px;
+        min-height: 100%;
+    }
+}
+.note {
+    z-index: 100000000;
+    background: #CFD8DC;
+    width: 100%;
+    color: white;
+}
+#flowPreviews {
+    position: absolute;
+    top: 5%;
+    bottom: 5%;
     left: 0;
     right: 0;
-    bottom: 0;
-  }
+    width: 100%;
+    z-index: 0;
+    border-left: 1px solid #ccc;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    > div {
+        flex: 1;
+        transition: all 300ms;
+        &:hover {
+            -webkit-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+            -moz-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+            box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.77);
+        }
+        min-width: 45%;
+        min-height: 45%;
+        padding: 2%;
+        background: rgba(255,255,255,0.6);
+        margin: 20px;
+        -webkit-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        -moz-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        display: flex;
+        flex-direction: column;
+       & > svg {
+            flex: 1;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-  .canvas,
-  &.with-error .canvas {
-    visibility: hidden;
-  }
-
-  &.with-diagram .canvas {
-    visibility: visible;
-  }
-}
-
-
-.buttons {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  > li {
-    display: inline-block;
-    margin-right: 10px;
-
-    > a {
-      background: #DDD;
-      border: solid 1px #666;
-      display: inline-block;
-      padding: 5px;
     }
-  }
+}
+#flowBranches {
+    position: absolute;
+    top: 5%;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 0;
+    border-left: 1px solid #ccc;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    > div {
+        flex: 1;
+        transition: all 300ms;
+        &:hover {
+            -webkit-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+            -moz-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+            box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.77);
+        }
+        min-width: 45%;
+        min-height: 45%;
+        padding: 2%;
+        background: rgba(255,255,255,0.6);
+        margin: 20px;
+        -webkit-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        -moz-box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        box-shadow: 4px 4px 5px 4px rgba(69,90,100,0.33);
+        display: flex;
+        flex-direction: column;
+       & > svg {
+            flex: 1;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-  a {
-    opacity: 0.3;
-  }
-
-  a.active {
-  opacity: 1.0;
-  }
+    }
 }
 
-#js-properties-panel {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 260px;
-  z-index: 10;
-  border-left: 1px solid #ccc;
-  overflow: auto;
-  &:empty {
-    display: none;
-    border-left:0px;
-    display:none;
-  }
-  > .djs-properties-panel {
-    padding-bottom: 70px;
-    min-height:100%;
-  }
-}
 
-#flowPreviews {
-  position: absolute;
-  padding-top:20%;
-  top: 20%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  z-index: 0;
-  border-left: 1px solid #ccc;
-  overflow: auto;
+.flowHeader {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  > g {
+  align-content: center;
+  position:relative;
+  top:-15px;
+  &> div{
+    flex: 2;
+    display: block !important;
+    height:100%;
+  }
+  &> h1 {
     flex:1;
-    > svg {
-      width: 100%;
-      margin-left:auto;
-      margin-right:auto;
-    }
+    margin:0;
+
+        color: 	#0288D1;
   }
 }
 
