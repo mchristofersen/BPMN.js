@@ -28,25 +28,31 @@
 </head>
 
 <body>
-    <div id="differ" style="display:none;">
-      <div id="diffHeader" class="btn-group btn-group-justified btn-group-raised">
-              <a href="javascript:void(0)" class="btn btn-primary btn-raised" id="finalizeMerge" >Merge</a>
-            <a href="javascript:void(0)" class="btn btn-danger btn-raised" id="cancelMerge" onclick='bus.fire("editor.confirm",[])'>close</a>
-          </div>
-      <div id="leftDiff"></div>
+    <div class="subflowViewer" style="display:none;">
 
-      <div id="rightDiff">
-      </div>
     </div>
+
+    <div id="differ" style="display:none;">
+        <div id="diffHeader" class="btn-group btn-group-justified btn-group-raised">
+            <a href="javascript:void(0)" class="btn btn-primary btn-raised" id="finalizeMerge">Merge</a>
+            <a href="javascript:void(0)" class="btn btn-danger btn-raised" id="cancelMerge" onclick='bus.fire("editor.confirm",[])'>close</a>
+        </div>
+        <div id="leftDiff"></div>
+
+        <div id="rightDiff"></div>
+    </div>
+
+
     <div id="mainPage">
+
         <div id="pageFrame" style="display:none;position:fixed;height:90%;width:90%;background:#ffffff;z-index:10000000;left:5%;top:5%;">
             <div id="renderedPage"></div>
             <div class="btn btn-primary btn-block" id="continue">Continue</div>
         </div>
+
+
         <div class="content" id="js-drop-zone">
-
             <div class="message intro">
-
                 <div class="note" style="position:fixed;top:0;">
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active" id="branchesTab"><a>Branches</a></li>
@@ -68,30 +74,27 @@
                 </div>
             </div>
 
-            <div class="canvas" id="js-canvas"></div>
+            <div class="canvas" id="js-canvas"></div><div id="js-properties-panel"  class="resizable"></div>
+            <div id="subflowCanvas" class="canvas"> </div>
+            <div class="resizable" id='subflow-properties-panel' ></div>
+
             <div id="flows">
 
                 <div id="flowBranches"></div>
                 <div id="flowPreviews" style="display:none;">
                 </div>
             </div>
-            <div id="js-properties-panel">
-
-            </div>
         </div>
     </div>
 
     <ul class="buttons">
         <li>
-            download
-        </li>
-        <li>
-            <a id="js-download-diagram" href title="download BPMN diagram">
+            <a id="js-download-diagram" href title="download BPMN diagram" style="display:none;">
         BPMN diagram
       </a>
         </li>
         <li>
-            <a id="js-download-svg" href title="download as SVG image">
+            <a id="js-download-svg" href title="download as SVG image" style="display:none;">
         SVG image
       </a>
         </li>
@@ -109,7 +112,7 @@
       Delete
     </a>
             </li>
-            
+
 
     </ul>
     <div class="fiddle" style="display:none;position:fixed;top:0;height:5%;width:100%;display:flex;z-index:1000000000" id="header">

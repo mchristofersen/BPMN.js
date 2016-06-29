@@ -23,7 +23,7 @@ Navbus.prototype = {
         },
         fire : function(signal, args) {
           console.log(signal)
-            return this.listeners[signal].call(args)
+            return this.listeners[signal].call(this,args)
         }
 			}
 

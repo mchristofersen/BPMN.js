@@ -287,7 +287,8 @@ app.post("/branch/update", function(req, res) {
     var user = req.body.user;
     var xml = req.body.xml;
     var svg = req.body.svg;
-    if (name == "") {
+    var id = req.body.id;
+    if (id == "") {
         res.send("empty name")
         return
     }
@@ -297,9 +298,7 @@ app.post("/branch/update", function(req, res) {
                 if (!err) {
 
                     bpmn.updateOne({
-                        flowName: name,
-                        user: user,
-                        active: 1
+                        id:id
                     }, {
                         $set: {
                             flowName: name,
@@ -371,7 +370,7 @@ app.get('/save', function(req, res) {
     res.send('hello world');
 });
 
-app.use("/static", express.static(__dirname + "/public"))
+app.use("/", express.static(__dirname + "/dist"))
 
 app.listen(3000);
 console.log('Express server listening on port 3000');

@@ -113,8 +113,10 @@ module.exports.doStep = function(stepId) {
                 break
             case "bpmn:SubProcess":
                 var flowName = step['flowId']
+                bus.fire("subflow.view",flowName)
                 $.getJSON("http://localhost:3000/flow",{flowName:step["flowId"]},function (resp){
-                  var xml = resp[0]["xml"];
+                  // var xml = resp[0]["xml"];
+                  debugger
                   WF.bpmns[WF.bpmns.length - 1].suspendedStep = step
                   var process = WF.processXML(resp)
                   WF.bpmns.push(process)
@@ -186,7 +188,7 @@ module.exports.renderPage = function(step) {
 }
 
 module.exports.handleForm = function(form) {
-    var formName = suspendedStep['$name'];
+    var formName = suspendedStep['name'];
     if (formName == "" || formName == undefined) {
         return
     } else {
@@ -227,6 +229,11 @@ module.exports.resolveXOR = function(xor) {
             }
         }
 
+    }
+    try{
+      return WF.doStep(xor.default.id)
+    }catch (e){
+      console.log(e)
     }
 }
 

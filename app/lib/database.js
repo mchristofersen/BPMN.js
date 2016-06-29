@@ -29,6 +29,7 @@ module.exports.createNewDiagram = function() {
         });
         container
             .removeClass('with-error')
+            .addClass("main")
             .addClass('with-diagram');
         bpmnModeler.saveXML({
             format: true
@@ -136,6 +137,7 @@ var processXML = function(resp) {
 module.exports.processXML = processXML;
 
 module.exports.finalizeMerge = function(xml, flowName, user, diff, rightModeler) {
+  var id = branches[flowName]["_id"]
     rightModeler.saveSVG({
         format: true
     }, function(err, svg) {
@@ -143,6 +145,7 @@ module.exports.finalizeMerge = function(xml, flowName, user, diff, rightModeler)
             url: "http://localhost:3000/merge",
             method: "post",
             data: {
+                id: id,
                 flowName: flowName,
                 xml: xml,
                 user: user,
@@ -151,7 +154,7 @@ module.exports.finalizeMerge = function(xml, flowName, user, diff, rightModeler)
             }
         }).done(function(resp) {
             isBranch = false;
-            bus.fire("editor.confirm",[])
+            bus.fire("closed.diagram",[])
         })
     });
 

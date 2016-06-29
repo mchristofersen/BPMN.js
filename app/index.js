@@ -3,6 +3,8 @@
     };
     var fs = require('fs');
     var d3 = require("d3");
+    var origin = require("diagram-js-origin");
+    console.log(origin);
     var beautify = ace.require("ace/ext/beautify");
     global.flows = {};
     global.branches = {};
@@ -57,6 +59,26 @@
 
         }
     });
+
+    global.subflowViewer = new Modeler({
+        container: subflowCanvas,
+        propertiesPanel: {
+            parent: '#subflow-properties-panel'
+        },
+        additionalModules: [
+            propertiesPanelModule,
+            propertiesProviderModule,
+            CliModule
+        ],
+        cli: {
+            bindTo: 'cli'
+        },
+        moddleExtensions: {
+            camunda: camundaModdleDescriptor,
+            ext: extModdleDescriptor
+
+        }
+    });
     bpmnModeler.get('keyboard').bind(document);
     bpmnJS = bpmnModeler,
         overlays = bpmnModeler.get('overlays'),
@@ -71,37 +93,87 @@
     // var newDiagramXML = fs.readFileSync('../../backend/newDiagram.bpmn', 'utf-8');
 
     global.bus = new Navbus();
-    bus.init({modeler:bpmnModeler,previews:$("#flowPreviews"),branchPreviews:$("#flowBranches")});
-    bus.initListener("close.diagram",function (){
-      $('.buttons a').hide()
-      $("#flows").show()
-      container
-          .removeClass('with-diagram')
-          .removeClass('with-error');
-      $("#js-properties-panel").hide();
-  getThumbnails()
-  getBranches();
-      if ( Object.keys(branches).length > 0 ){
-        bus.bp.show()
-        bus.fp.hide()
-      }else {
-        bus.fp.show()
-        bus.bp.hide()
+    bus.init({
+        modeler: bpmnModeler,
+        previews: $("#flowPreviews"),
+        branchPreviews: $("#flowBranches")
+    });
+
+    bus.initListener("editor.confirm", function() {
+        $("#confirmEdit").unbind("click");
+        // $("#js-canvas").show();
+        $(".fiddle").hide();
+        $(".djs-palette").show();
+        $("#differ").hide();
+        $("#mainPage").show();
+        $("#leftDiff").html("");
+        $("#rightDiff").html("");
+    })
+
+    bus.initListener("close.diagram", function(args) {
+      var sub = d3.select(".content").classed("subflow")
+      if (sub){
+        debugger
+        return bus.fire("close.subflow",[])
       }
+        $('.buttons a').hide()
+        $("#flows").show()
+        container
+            .removeClass('with-diagram')
+            .removeClass("main")
+            .removeClass('with-error');
+        getThumbnails()
+        getBranches();
+        if (Object.keys(branches).length > 0) {
+            bus.bp.show()
+            bus.fp.hide()
+        } else {
+            bus.fp.show()
+            bus.bp.hide()
+        }
     })
 
+    $("#js-close-diagram").click(function(e) {
+        bus.fire("close.diagram", [])
+    });
 
-    bus.initListener("open.diagram",function (){
-      $("#flows").hide()
-      $('.buttons a').show()
-      $("#js-properties-panel").show();
-      container
-          .addClass('with-diagram')
-          .removeClass('with-error');
-      bus.fp.hide()
-      bus.bp.hide();
+    bus.initListener("close.subflow", function(args) {
+        $('.content').removeClass("subflow").addClass("main")
+
     })
-    // console.log(bus)
+
+    bus.initListener("open.diagram", function(args) {
+            $("#flows").hide()
+            $('.buttons a').show()
+            $("#js-properties-panel").show();
+            container
+                .addClass('with-diagram')
+                .removeClass('with-error');
+            bus.fp.hide()
+            bus.bp.hide();
+            addDropShadows();
+        })
+        // console.log(bus)
+
+    bus.initListener("subflow.view", function(flowId) {
+      debugger;
+      if (!flowId){
+        var flowId = bpmnModeler.get("propertiesPanel")._current.element.businessObject.flowId
+      }
+        var subflowCanvas = $("#subflowCanvas")
+        if (flows[flowId]) {
+            var xml = flows[flowId].xml
+            $(".content").addClass("subflow").removeClass("main")
+            subflowViewer.importXML(xml, function(err) {
+                if (err) {
+                    l(err)
+                }
+            })
+        } else {
+            return getXML(flowId)
+        }
+    })
+
     function addOverlay(id, modeler, klass) {
         if (modeler) {
             var registry = modeler.get("elementRegistry");
@@ -128,8 +200,6 @@
     }
 
 
-
-
     function createNewDiagram() {
         var name = prompt("Enter Workflow Name:");
         flowName = name;
@@ -141,7 +211,6 @@
             modeling.updateProperties(processElement, {
                 id: name
             });
-            bus.fire("open.diagram")
             bpmnModeler.saveXML({
                 format: true
             }, function(err, xml) {
@@ -158,6 +227,7 @@
                             }
                         }).done(function(resp) {
                             console.log(resp);
+                            container.addClass("main")
                         })
                         //  done(err, svg);
                 });
@@ -169,8 +239,45 @@
         // PropertiesPanel.setInputValue($("camunda-id"),name)
     }
 
-    function openDiagram(xml) {
+    function addDropShadows() {
+        var svg = d3.select("#js-canvas > div > div > svg");
+        var defs = svg.select("defs")
 
+        var filter = defs.append("filter")
+            .attr("id", "drop-shadow")
+            .attr("height", "130%");
+
+        filter.append("feGaussianBlur")
+            .attr("in", "SourceAlpha")
+            .attr("stdDeviation", 5)
+            .attr("result", "blur");
+
+        // translate output of Gaussian blur to the right and downwards with 2px
+        // store result in offsetBlur
+        filter.append("feOffset")
+            .attr("in", "blur")
+            .attr("dx", 5)
+            .attr("dy", 5)
+            .attr("color", "orange")
+            .attr("result", "offsetBlur");
+
+
+
+        // overlay original SourceGraphic over translated blurred opacity by using
+        // feMerge filter. Order of specifying inputs is important!
+        var feMerge = filter.append("feMerge");
+        feMerge.append("feMergeNode")
+            .attr("in", "offsetBlur")
+        feMerge.append("feMergeNode")
+            .attr("in", "SourceGraphic");
+        var item = d3.selectAll(".djs-element")
+            .each(function(d, i) {
+                d3.select(this)
+                    .style("filter", "url(#drop-shadow)")
+            })
+    }
+
+    function openDiagram(xml) {
         if (!xml) {
             global.flowName = prompt("Enter Workflow Name");
             bpmnModeler.createDiagram(function(err) {
@@ -183,7 +290,7 @@
                 if (err) {
                     container
                         .removeClass('with-diagram')
-                        .addClass('with-errorStartEvent_1');
+                        .addClass('with-error');
 
                     container.find('.error pre').text(err.message);
 
@@ -208,7 +315,7 @@
 
                     console.error(err);
                 } else {
-                    bus.fire("open.diagram")
+                    bus.fire("open.diagram",[])
                     if (isBranch) {
                         loadModels(xml, flows[flowName].xml, function(err, a, b) {
 
@@ -223,6 +330,8 @@
                 }
 
 
+                $(".content").addClass("main").removeClass("subflow")
+
             });
         }
 
@@ -231,7 +340,7 @@
     }
 
     function close() {
-        bus.fire("close.diagram")
+        bus.fire("close.diagram",[])
 
     }
 
@@ -291,8 +400,8 @@
             e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
         }
 
-        container.get(0).addEventListener('dragover', handleDragOver, false);
-        container.get(0).addEventListener('drop', handleFileSelect, false);
+        // container.get(0).addEventListener('dragover', handleDragOver, false);
+        // container.get(0).addEventListener('drop', handleFileSelect, false);
     }
 
 
@@ -347,7 +456,7 @@
                 user: user
             },
             success: function(resp) {
-              isBranch = true;
+                isBranch = true;
                 db.processXML(resp)
                 openDiagram(resp[0].xml);
             }
@@ -357,12 +466,14 @@
 
     deleteBranch = function(flowName) {
         var user = cookie.get("user");
+        var id = branches[flowName]["id"]
         $.ajax({
             url: "http://localhost:3000/branch",
             method: "delete",
             data: {
                 flowName: flowName,
-                user: user
+                user: user,
+                id: id
             },
             success: function(resp) {
                 isBranch = false;
@@ -410,49 +521,49 @@
                 $("#flowPreviews").html("");
 
                 $.each(json, function(idx, elem) {
-                        flows[elem.flowName] = elem
-                        d3.select("#flowPreviews").append("div")
-                            .classed("preview", true)
-                            .attr("id", elem.flowName + "Preview")
-                            .append("div")
-                            .classed("flowHeader", true)
-                            .html(`<h1>${elem.flowName}</h1><div class="btn-group btn-group-justified btn-group-raised">
+                    flows[elem.flowName] = elem
+                    d3.select("#flowPreviews").append("div")
+                        .classed("preview", true)
+                        .attr("id", elem.flowName + "Preview")
+                        .append("div")
+                        .classed("flowHeader", true)
+                        .html(`<h1>${elem.flowName}</h1><div class="btn-group btn-group-justified btn-group-raised">
                                       <a href="javascript:void(0)" class="btn btn-raised openButton">Open</a>
                                       <a href="javascript:void(0)" class="btn btn-raised branchButton">Branch</a>
                                     </div>`)
-                            .each(function(d) {
-                                d3.select(this).select(".openButton")
-                                    .on("click", function(d) {
-                                        isBranch = false;
-                                        flowName = elem.flowName;
-                                        getXML(elem.flowName);
-                                    });
-                                d3.select(this).select('.branchButton')
-                                    .on("click", function(d) {
-                                        flowName = elem.flowName;
-                                        isBranch = true;
-                                        branch(elem.flowName);
-                                    })
-                            })
-                        if (elem.flowName != "") {
-                            d3.select(`#${elem.flowName}Preview`)
-                                .append("svg")
-                                .html(elem.svg)
-                                // .attr({"height": "40%","width":"40%"})
-                                .each(function(d) {
-                                    var html = d3.select(this).html()
-                                    var newhtml = `<g class="flowFrame">${html}</g>`
-                                    d3.select(this).html(newhtml);
-                                    d3.select(this).attr({
-                                        "height": "40%",
-                                        "width": "40%"
-                                    })
+                        .each(function(d) {
+                            d3.select(this).select(".openButton")
+                                .on("click", function(d) {
+                                    isBranch = false;
+                                    flowName = elem.flowName;
+                                    getXML(elem.flowName);
+                                });
+                            d3.select(this).select('.branchButton')
+                                .on("click", function(d) {
+                                    flowName = elem.flowName;
+                                    isBranch = true;
+                                    branch(elem.flowName);
                                 })
+                        })
+                    if (elem.flowName != "") {
+                        d3.select(`#${elem.flowName}Preview`)
+                            .append("svg")
+                            .html(elem.svg)
+                            // .attr({"height": "40%","width":"40%"})
+                            .each(function(d) {
+                                var html = d3.select(this).html()
+                                var newhtml = `<g class="flowFrame">${html}</g>`
+                                d3.select(this).html(newhtml);
+                                d3.select(this).attr({
+                                    "height": "40%",
+                                    "width": "40%"
+                                })
+                            })
 
-                        }
-                        return json.length
+                    }
+                    return json.length
 
-                    })
+                })
             }
         })
 
@@ -460,16 +571,16 @@
 
     function loadModels(a, b, done) {
         new BpmnModdle().fromXML(a, function(err, adefs) {
-          if (err) {
+            if (err) {
                 return done(err);
-            }else{
-              new BpmnModdle().fromXML(b, function(err, bdefs) {
-                if (err) {
-                      return done(err);
-                  }else{
-                    return done(err,adefs,bdefs);
-                  }
-              });
+            } else {
+                new BpmnModdle().fromXML(b, function(err, bdefs) {
+                    if (err) {
+                        return done(err);
+                    } else {
+                        return done(err, adefs, bdefs);
+                    }
+                });
             }
         });
 
@@ -505,8 +616,8 @@
                         $(".djs-palette").hide();
                         var diff;
                         loadModels(xml, flows[flowName].xml, function loading(err, a, b) {
-                            if (err){
-                              console.log(err);
+                            if (err) {
+                                console.log(err);
                             }
                             diff = differ.diff(b, a);
                             $.each(diff._added, function(idx, elem) {
@@ -526,7 +637,7 @@
                 })
             }
         })
-      }
+    }
 
     global.getBranches = function() {
         $("#flowBranches").html("");
@@ -593,12 +704,132 @@
 
 
 
-                          return json.length
+                    return json.length
 
                 })
             }
 
         })
+    }
+
+    global.openEditor = function(e) {
+        var currentElement = bpmnModeler.get("propertiesPanel")._current.element;
+        $(".fiddle").show();
+        ace.require("ace/ext/language_tools");
+        var leftEditor = ace.edit("leftEditor");
+        leftEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true
+        });
+        if (currentElement.businessObject.html != undefined) {
+            leftEditor.setValue(currentElement.businessObject.html);
+        } else {
+            leftEditor.setValue("");
+        }
+        leftEditor.getSession().setUseWorker(true);
+        leftEditor.setTheme("ace/theme/sqlserver");
+        leftEditor.getSession().setMode("ace/mode/html");
+        leftEditor.getSession().setUseWrapMode(true);
+        leftEditor.getSession().setFoldStyle("markbeginend");
+        leftEditor.setShowFoldWidgets(true);
+        leftEditor.setFadeFoldWidgets(true);
+        leftEditor.setBehavioursEnabled(true);
+        leftEditor.commands.addCommands(beautify.commands);
+        document.getElementById('leftEditor').style.fontSize = '24px';
+        leftEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: true
+        });
+
+        var html = leftEditor.getValue();
+        $("#previewHTML").html(html);
+        $("#leftEditor").on("mouseenter", function() {
+            leftEditor.resize();
+        })
+        $("#leftEditor").on("mouseout", function() {
+            leftEditor.resize();
+        })
+
+
+
+        var bottomEditor = ace.edit("bottomEditor");
+        if (currentElement.businessObject.css != undefined) {
+            bottomEditor.setValue(currentElement.businessObject.css);
+        } else {
+            bottomEditor.setValue("");
+        }
+        bottomEditor.getSession().setUseWorker(true);
+        bottomEditor.setTheme("ace/theme/sqlserver");
+        bottomEditor.getSession().setMode("ace/mode/less");
+        bottomEditor.getSession().setUseWrapMode(true);
+        bottomEditor.getSession().setFoldStyle("markbeginend");
+        bottomEditor.setShowFoldWidgets(true);
+        bottomEditor.setFadeFoldWidgets(true);
+        document.getElementById('bottomEditor').style.fontSize = '20px';
+        var html = bottomEditor.getValue();
+        $("#previewCSS").html(html);
+        $("#bottomEditor").on("mouseenter", function() {
+            bottomEditor.resize();
+        })
+        $("#bottomEditor").on("mouseout", function() {
+            bottomEditor.resize();
+        })
+
+        bottomEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
+
+        var rightEditor = ace.edit("rightEditor");
+        if (currentElement.businessObject.js != undefined) {
+            rightEditor.setValue(currentElement.businessObject.js);
+        } else {
+            rightEditor.setValue("");
+        }
+        rightEditor.getSession().setUseWorker(true);
+        rightEditor.setTheme("ace/theme/sqlserver");
+        rightEditor.getSession().setMode("ace/mode/javascript");
+        rightEditor.getSession().setUseWrapMode(true);
+        rightEditor.getSession().setFoldStyle("markbeginend");
+        rightEditor.setShowFoldWidgets(true);
+        rightEditor.setFadeFoldWidgets(true);
+        document.getElementById('rightEditor').style.fontSize = '20px';
+        var html = rightEditor.getValue();
+        $("#previewJS").html(html);
+        $("#rightEditor").on("mouseenter", function() {
+            rightEditor.resize();
+        })
+        $("#rightEditor").on("mouseout", function() {
+            rightEditor.resize();
+        })
+        $("#runButton").on("click", function() {
+            setTimeout(function() {
+                var html = leftEditor.getValue();
+                $("#previewHTML").html(html);
+                var less = require('../node_modules/less/index.js');
+                var css = bottomEditor.getValue();
+                less.render(css, {
+                    async: false
+                }, function(e, output) {
+                    $("#previewCSS").html(output.css);
+                })
+                var js = rightEditor.getValue();
+                $("#previewJS").html("<script>" + js + "</script>");
+            }, 10)
+
+        })
+        rightEditor.setOptions({
+            enableBasicAutocompletion: true,
+            enableSnippets: true,
+            enableLiveAutocompletion: false
+        });
+        $("#confirmEdit").click(function(e) {
+            confirmEdit(currentElement, leftEditor, rightEditor, bottomEditor);
+        })
+
+        // $("#js-canvas").hide();
     }
 
     function l(mess) {
@@ -618,28 +849,25 @@
                 js: rightEditor.getValue()
             })
         }
-      bus.fire("editor.confirm",[])
+        cancelEdit()
     }
 
     function cancelEdit() {
-        bus.fire("editor.confirm",[])
+      $("#confirmEdit").unbind("click");
+      $(".fiddle").hide();
+      $(".djs-palette").show();
+      $("#differ").hide();
+      $("#mainPage").show();
+      $("#leftDiff").html("");
+      $("#rightDiff").html("");
     }
 
 
 
 
     $(document).on('ready', function() {
+        bus.fire("close.diagram",[])
 
-      bus.initListener("editor.confirm",function (){
-        $("#confirmEdit").unbind("click");
-        // $("#js-canvas").show();
-        $(".fiddle").hide();
-        $(".djs-palette").show();
-        $("#differ").hide();
-        $("#mainPage").show();
-        $("#leftDiff").html("");
-        $("#rightDiff").html("");
-      })
 
         $("#continue").click(function(e) {
             var f = $("form").serializeArray();
@@ -647,21 +875,21 @@
             $("#renderedPage").parent().hide();
             WF.doStep(suspendedStep["outgoing"][0]["id"])
         })
-        bus.fire("close.diagram")
         $(".fiddle").hide();
 
         $("#flowsTab").click(function(e) {
             $("#flowBranches").hide();
             $("#flowPreviews").show();
+            isBranch = false;
         })
         $("#branchesTab").click(function(e) {
             $("#flowBranches").show();
             $("#flowPreviews").hide();
+            isBranch=true;
         })
 
         $("#js-delete-diagram").click(function(e) {
-          bus.fire("close.diagram")
-
+            bus.fire("close.diagram",[])
             deleteFlow();
         });
         $("#hidePanel > svg").click(function(e) {
@@ -680,7 +908,7 @@
         $('#js-create-diagram').click(function(e) {
             e.stopPropagation();
             e.preventDefault();
-            bus.fire("open.diagram")
+            bus.fire("open.diagram",[])
             db.createNewDiagram();
 
         });
@@ -695,11 +923,11 @@
             }
         });
 
-        $("#js-close-diagram").click(function(e) {
-
-            close();
-
-        })
+        // $("#js-close-diagram").click(function(e) {
+        //
+        //     close();
+        //
+        // })
 
         function setEncoded(link, name, data) {
             var encodedData = encodeURIComponent(data);
@@ -725,7 +953,7 @@
             db.saveDiagram(function(err, xml) {
                 setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
             });
-        }, 3000);
+        }, 500);
 
         $('.overlay').click(function(e) {
             $('.overlay').removeClass('expanded');
@@ -737,131 +965,21 @@
             $(this).children().addClass('focused');
         });
 
-
+        bpmnModeler.on('diagram.init', addDropShadows)
         bpmnModeler.on('commandStack.changed', exportArtifacts);
         bpmnModeler.on("propertiesPanel.changed", function(e) {
+            $(".djs-properties-header").on("drag", function (e){
+              $("#js-properties-panel").css("top",e.pageY+"px")
+            })
+            $(".djs-properties-header").on("dragended", function (e){
+              $("#js-properties-panel").css("top",e.pageY+"px")
+            })
+
             var currentElement = e.current.element;
             $("#camunda-flowId").autocomplete({
                 source: Object.keys(flows)
             })
-            $("#camunda-content").on("click", function(e) {
-                    $(".fiddle").show();
-                    ace.require("ace/ext/language_tools");
-                    var leftEditor = ace.edit("leftEditor");
-                    leftEditor.setOptions({
-                        enableBasicAutocompletion: true,
-                        enableSnippets: true
-                    });
-                    if (currentElement.businessObject.html != undefined) {
-                        leftEditor.setValue(currentElement.businessObject.html);
-                    } else {
-                        leftEditor.setValue("");
-                    }
-                    leftEditor.getSession().setUseWorker(true);
-                    leftEditor.setTheme("ace/theme/sqlserver");
-                    leftEditor.getSession().setMode("ace/mode/html");
-                    leftEditor.getSession().setUseWrapMode(true);
-                    leftEditor.getSession().setFoldStyle("markbeginend");
-                    leftEditor.setShowFoldWidgets(true);
-                    leftEditor.setFadeFoldWidgets(true);
-                    leftEditor.setBehavioursEnabled(true);
-                    leftEditor.commands.addCommands(beautify.commands);
-                    document.getElementById('leftEditor').style.fontSize = '24px';
-                    leftEditor.setOptions({
-                        enableBasicAutocompletion: true,
-                        enableSnippets: true,
-                        enableLiveAutocompletion: true
-                    });
-
-                    var html = leftEditor.getValue();
-                    $("#previewHTML").html(html);
-                    $("#leftEditor").on("mouseenter", function() {
-                        leftEditor.resize();
-                    })
-                    $("#leftEditor").on("mouseout", function() {
-                        leftEditor.resize();
-                    })
-
-
-
-                    var bottomEditor = ace.edit("bottomEditor");
-                    if (currentElement.businessObject.css != undefined) {
-                        bottomEditor.setValue(currentElement.businessObject.css);
-                    } else {
-                        bottomEditor.setValue("");
-                    }
-                    bottomEditor.getSession().setUseWorker(true);
-                    bottomEditor.setTheme("ace/theme/sqlserver");
-                    bottomEditor.getSession().setMode("ace/mode/less");
-                    bottomEditor.getSession().setUseWrapMode(true);
-                    bottomEditor.getSession().setFoldStyle("markbeginend");
-                    bottomEditor.setShowFoldWidgets(true);
-                    bottomEditor.setFadeFoldWidgets(true);
-                    document.getElementById('bottomEditor').style.fontSize = '20px';
-                    var html = bottomEditor.getValue();
-                    $("#previewCSS").html(html);
-                    $("#bottomEditor").on("mouseenter", function() {
-                        bottomEditor.resize();
-                    })
-                    $("#bottomEditor").on("mouseout", function() {
-                        bottomEditor.resize();
-                    })
-
-                    bottomEditor.setOptions({
-                        enableBasicAutocompletion: true,
-                        enableSnippets: true,
-                        enableLiveAutocompletion: false
-                    });
-
-                    var rightEditor = ace.edit("rightEditor");
-                    if (currentElement.businessObject.js != undefined) {
-                        rightEditor.setValue(currentElement.businessObject.js);
-                    } else {
-                        rightEditor.setValue("");
-                    }
-                    rightEditor.getSession().setUseWorker(true);
-                    rightEditor.setTheme("ace/theme/sqlserver");
-                    rightEditor.getSession().setMode("ace/mode/javascript");
-                    rightEditor.getSession().setUseWrapMode(true);
-                    rightEditor.getSession().setFoldStyle("markbeginend");
-                    rightEditor.setShowFoldWidgets(true);
-                    rightEditor.setFadeFoldWidgets(true);
-                    document.getElementById('rightEditor').style.fontSize = '20px';
-                    var html = rightEditor.getValue();
-                    $("#previewJS").html(html);
-                    $("#rightEditor").on("mouseenter", function() {
-                        rightEditor.resize();
-                    })
-                    $("#rightEditor").on("mouseout", function() {
-                        rightEditor.resize();
-                    })
-                    $("#runButton").on("click", function() {
-                        setTimeout(function() {
-                            var html = leftEditor.getValue();
-                            $("#previewHTML").html(html);
-                            var less = require('../node_modules/less/index.js');
-                            var css = bottomEditor.getValue();
-                            less.render(css, {
-                                async: false
-                            }, function(e, output) {
-                                $("#previewCSS").html(output.css);
-                            })
-                            var js = rightEditor.getValue();
-                            $("#previewJS").html("<script>" + js + "</script>");
-                        }, 10)
-
-                    })
-                    rightEditor.setOptions({
-                        enableBasicAutocompletion: true,
-                        enableSnippets: true,
-                        enableLiveAutocompletion: false
-                    });
-                    $("#confirmEdit").click(function(e) {
-                        confirmEdit(currentElement, leftEditor, rightEditor, bottomEditor);
-                    })
-
-                    $("#js-canvas").hide();
-                })
+            $("#camunda-content").on("click", openEditor)
                 //  $("#camunda-html").on("mouseout",function (e){
                 //    $("#leftEditorOverlay").animate({
                 //      opacity : "-=1",

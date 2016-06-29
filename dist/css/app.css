@@ -3,45 +3,54 @@
   box-sizing: border-box;
 }
 /* line 5, styles/app.less */
+.viewSubflowIcon {
+  content: "\f00e";
+  font-family: FontAwesome;
+}
+/* line 11, styles/app.less */
+.djs-visual:hover > [data-marker="sub-process"] {
+  color: #03A9F4;
+}
+/* line 15, styles/app.less */
 .ui-helper-hidden-accessible {
   display: none!important;
 }
-/* line 8, styles/app.less */
+/* line 18, styles/app.less */
 .nav-tabs {
   background: #00796B !important;
   vertical-align: center;
 }
-/* line 13, styles/app.less */
+/* line 23, styles/app.less */
 g.preview > svg {
   width: 100% !important;
   height: 25%;
 }
-/* line 17, styles/app.less */
+/* line 27, styles/app.less */
 .expanded > .curtain {
   width: 5%;
   height: 5%;
 }
-/* line 21, styles/app.less */
+/* line 31, styles/app.less */
 .overlay {
   transition-duration: 0.25s;
   transition-timing-function: ease-in;
   z-index: 10;
 }
-/* line 22, styles/app.less */
+/* line 32, styles/app.less */
 .overlay#cssOverlay,
 .overlay#previewOverlay {
   transition-property: top, height;
 }
-/* line 26, styles/app.less */
+/* line 36, styles/app.less */
 .overlay#htmlOverlay,
 .overlay#jsOverlay {
   transition-property: left, width, right;
 }
-/* line 34, styles/app.less */
+/* line 44, styles/app.less */
 .fiddle {
   background: rgba(255, 255, 255, 0.9);
 }
-/* line 41, styles/app.less */
+/* line 51, styles/app.less */
 .fiddle > #previewOverlay {
   height: 95%;
   width: 100%;
@@ -50,12 +59,12 @@ g.preview > svg {
   display: flex;
   flex-direction: column;
 }
-/* line 48, styles/app.less */
+/* line 58, styles/app.less */
 .fiddle > #previewOverlay > .curtain {
   height: 5%;
   width: 100%;
 }
-/* line 52, styles/app.less */
+/* line 62, styles/app.less */
 .fiddle > #previewOverlay.expanded {
   top: 0;
   height: 95%;
@@ -63,19 +72,19 @@ g.preview > svg {
   left: 5%;
   z-index: 100;
 }
-/* line 58, styles/app.less */
+/* line 68, styles/app.less */
 .fiddle > #previewOverlay.expanded > .curtain {
   height: 5%;
 }
-/* line 61, styles/app.less */
+/* line 71, styles/app.less */
 .fiddle > #previewOverlay.expanded:not(:hover) > #previewPane {
   border: 5px solid #9C27B0;
 }
-/* line 64, styles/app.less */
+/* line 74, styles/app.less */
 .fiddle > #previewOverlay.expanded:hover > #previewPane {
   border: 5px solid #F5F5F5;
 }
-/* line 69, styles/app.less */
+/* line 79, styles/app.less */
 .fiddle > #htmlOverlay.expanded {
   width: 95%;
   left: 0;
@@ -83,19 +92,19 @@ g.preview > svg {
   top: 5%;
   z-index: 100;
 }
-/* line 76, styles/app.less */
+/* line 86, styles/app.less */
 .fiddle > #htmlOverlay.expanded > .curtain {
   width: 5%;
 }
-/* line 79, styles/app.less */
+/* line 89, styles/app.less */
 .fiddle > #htmlOverlay.expanded:not(:hover) > #leftEditor {
   border: 5px solid #C2185B;
 }
-/* line 82, styles/app.less */
+/* line 92, styles/app.less */
 .fiddle > #htmlOverlay.expanded:hover > #leftEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 86, styles/app.less */
+/* line 96, styles/app.less */
 .fiddle > #htmlOverlay {
   left: -90%;
   display: flex;
@@ -103,12 +112,12 @@ g.preview > svg {
   height: 100%;
   top: 0;
 }
-/* line 92, styles/app.less */
+/* line 102, styles/app.less */
 .fiddle > #htmlOverlay > .curtain {
   height: 100%;
   width: 5%;
 }
-/* line 97, styles/app.less */
+/* line 107, styles/app.less */
 .fiddle > #jsOverlay.expanded {
   right: 0;
   top: 5%;
@@ -116,19 +125,19 @@ g.preview > svg {
   height: 90%;
   z-index: 100;
 }
-/* line 103, styles/app.less */
+/* line 113, styles/app.less */
 .fiddle > #jsOverlay.expanded > .curtain {
   width: 5%;
 }
-/* line 106, styles/app.less */
+/* line 116, styles/app.less */
 .fiddle > #jsOverlay.expanded:not(:hover) > #rightEditor {
   border: 5px solid #FBC02D;
 }
-/* line 109, styles/app.less */
+/* line 119, styles/app.less */
 .fiddle > #jsOverlay.expanded:hover > #rightEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 113, styles/app.less */
+/* line 123, styles/app.less */
 .fiddle > #jsOverlay {
   right: -90%;
   display: flex;
@@ -136,12 +145,12 @@ g.preview > svg {
   height: 100%;
   top: 0;
 }
-/* line 119, styles/app.less */
+/* line 129, styles/app.less */
 .fiddle > #jsOverlay > .curtain {
   height: 100%;
   width: 5%;
 }
-/* line 124, styles/app.less */
+/* line 134, styles/app.less */
 .fiddle > #cssOverlay.expanded {
   top: 5%;
   height: 90%;
@@ -149,31 +158,31 @@ g.preview > svg {
   width: 90%;
   z-index: 100;
 }
-/* line 130, styles/app.less */
+/* line 140, styles/app.less */
 .fiddle > #cssOverlay.expanded > .curtain {
   height: 5%;
 }
-/* line 133, styles/app.less */
+/* line 143, styles/app.less */
 .fiddle > #cssOverlay.expanded:not(:hover) > #bottomEditor {
   border: 5px solid #3F51B5;
 }
-/* line 136, styles/app.less */
+/* line 146, styles/app.less */
 .fiddle > #cssOverlay.expanded:hover > #bottomEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 140, styles/app.less */
+/* line 150, styles/app.less */
 .fiddle > #cssOverlay {
   top: 95%;
   height: 90%;
   left: 0;
   width: 100%;
 }
-/* line 145, styles/app.less */
+/* line 155, styles/app.less */
 .fiddle > #cssOverlay > .curtain {
   height: 5%;
   width: 100%;
 }
-/* line 150, styles/app.less */
+/* line 160, styles/app.less */
 .fiddle > .overlay > div > i.icon-shell,
 .fiddle i.icon-css,
 .fiddle i.icon-fire-alt,
@@ -181,7 +190,7 @@ g.preview > svg {
   font-size: 2.5em;
   margin-top: 5px;
 }
-/* line 157, styles/app.less */
+/* line 167, styles/app.less */
 .fiddle > .btn-primary,
 .fiddle .btn-danger,
 .fiddle .btn-success,
@@ -189,7 +198,7 @@ g.preview > svg {
   margin: 1px;
   padding: 0;
 }
-/* line 163, styles/app.less */
+/* line 173, styles/app.less */
 .fiddle > .btn-primary > i.icon-shell,
 .fiddle .btn-danger > i.icon-shell,
 .fiddle .btn-success > i.icon-shell,
@@ -209,7 +218,7 @@ g.preview > svg {
   font-size: 2.5em;
   margin-top: 2px;
 }
-/* line 170, styles/app.less */
+/* line 180, styles/app.less */
 .fiddle > .btn-primary > i,
 .fiddle .btn-danger > i,
 .fiddle .btn-success > i,
@@ -222,7 +231,7 @@ g.preview > svg {
   font-weight: 900;
   font-stretch: ultra-expanded;
 }
-/* line 175, styles/app.less */
+/* line 185, styles/app.less */
 .fiddle > .btn-primary > i:not(:hover) > i,
 .fiddle .btn-danger > i:not(:hover) > i,
 .fiddle .btn-success > i:not(:hover) > i,
@@ -241,22 +250,22 @@ g.preview > svg {
 .fiddle .btn-warning span span {
   color: white;
 }
-/* line 181, styles/app.less */
+/* line 191, styles/app.less */
 .fiddle > #cancelEdit {
   flex: 2;
   padding: 0;
 }
-/* line 185, styles/app.less */
+/* line 195, styles/app.less */
 .fiddle > #confirmEdit {
   flex: 2;
   padding: 0;
 }
-/* line 189, styles/app.less */
+/* line 199, styles/app.less */
 .fiddle > #runButton {
   flex: 4;
   padding: 0;
 }
-/* line 194, styles/app.less */
+/* line 204, styles/app.less */
 #continue {
   position: absolute;
   bottom: 0;
@@ -264,73 +273,73 @@ g.preview > svg {
   width: 100%;
   margin-bottom: 0;
 }
-/* line 201, styles/app.less */
+/* line 211, styles/app.less */
 div.btn.btn-warning.curtain {
   background: #FF9800;
   color: #F5F5F5;
 }
-/* line 204, styles/app.less */
+/* line 214, styles/app.less */
 div.btn.btn-warning.curtain:hover {
   background: #F5F5F5;
   color: #FF9800;
 }
-/* line 208, styles/app.less */
+/* line 218, styles/app.less */
 div.btn.btn-warning.curtain.focused {
   background: #F5F5F5;
   color: #FF9800;
 }
-/* line 213, styles/app.less */
+/* line 223, styles/app.less */
 div.btn.btn-danger.curtain {
   background: #C2185B;
   color: #F5F5F5;
 }
-/* line 216, styles/app.less */
+/* line 226, styles/app.less */
 div.btn.btn-danger.curtain:hover {
   background: #F5F5F5;
   color: #C2185B;
 }
-/* line 220, styles/app.less */
+/* line 230, styles/app.less */
 div.btn.btn-danger.curtain.focused {
   background: #F5F5F5;
   color: #C2185B;
 }
-/* line 225, styles/app.less */
+/* line 235, styles/app.less */
 div.btn.btn-secondary.curtain {
   background: #9C27B0;
   color: #F5F5F5;
 }
-/* line 228, styles/app.less */
+/* line 238, styles/app.less */
 div.btn.btn-secondary.curtain:hover {
   background: #F5F5F5;
   color: #9C27B0;
 }
-/* line 232, styles/app.less */
+/* line 242, styles/app.less */
 div.btn.btn-secondary.curtain.focused {
   background: #F5F5F5;
   color: #9C27B0;
 }
-/* line 237, styles/app.less */
+/* line 247, styles/app.less */
 div.btn.btn-info.curtain {
   background: #3F51B5;
   color: #F5F5F5;
 }
-/* line 240, styles/app.less */
+/* line 250, styles/app.less */
 div.btn.btn-info.curtain:hover {
   background: #F5F5F5;
   color: #3F51B5;
 }
-/* line 244, styles/app.less */
+/* line 254, styles/app.less */
 div.btn.btn-info.curtain.focused {
   background: #F5F5F5;
   color: #3F51B5;
 }
-/* line 253, styles/app.less */
+/* line 263, styles/app.less */
 #leftDiff,
 #rightDiff {
   border: 3px solid black;
   border-radius: 3px;
 }
-/* line 258, styles/app.less */
+/* line 268, styles/app.less */
 #differ,
 #mainPage {
   display: flex;
@@ -342,13 +351,13 @@ div.btn.btn-info.curtain.focused {
   height: 100%;
   background: #ffffff;
 }
-/* line 262, styles/app.less */
+/* line 272, styles/app.less */
 #differ > #diffHeader,
 #mainPage > #diffHeader {
   flex: 1 !important;
   min-height: 5% !important;
 }
-/* line 266, styles/app.less */
+/* line 276, styles/app.less */
 #differ > div,
 #mainPage > div {
   flex: 10;
@@ -357,12 +366,12 @@ div.btn.btn-info.curtain.focused {
     height: 100%;
   width: 100%;
 }
-/* line 272, styles/app.less */
+/* line 282, styles/app.less */
 #differ > div > .bjs-container,
 #mainPage > div > .bjs-container {
   position: absolute !important;
 }
-/* line 283, styles/app.less */
+/* line 293, styles/app.less */
 .highlight-overlay {
   background-color: green;
   /* color elements as green */
@@ -371,7 +380,7 @@ div.btn.btn-info.curtain.focused {
   pointer-events: none;
   /* no pointer events, allows clicking through onto the element */
 }
-/* line 290, styles/app.less */
+/* line 300, styles/app.less */
 .curtain {
   display: flex !important;
   justify-content: center;
@@ -379,7 +388,7 @@ div.btn.btn-info.curtain.focused {
   color: white;
   margin: 0 !important;
 }
-/* line 296, styles/app.less */
+/* line 306, styles/app.less */
 .curtain > i {
   align-self: center;
   vertical-align: middle;
@@ -387,21 +396,21 @@ div.btn.btn-info.curtain.focused {
   text-indent: 5px;
   font-weight: 800;
 }
-/* line 305, styles/app.less */
+/* line 315, styles/app.less */
 #previewPane {
   background: "white";
 }
-/* line 308, styles/app.less */
+/* line 318, styles/app.less */
 #codeEditor {
   opacity: 0;
   z-index: -100000;
 }
-/* line 312, styles/app.less */
+/* line 322, styles/app.less */
 #codeEditor.show {
   opacity: 1;
   z-index: 10000000;
 }
-/* line 316, styles/app.less */
+/* line 326, styles/app.less */
 #renderedPage {
   position: absolute;
   left: 0;
@@ -411,14 +420,14 @@ div.btn.btn-info.curtain.focused {
   background: white;
   overflow: auto;
 }
-/* line 325, styles/app.less */
+/* line 335, styles/app.less */
 .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
   fill: green !important;
   /* color elements as green */
   stroke: green !important;
   /* color elements as green */
 }
-/* line 331, styles/app.less */
+/* line 341, styles/app.less */
 g.djs-element.highlight > polyline {
   fill: green !important;
   /* color elements as green */
@@ -426,7 +435,7 @@ g.djs-element.highlight > polyline {
   stroke-opacity: 1;
   stroke-weight: 2;
 }
-/* line 338, styles/app.less */
+/* line 348, styles/app.less */
 body,
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -436,18 +445,18 @@ html {
   padding: 0;
   margin: 0;
 }
-/* line 347, styles/app.less */
+/* line 357, styles/app.less */
 a:link {
   text-decoration: none;
 }
-/* line 350, styles/app.less */
+/* line 360, styles/app.less */
 .content {
   position: relative;
   width: 100%;
   height: 100%;
   padding-top: 10%;
 }
-/* line 355, styles/app.less */
+/* line 365, styles/app.less */
 .content > .message {
   width: 100%;
   height: 10%;
@@ -457,32 +466,32 @@ a:link {
   font-size: 24px;
   color: #111;
 }
-/* line 363, styles/app.less */
+/* line 373, styles/app.less */
 .content > .message .note {
   vertical-align: middle;
   text-align: center;
   display: table-cell;
 }
-/* line 369, styles/app.less */
+/* line 379, styles/app.less */
 .content > .message .error .details {
   max-width: 500px;
   font-size: 12px;
   margin: 20px auto;
   text-align: left;
 }
-/* line 375, styles/app.less */
+/* line 385, styles/app.less */
 .content > .message .error pre {
   border: solid 1px #CCC;
   background: #EEE;
   padding: 10px;
 }
-/* line 382, styles/app.less */
+/* line 392, styles/app.less */
 .content.with-diagram .intro,
 .content.with-error .intro,
 .content:not(.with-error) .error {
   display: none;
 }
-/* line 387, styles/app.less */
+/* line 397, styles/app.less */
 .content .canvas {
   position: absolute;
   top: 0;
@@ -490,16 +499,60 @@ a:link {
   right: 0;
   bottom: 0;
 }
-/* line 394, styles/app.less */
-.content.with-error .canvas,
-.content .canvas {
+/* line 404, styles/app.less */
+.content.with-error .canvas {
   visibility: hidden;
 }
-/* line 398, styles/app.less */
-.content.with-diagram .canvas {
+/* line 407, styles/app.less */
+.content.subflow > #subflow-properties-panel {
+  visibility: visible ;
+}
+/* line 410, styles/app.less */
+.content.subflow > #subflowCanvas {
+  visibility: visible ;
+}
+/* line 413, styles/app.less */
+.content.main > #js-properties-panel {
   visibility: visible;
 }
-/* line 402, styles/app.less */
+/* line 416, styles/app.less */
+.content.main > #js-canvas {
+  visibility: visible;
+}
+/* line 419, styles/app.less */
+.content #js-canvas,
+.content #subflowCanvas {
+  visibility: hidden;
+}
+/* line 423, styles/app.less */
+.content #js-properties-panel,
+.content #subflow-properties-panel {
+  visibility: hidden;
+  position: absolute;
+  transition: all 300ms;
+  width: 260px;
+  right: 0px;
+  z-index: 10;
+  border-left: 1px solid #ccc;
+  overflow: auto;
+}
+/* line 432, styles/app.less */
+.content #js-properties-panel:empty,
+.content #subflow-properties-panel:empty {
+  border-left: 0;
+  display: none;
+}
+/* line 437, styles/app.less */
+.content #js-properties-panel:hover,
+.content #subflow-properties-panel:hover {
+  right: 0;
+}
+/* line 440, styles/app.less */
+.content #js-properties-panel > .djs-properties-panel,
+.content #subflow-properties-panel > .djs-properties-panel {
+  padding-bottom: 70px;
+}
+/* line 445, styles/app.less */
 .buttons {
   position: fixed;
   bottom: 20px;
@@ -508,75 +561,49 @@ a:link {
   margin: 0;
   list-style: none;
 }
-/* line 409, styles/app.less */
+/* line 452, styles/app.less */
 .buttons > li {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 412, styles/app.less */
+/* line 455, styles/app.less */
 .buttons > li > a {
   background: #DDD;
   border: solid 1px #666;
   display: inline-block;
   padding: 5px;
 }
-/* line 419, styles/app.less */
+/* line 462, styles/app.less */
 .buttons a {
   opacity: 0.8;
 }
-/* line 422, styles/app.less */
+/* line 465, styles/app.less */
 .buttons a.active {
   opacity: 1.0;
 }
-/* line 427, styles/app.less */
+/* line 470, styles/app.less */
 .ui-autocomplete {
   background: white;
   color: black;
   list-style: none;
 }
-/* line 432, styles/app.less */
+/* line 475, styles/app.less */
 .ui-autocomplete > li > a {
   color: black !important;
   font-size: 1em;
 }
-/* line 439, styles/app.less */
+/* line 482, styles/app.less */
 #js-create-diagram {
   color: #FFEB3B;
 }
-/* line 442, styles/app.less */
-#js-properties-panel {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  transition: all 300ms;
-  width: 260px;
-  right: 0px;
-  z-index: 10;
-  border-left: 1px solid #ccc;
-  overflow: auto;
-}
-/* line 452, styles/app.less */
-#js-properties-panel:empty {
-  border-left: 0;
-  display: none;
-}
-/* line 457, styles/app.less */
-#js-properties-panel:hover {
-  right: 0;
-}
-/* line 460, styles/app.less */
-#js-properties-panel > .djs-properties-panel {
-  padding-bottom: 70px;
-  min-height: 100%;
-}
-/* line 465, styles/app.less */
+/* line 486, styles/app.less */
 .note {
   z-index: 100000000;
   background: #CFD8DC;
   width: 100%;
   color: white;
 }
-/* line 471, styles/app.less */
+/* line 492, styles/app.less */
 #flowPreviews {
   position: absolute;
   top: 5%;
@@ -592,7 +619,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 485, styles/app.less */
+/* line 506, styles/app.less */
 #flowPreviews > div {
   flex: 1;
   transition: all 300ms;
@@ -607,20 +634,20 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 488, styles/app.less */
+/* line 509, styles/app.less */
 #flowPreviews > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 503, styles/app.less */
+/* line 524, styles/app.less */
 #flowPreviews > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 512, styles/app.less */
+/* line 533, styles/app.less */
 #flowBranches {
   position: absolute;
   top: 5%;
@@ -636,7 +663,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 526, styles/app.less */
+/* line 547, styles/app.less */
 #flowBranches > div {
   flex: 1;
   transition: all 300ms;
@@ -651,33 +678,33 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 529, styles/app.less */
+/* line 550, styles/app.less */
 #flowBranches > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 544, styles/app.less */
+/* line 565, styles/app.less */
 #flowBranches > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 555, styles/app.less */
+/* line 576, styles/app.less */
 .flowHeader {
   display: flex;
   align-content: center;
   position: relative;
   top: -15px;
 }
-/* line 560, styles/app.less */
+/* line 581, styles/app.less */
 .flowHeader > div {
   flex: 2;
   display: block !important;
   height: 100%;
 }
-/* line 565, styles/app.less */
+/* line 586, styles/app.less */
 .flowHeader > h1 {
   flex: 1;
   margin: 0;
@@ -698,12 +725,12 @@ a:link {
   background-color: #f8f8f8;
   position: relative;
 }
-/* line 22, styles/app.less */
+/* line 32, styles/app.less */
 .djs-properties-panel#cssOverlay,
 .djs-properties-panel#previewOverlay {
   transition-property: top, height;
 }
-/* line 26, styles/app.less */
+/* line 36, styles/app.less */
 .djs-properties-panel#htmlOverlay,
 .djs-properties-panel#jsOverlay {
   transition-property: left, width, right;
