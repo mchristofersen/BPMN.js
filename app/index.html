@@ -33,13 +33,15 @@
     </div>
 
     <div id="differ" style="display:none;">
-        <div id="diffHeader" class="btn-group btn-group-justified btn-group-raised">
-            <a href="javascript:void(0)" class="btn btn-primary btn-raised" id="finalizeMerge">Merge</a>
-            <a href="javascript:void(0)" class="btn btn-danger btn-raised" id="cancelMerge" onclick='bus.fire("editor.confirm",[])'>close</a>
+      <div id="diffHeader" class="btn-group btn-group-justified btn-group-raised">
+          <a href="javascript:void(0)" class="btn btn-primary btn-raised" id="finalizeMerge">Merge</a>
+          <a href="javascript:void(0)" class="btn btn-danger btn-raised" id="cancelMerge" onclick='bus.fire("editor.confirm",[])'>close</a>
+      </div>
+        <div id="leftDiff">
         </div>
-        <div id="leftDiff"></div>
 
-        <div id="rightDiff"></div>
+        <div id="rightDiff">
+        </div>
     </div>
 
 

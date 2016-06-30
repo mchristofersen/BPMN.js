@@ -50,7 +50,7 @@ g.preview > svg {
 .fiddle {
   background: rgba(255, 255, 255, 0.9);
 }
-/* line 51, styles/app.less */
+/* line 46, styles/app.less */
 .fiddle > #previewOverlay {
   height: 95%;
   width: 100%;
@@ -59,12 +59,12 @@ g.preview > svg {
   display: flex;
   flex-direction: column;
 }
-/* line 58, styles/app.less */
+/* line 53, styles/app.less */
 .fiddle > #previewOverlay > .curtain {
   height: 5%;
   width: 100%;
 }
-/* line 62, styles/app.less */
+/* line 57, styles/app.less */
 .fiddle > #previewOverlay.expanded {
   top: 0;
   height: 95%;
@@ -72,19 +72,19 @@ g.preview > svg {
   left: 5%;
   z-index: 100;
 }
-/* line 68, styles/app.less */
+/* line 63, styles/app.less */
 .fiddle > #previewOverlay.expanded > .curtain {
   height: 5%;
 }
-/* line 71, styles/app.less */
+/* line 66, styles/app.less */
 .fiddle > #previewOverlay.expanded:not(:hover) > #previewPane {
   border: 5px solid #9C27B0;
 }
-/* line 74, styles/app.less */
+/* line 69, styles/app.less */
 .fiddle > #previewOverlay.expanded:hover > #previewPane {
   border: 5px solid #F5F5F5;
 }
-/* line 79, styles/app.less */
+/* line 74, styles/app.less */
 .fiddle > #htmlOverlay.expanded {
   width: 95%;
   left: 0;
@@ -92,19 +92,19 @@ g.preview > svg {
   top: 5%;
   z-index: 100;
 }
-/* line 86, styles/app.less */
+/* line 81, styles/app.less */
 .fiddle > #htmlOverlay.expanded > .curtain {
   width: 5%;
 }
-/* line 89, styles/app.less */
+/* line 84, styles/app.less */
 .fiddle > #htmlOverlay.expanded:not(:hover) > #leftEditor {
   border: 5px solid #C2185B;
 }
-/* line 92, styles/app.less */
+/* line 87, styles/app.less */
 .fiddle > #htmlOverlay.expanded:hover > #leftEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 96, styles/app.less */
+/* line 91, styles/app.less */
 .fiddle > #htmlOverlay {
   left: -90%;
   display: flex;
@@ -112,12 +112,12 @@ g.preview > svg {
   height: 100%;
   top: 0;
 }
-/* line 102, styles/app.less */
+/* line 97, styles/app.less */
 .fiddle > #htmlOverlay > .curtain {
   height: 100%;
   width: 5%;
 }
-/* line 107, styles/app.less */
+/* line 102, styles/app.less */
 .fiddle > #jsOverlay.expanded {
   right: 0;
   top: 5%;
@@ -125,19 +125,19 @@ g.preview > svg {
   height: 90%;
   z-index: 100;
 }
-/* line 113, styles/app.less */
+/* line 108, styles/app.less */
 .fiddle > #jsOverlay.expanded > .curtain {
   width: 5%;
 }
-/* line 116, styles/app.less */
+/* line 111, styles/app.less */
 .fiddle > #jsOverlay.expanded:not(:hover) > #rightEditor {
   border: 5px solid #FBC02D;
 }
-/* line 119, styles/app.less */
+/* line 114, styles/app.less */
 .fiddle > #jsOverlay.expanded:hover > #rightEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 123, styles/app.less */
+/* line 118, styles/app.less */
 .fiddle > #jsOverlay {
   right: -90%;
   display: flex;
@@ -145,12 +145,12 @@ g.preview > svg {
   height: 100%;
   top: 0;
 }
-/* line 129, styles/app.less */
+/* line 124, styles/app.less */
 .fiddle > #jsOverlay > .curtain {
   height: 100%;
   width: 5%;
 }
-/* line 134, styles/app.less */
+/* line 129, styles/app.less */
 .fiddle > #cssOverlay.expanded {
   top: 5%;
   height: 90%;
@@ -158,31 +158,31 @@ g.preview > svg {
   width: 90%;
   z-index: 100;
 }
-/* line 140, styles/app.less */
+/* line 135, styles/app.less */
 .fiddle > #cssOverlay.expanded > .curtain {
   height: 5%;
 }
-/* line 143, styles/app.less */
+/* line 138, styles/app.less */
 .fiddle > #cssOverlay.expanded:not(:hover) > #bottomEditor {
   border: 5px solid #3F51B5;
 }
-/* line 146, styles/app.less */
+/* line 141, styles/app.less */
 .fiddle > #cssOverlay.expanded:hover > #bottomEditor {
   border: 5px solid #F5F5F5;
 }
-/* line 150, styles/app.less */
+/* line 145, styles/app.less */
 .fiddle > #cssOverlay {
   top: 95%;
   height: 90%;
   left: 0;
   width: 100%;
 }
-/* line 155, styles/app.less */
+/* line 150, styles/app.less */
 .fiddle > #cssOverlay > .curtain {
   height: 5%;
   width: 100%;
 }
-/* line 160, styles/app.less */
+/* line 155, styles/app.less */
 .fiddle > .overlay > div > i.icon-shell,
 .fiddle i.icon-css,
 .fiddle i.icon-fire-alt,
@@ -190,7 +190,7 @@ g.preview > svg {
   font-size: 2.5em;
   margin-top: 5px;
 }
-/* line 167, styles/app.less */
+/* line 162, styles/app.less */
 .fiddle > .btn-primary,
 .fiddle .btn-danger,
 .fiddle .btn-success,
@@ -198,7 +198,7 @@ g.preview > svg {
   margin: 1px;
   padding: 0;
 }
-/* line 173, styles/app.less */
+/* line 168, styles/app.less */
 .fiddle > .btn-primary > i.icon-shell,
 .fiddle .btn-danger > i.icon-shell,
 .fiddle .btn-success > i.icon-shell,
@@ -218,7 +218,7 @@ g.preview > svg {
   font-size: 2.5em;
   margin-top: 2px;
 }
-/* line 180, styles/app.less */
+/* line 175, styles/app.less */
 .fiddle > .btn-primary > i,
 .fiddle .btn-danger > i,
 .fiddle .btn-success > i,
@@ -231,7 +231,7 @@ g.preview > svg {
   font-weight: 900;
   font-stretch: ultra-expanded;
 }
-/* line 185, styles/app.less */
+/* line 180, styles/app.less */
 .fiddle > .btn-primary > i:not(:hover) > i,
 .fiddle .btn-danger > i:not(:hover) > i,
 .fiddle .btn-success > i:not(:hover) > i,
@@ -250,22 +250,22 @@ g.preview > svg {
 .fiddle .btn-warning span span {
   color: white;
 }
-/* line 191, styles/app.less */
+/* line 186, styles/app.less */
 .fiddle > #cancelEdit {
   flex: 2;
   padding: 0;
 }
-/* line 195, styles/app.less */
+/* line 190, styles/app.less */
 .fiddle > #confirmEdit {
   flex: 2;
   padding: 0;
 }
-/* line 199, styles/app.less */
+/* line 194, styles/app.less */
 .fiddle > #runButton {
   flex: 4;
   padding: 0;
 }
-/* line 204, styles/app.less */
+/* line 199, styles/app.less */
 #continue {
   position: absolute;
   bottom: 0;
@@ -273,105 +273,124 @@ g.preview > svg {
   width: 100%;
   margin-bottom: 0;
 }
-/* line 211, styles/app.less */
+/* line 206, styles/app.less */
 div.btn.btn-warning.curtain {
   background: #FF9800;
   color: #F5F5F5;
 }
-/* line 214, styles/app.less */
+/* line 209, styles/app.less */
 div.btn.btn-warning.curtain:hover {
   background: #F5F5F5;
   color: #FF9800;
 }
-/* line 218, styles/app.less */
+/* line 213, styles/app.less */
 div.btn.btn-warning.curtain.focused {
   background: #F5F5F5;
   color: #FF9800;
 }
-/* line 223, styles/app.less */
+/* line 218, styles/app.less */
 div.btn.btn-danger.curtain {
   background: #C2185B;
   color: #F5F5F5;
 }
-/* line 226, styles/app.less */
+/* line 221, styles/app.less */
 div.btn.btn-danger.curtain:hover {
   background: #F5F5F5;
   color: #C2185B;
 }
-/* line 230, styles/app.less */
+/* line 225, styles/app.less */
 div.btn.btn-danger.curtain.focused {
   background: #F5F5F5;
   color: #C2185B;
 }
-/* line 235, styles/app.less */
+/* line 230, styles/app.less */
 div.btn.btn-secondary.curtain {
   background: #9C27B0;
   color: #F5F5F5;
 }
-/* line 238, styles/app.less */
+/* line 233, styles/app.less */
 div.btn.btn-secondary.curtain:hover {
   background: #F5F5F5;
   color: #9C27B0;
 }
-/* line 242, styles/app.less */
+/* line 237, styles/app.less */
 div.btn.btn-secondary.curtain.focused {
   background: #F5F5F5;
   color: #9C27B0;
 }
-/* line 247, styles/app.less */
+/* line 242, styles/app.less */
 div.btn.btn-info.curtain {
   background: #3F51B5;
   color: #F5F5F5;
 }
-/* line 250, styles/app.less */
+/* line 245, styles/app.less */
 div.btn.btn-info.curtain:hover {
   background: #F5F5F5;
   color: #3F51B5;
 }
-/* line 254, styles/app.less */
+/* line 249, styles/app.less */
 div.btn.btn-info.curtain.focused {
   background: #F5F5F5;
   color: #3F51B5;
 }
-/* line 263, styles/app.less */
-#leftDiff,
-#rightDiff {
+/* line 256, styles/app.less */
+#leftDiffCanvas,
+#rightDiffCanvas {
   border: 3px solid black;
   border-radius: 3px;
+  width: 100%;
+  height: 100%;
 }
-/* line 268, styles/app.less */
-#differ,
+/* line 262, styles/app.less */
 #mainPage {
-  display: flex;
-  position: fixed;
-  flex-direction: column;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  position: absolute;
+}
+/* line 271, styles/app.less */
+#differ {
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background: #ffffff;
 }
-/* line 272, styles/app.less */
-#differ > #diffHeader,
-#mainPage > #diffHeader {
-  flex: 1 !important;
-  min-height: 5% !important;
-}
-/* line 276, styles/app.less */
-#differ > div,
-#mainPage > div {
-  flex: 10;
-  background: transparent;
-  min-height: 45%
-    height: 100%;
+/* line 273, styles/app.less */
+#differ > #diffHeader {
+  display: fixed;
+  top: 0;
   width: 100%;
+  height: 5% ;
 }
-/* line 282, styles/app.less */
-#differ > div > .bjs-container,
-#mainPage > div > .bjs-container {
+/* line 279, styles/app.less */
+#differ > div {
+  position: absolute;
+  background: transparent;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+}
+/* line 285, styles/app.less */
+#differ > div#leftDiff {
+  left: 0;
+  top: 5%;
+  border: 2px solid black;
+}
+/* line 290, styles/app.less */
+#differ > div#rightDiff {
+  left: 50%;
+  top: 5%;
+  border: 2px solid black;
+}
+/* line 295, styles/app.less */
+#differ > div > .bjs-container {
   position: absolute !important;
 }
-/* line 293, styles/app.less */
+/* line 306, styles/app.less */
 .highlight-overlay {
   background-color: green;
   /* color elements as green */
@@ -380,7 +399,7 @@ div.btn.btn-info.curtain.focused {
   pointer-events: none;
   /* no pointer events, allows clicking through onto the element */
 }
-/* line 300, styles/app.less */
+/* line 313, styles/app.less */
 .curtain {
   display: flex !important;
   justify-content: center;
@@ -388,7 +407,7 @@ div.btn.btn-info.curtain.focused {
   color: white;
   margin: 0 !important;
 }
-/* line 306, styles/app.less */
+/* line 319, styles/app.less */
 .curtain > i {
   align-self: center;
   vertical-align: middle;
@@ -396,21 +415,21 @@ div.btn.btn-info.curtain.focused {
   text-indent: 5px;
   font-weight: 800;
 }
-/* line 315, styles/app.less */
+/* line 328, styles/app.less */
 #previewPane {
   background: "white";
 }
-/* line 318, styles/app.less */
+/* line 331, styles/app.less */
 #codeEditor {
   opacity: 0;
   z-index: -100000;
 }
-/* line 322, styles/app.less */
+/* line 335, styles/app.less */
 #codeEditor.show {
   opacity: 1;
   z-index: 10000000;
 }
-/* line 326, styles/app.less */
+/* line 339, styles/app.less */
 #renderedPage {
   position: absolute;
   left: 0;
@@ -420,14 +439,14 @@ div.btn.btn-info.curtain.focused {
   background: white;
   overflow: auto;
 }
-/* line 335, styles/app.less */
+/* line 348, styles/app.less */
 .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
   fill: green !important;
   /* color elements as green */
   stroke: green !important;
   /* color elements as green */
 }
-/* line 341, styles/app.less */
+/* line 354, styles/app.less */
 g.djs-element.highlight > polyline {
   fill: green !important;
   /* color elements as green */
@@ -435,7 +454,7 @@ g.djs-element.highlight > polyline {
   stroke-opacity: 1;
   stroke-weight: 2;
 }
-/* line 348, styles/app.less */
+/* line 361, styles/app.less */
 body,
 html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -445,18 +464,18 @@ html {
   padding: 0;
   margin: 0;
 }
-/* line 357, styles/app.less */
+/* line 370, styles/app.less */
 a:link {
   text-decoration: none;
 }
-/* line 360, styles/app.less */
+/* line 373, styles/app.less */
 .content {
   position: relative;
   width: 100%;
   height: 100%;
   padding-top: 10%;
 }
-/* line 365, styles/app.less */
+/* line 378, styles/app.less */
 .content > .message {
   width: 100%;
   height: 10%;
@@ -466,32 +485,32 @@ a:link {
   font-size: 24px;
   color: #111;
 }
-/* line 373, styles/app.less */
+/* line 386, styles/app.less */
 .content > .message .note {
   vertical-align: middle;
   text-align: center;
   display: table-cell;
 }
-/* line 379, styles/app.less */
+/* line 392, styles/app.less */
 .content > .message .error .details {
   max-width: 500px;
   font-size: 12px;
   margin: 20px auto;
   text-align: left;
 }
-/* line 385, styles/app.less */
+/* line 398, styles/app.less */
 .content > .message .error pre {
   border: solid 1px #CCC;
   background: #EEE;
   padding: 10px;
 }
-/* line 392, styles/app.less */
+/* line 405, styles/app.less */
 .content.with-diagram .intro,
 .content.with-error .intro,
 .content:not(.with-error) .error {
   display: none;
 }
-/* line 397, styles/app.less */
+/* line 410, styles/app.less */
 .content .canvas {
   position: absolute;
   top: 0;
@@ -499,32 +518,32 @@ a:link {
   right: 0;
   bottom: 0;
 }
-/* line 404, styles/app.less */
+/* line 417, styles/app.less */
 .content.with-error .canvas {
   visibility: hidden;
 }
-/* line 407, styles/app.less */
+/* line 420, styles/app.less */
 .content.subflow > #subflow-properties-panel {
   visibility: visible ;
 }
-/* line 410, styles/app.less */
+/* line 423, styles/app.less */
 .content.subflow > #subflowCanvas {
   visibility: visible ;
 }
-/* line 413, styles/app.less */
+/* line 426, styles/app.less */
 .content.main > #js-properties-panel {
   visibility: visible;
 }
-/* line 416, styles/app.less */
+/* line 429, styles/app.less */
 .content.main > #js-canvas {
   visibility: visible;
 }
-/* line 419, styles/app.less */
+/* line 432, styles/app.less */
 .content #js-canvas,
 .content #subflowCanvas {
   visibility: hidden;
 }
-/* line 423, styles/app.less */
+/* line 436, styles/app.less */
 .content #js-properties-panel,
 .content #subflow-properties-panel {
   visibility: hidden;
@@ -536,23 +555,23 @@ a:link {
   border-left: 1px solid #ccc;
   overflow: auto;
 }
-/* line 432, styles/app.less */
+/* line 445, styles/app.less */
 .content #js-properties-panel:empty,
 .content #subflow-properties-panel:empty {
   border-left: 0;
   display: none;
 }
-/* line 437, styles/app.less */
+/* line 450, styles/app.less */
 .content #js-properties-panel:hover,
 .content #subflow-properties-panel:hover {
   right: 0;
 }
-/* line 440, styles/app.less */
+/* line 453, styles/app.less */
 .content #js-properties-panel > .djs-properties-panel,
 .content #subflow-properties-panel > .djs-properties-panel {
   padding-bottom: 70px;
 }
-/* line 445, styles/app.less */
+/* line 458, styles/app.less */
 .buttons {
   position: fixed;
   bottom: 20px;
@@ -561,49 +580,49 @@ a:link {
   margin: 0;
   list-style: none;
 }
-/* line 452, styles/app.less */
+/* line 465, styles/app.less */
 .buttons > li {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 455, styles/app.less */
+/* line 468, styles/app.less */
 .buttons > li > a {
   background: #DDD;
   border: solid 1px #666;
   display: inline-block;
   padding: 5px;
 }
-/* line 462, styles/app.less */
+/* line 475, styles/app.less */
 .buttons a {
   opacity: 0.8;
 }
-/* line 465, styles/app.less */
+/* line 478, styles/app.less */
 .buttons a.active {
   opacity: 1.0;
 }
-/* line 470, styles/app.less */
+/* line 483, styles/app.less */
 .ui-autocomplete {
   background: white;
   color: black;
   list-style: none;
 }
-/* line 475, styles/app.less */
+/* line 488, styles/app.less */
 .ui-autocomplete > li > a {
   color: black !important;
   font-size: 1em;
 }
-/* line 482, styles/app.less */
+/* line 495, styles/app.less */
 #js-create-diagram {
   color: #FFEB3B;
 }
-/* line 486, styles/app.less */
+/* line 499, styles/app.less */
 .note {
   z-index: 100000000;
   background: #CFD8DC;
   width: 100%;
   color: white;
 }
-/* line 492, styles/app.less */
+/* line 505, styles/app.less */
 #flowPreviews {
   position: absolute;
   top: 5%;
@@ -619,7 +638,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 506, styles/app.less */
+/* line 519, styles/app.less */
 #flowPreviews > div {
   flex: 1;
   transition: all 300ms;
@@ -634,20 +653,20 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 509, styles/app.less */
+/* line 522, styles/app.less */
 #flowPreviews > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 524, styles/app.less */
+/* line 537, styles/app.less */
 #flowPreviews > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 533, styles/app.less */
+/* line 546, styles/app.less */
 #flowBranches {
   position: absolute;
   top: 5%;
@@ -663,7 +682,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 547, styles/app.less */
+/* line 560, styles/app.less */
 #flowBranches > div {
   flex: 1;
   transition: all 300ms;
@@ -678,33 +697,33 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 550, styles/app.less */
+/* line 563, styles/app.less */
 #flowBranches > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 565, styles/app.less */
+/* line 578, styles/app.less */
 #flowBranches > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 576, styles/app.less */
+/* line 589, styles/app.less */
 .flowHeader {
   display: flex;
   align-content: center;
   position: relative;
   top: -15px;
 }
-/* line 581, styles/app.less */
+/* line 594, styles/app.less */
 .flowHeader > div {
   flex: 2;
   display: block !important;
   height: 100%;
 }
-/* line 586, styles/app.less */
+/* line 599, styles/app.less */
 .flowHeader > h1 {
   flex: 1;
   margin: 0;
@@ -717,7 +736,7 @@ a:link {
   font-weight: normal;
   font-style: normal;
 }
-/* line 16, bpmn-js-properties-panel/styles/properties.less */
+/* line 16, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel {
   transition-duration: 0.25s;
   transition-timing-function: ease-in;
@@ -735,23 +754,23 @@ a:link {
 .djs-properties-panel#jsOverlay {
   transition-property: left, width, right;
 }
-/* line 20, bpmn-js-properties-panel/styles/properties.less */
+/* line 20, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel:empty {
   display: none;
 }
-/* line 24, bpmn-js-properties-panel/styles/properties.less */
+/* line 24, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel label,
 .djs-properties-panel input {
   vertical-align: middle;
 }
-/* line 30, bpmn-js-properties-panel/styles/properties.less */
+/* line 30, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel input,
 .djs-properties-panel button,
 .djs-properties-panel textarea {
   padding: 3px 6px;
   border: 1px solid #ccc;
 }
-/* line 36, bpmn-js-properties-panel/styles/properties.less */
+/* line 36, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel input:focus,
 .djs-properties-panel button:focus,
 .djs-properties-panel textarea:focus {
@@ -759,45 +778,45 @@ a:link {
   border-color: #52B415;
   box-shadow: 0 0 1px 2px rgba(82, 180, 21, 0.2);
 }
-/* line 40, bpmn-js-properties-panel/styles/properties.less */
+/* line 40, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel input.invalid,
 .djs-properties-panel button.invalid,
 .djs-properties-panel textarea.invalid {
   border-color: #cc3333;
   background: #f0c2c2;
 }
-/* line 42, bpmn-js-properties-panel/styles/properties.less */
+/* line 42, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel input.invalid:focus,
 .djs-properties-panel button.invalid:focus,
 .djs-properties-panel textarea.invalid:focus {
   box-shadow: 0 0 1px 2px rgba(204, 51, 51, 0.2);
 }
-/* line 49, bpmn-js-properties-panel/styles/properties.less */
+/* line 49, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel [type=text],
 .djs-properties-panel textarea,
 .djs-properties-panel select {
   width: 100%;
 }
-/* line 55, bpmn-js-properties-panel/styles/properties.less */
+/* line 55, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel textarea {
   resize: vertical;
 }
-/* line 59, bpmn-js-properties-panel/styles/properties.less */
+/* line 59, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel label {
   font-weight: bolder;
   display: inline-block;
   vertical-align: middle;
   color: #666;
 }
-/* line 71, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 71, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel label[for] {
   cursor: pointer;
 }
-/* line 74, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 74, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel label.pp-hidden {
   display: none;
 }
-/* line 63, bpmn-js-properties-panel/styles/properties.less */
+/* line 63, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel .entry-label {
   font-weight: bolder;
   display: inline-block;
@@ -809,22 +828,22 @@ a:link {
   transition: margin 0.218s linear;
   font-style: italic;
 }
-/* line 71, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 71, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel .entry-label[for] {
   cursor: pointer;
 }
-/* line 74, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 74, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel .entry-label.pp-hidden {
   display: none;
 }
-/* line 71, bpmn-js-properties-panel/styles/properties.less */
+/* line 71, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel .entry-label.divider {
   border-top: 1px dotted #ccc;
   padding-top: 8px;
   margin-top: 16px;
   width: 100%;
 }
-/* line 79, bpmn-js-properties-panel/styles/properties.less */
+/* line 79, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-panel button {
   position: absolute;
   top: 0;
@@ -835,11 +854,11 @@ a:link {
   background-color: #f8f8f8;
   border: 1px solid #ccc;
 }
-/* line 44, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 44, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel button > span {
   display: none;
 }
-/* line 48, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 48, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel button:before {
   font-family: "bpmn-js-pp";
   font-style: normal;
@@ -855,96 +874,96 @@ a:link {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
-/* line 53, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 53, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel button.add:before {
   content: '\E803';
 }
-/* line 57, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 57, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel button.clear:before {
   content: '\E802';
 }
-/* line 61, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 61, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-panel button:hover {
   color: #52B415;
 }
-/* line 84, bpmn-js-properties-panel/styles/properties.less */
+/* line 84, bpmn-js-properties-panel\styles\properties.less */
 .pp-error-message,
 .pp-error-message.pp-entry-link {
   color: #cc3333;
 }
-/* line 89, bpmn-js-properties-panel/styles/properties.less */
+/* line 89, bpmn-js-properties-panel\styles\properties.less */
 .pp-row {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-/* line 92, bpmn-js-properties-panel/styles/properties.less */
+/* line 92, bpmn-js-properties-panel\styles\properties.less */
 .pp-row:first-of-type {
   margin-top: 0;
 }
-/* line 95, bpmn-js-properties-panel/styles/properties.less */
+/* line 95, bpmn-js-properties-panel\styles\properties.less */
 .pp-row:last-of-type {
   margin-bottom: 0;
 }
-/* line 100, bpmn-js-properties-panel/styles/properties.less */
+/* line 100, bpmn-js-properties-panel\styles\properties.less */
 .pp-textfield,
 .pp-textarea {
   margin-bottom: 3px;
 }
-/* line 105, bpmn-js-properties-panel/styles/properties.less */
+/* line 105, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group {
   list-style: none;
   padding: 0;
   margin: 0 0 9px 0;
 }
-/* line 110, bpmn-js-properties-panel/styles/properties.less */
+/* line 110, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group .pp-radio-wrapper {
   margin: 6px 0;
 }
-/* line 114, bpmn-js-properties-panel/styles/properties.less */
+/* line 114, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group input,
 .pp-radios-group label {
   vertical-align: middle;
 }
-/* line 119, bpmn-js-properties-panel/styles/properties.less */
+/* line 119, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group input {
   margin-top: 0;
   margin-left: 0;
 }
-/* line 127, bpmn-js-properties-panel/styles/properties.less */
+/* line 127, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group input,
 .pp-checkbox input {
   margin-left: 0;
 }
-/* line 132, bpmn-js-properties-panel/styles/properties.less */
+/* line 132, bpmn-js-properties-panel\styles\properties.less */
 .pp-radios-group label:after,
 .pp-checkbox label:after {
   display: none;
 }
-/* line 139, bpmn-js-properties-panel/styles/properties.less */
+/* line 139, bpmn-js-properties-panel\styles\properties.less */
 .pp-textfield input {
   padding-right: 28px;
 }
-/* line 143, bpmn-js-properties-panel/styles/properties.less */
+/* line 143, bpmn-js-properties-panel\styles\properties.less */
 .pp-textfield .clear {
   background: transparent;
   border: none;
   top: 0;
   right: 0;
 }
-/* line 151, bpmn-js-properties-panel/styles/properties.less */
+/* line 151, bpmn-js-properties-panel\styles\properties.less */
 .pp-combo-input {
   margin-top: 7px;
 }
-/* line 156, bpmn-js-properties-panel/styles/properties.less */
+/* line 156, bpmn-js-properties-panel\styles\properties.less */
 .pp-select select {
   height: 23px;
 }
-/* line 159, bpmn-js-properties-panel/styles/properties.less */
+/* line 159, bpmn-js-properties-panel\styles\properties.less */
 .pp-select button.add {
   top: -22px;
   right: 0;
 }
-/* line 169, bpmn-js-properties-panel/styles/properties.less */
+/* line 169, bpmn-js-properties-panel\styles\properties.less */
 .pp-select button.add,
 .pp-element-list button.add,
 .pp-select button.clear,
@@ -952,90 +971,90 @@ a:link {
   top: -23px;
   border-bottom: none;
 }
-/* line 176, bpmn-js-properties-panel/styles/properties.less */
+/* line 176, bpmn-js-properties-panel\styles\properties.less */
 .pp-select button.add,
 .pp-element-list button.add {
   right: 0px;
 }
-/* line 180, bpmn-js-properties-panel/styles/properties.less */
+/* line 180, bpmn-js-properties-panel\styles\properties.less */
 .pp-select button.clear,
 .pp-element-list button.clear {
   right: 23px;
 }
-/* line 185, bpmn-js-properties-panel/styles/properties.less */
+/* line 185, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-entry {
   margin-bottom: 9px;
 }
-/* line 188, bpmn-js-properties-panel/styles/properties.less */
+/* line 188, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-entry .pp-field-wrapper {
   position: relative;
 }
-/* line 191, bpmn-js-properties-panel/styles/properties.less */
+/* line 191, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-entry .pp-field-wrapper input[readonly] + .clear {
   display: none;
 }
-/* line 197, bpmn-js-properties-panel/styles/properties.less */
+/* line 197, bpmn-js-properties-panel\styles\properties.less */
 .pp-hidden {
   display: none;
 }
-/* line 201, bpmn-js-properties-panel/styles/properties.less */
+/* line 201, bpmn-js-properties-panel\styles\properties.less */
 label.pp-hidden {
   display: none;
 }
-/* line 206, bpmn-js-properties-panel/styles/properties.less */
+/* line 206, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-add-row > button {
   position: relative;
   margin-left: 10px;
 }
-/* line 212, bpmn-js-properties-panel/styles/properties.less */
+/* line 212, bpmn-js-properties-panel\styles\properties.less */
 .pp-table {
   margin-top: 10px;
 }
-/* line 216, bpmn-js-properties-panel/styles/properties.less */
+/* line 216, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row {
   margin-bottom: 2px;
   overflow: hidden;
 }
-/* line 220, bpmn-js-properties-panel/styles/properties.less */
+/* line 220, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > input,
 .pp-table-row > button {
   float: left;
 }
-/* line 225, bpmn-js-properties-panel/styles/properties.less */
+/* line 225, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label {
   padding-left: 5px;
 }
-/* line 232, bpmn-js-properties-panel/styles/properties.less */
+/* line 232, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label.pp-table-row-columns-1,
 .pp-table-row > input.pp-table-row-columns-1 {
   width: 100%;
 }
-/* line 234, bpmn-js-properties-panel/styles/properties.less */
+/* line 234, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label.pp-table-row-columns-1.pp-table-row-removable,
 .pp-table-row > input.pp-table-row-columns-1.pp-table-row-removable {
   width: calc(100% - 24px);
 }
-/* line 239, bpmn-js-properties-panel/styles/properties.less */
+/* line 239, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label.pp-table-row-columns-2,
 .pp-table-row > input.pp-table-row-columns-2 {
   width: 50%;
 }
-/* line 241, bpmn-js-properties-panel/styles/properties.less */
+/* line 241, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label.pp-table-row-columns-2.pp-table-row-removable,
 .pp-table-row > input.pp-table-row-columns-2.pp-table-row-removable {
   width: calc(50% - 12px);
 }
-/* line 244, bpmn-js-properties-panel/styles/properties.less */
+/* line 244, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > label.pp-table-row-columns-2:nth-child(2),
 .pp-table-row > input.pp-table-row-columns-2:nth-child(2) {
   border-left: none;
 }
-/* line 250, bpmn-js-properties-panel/styles/properties.less */
+/* line 250, bpmn-js-properties-panel\styles\properties.less */
 .pp-table-row > button {
   border-left: none;
   position: static;
 }
-/* line 256, bpmn-js-properties-panel/styles/properties.less */
+/* line 256, bpmn-js-properties-panel\styles\properties.less */
 .djs-properties-static {
   margin-bottom: 0;
   margin-top: 0;
@@ -1045,12 +1064,12 @@ label.pp-hidden {
   font: 13.3333px Arial;
   width: 100%;
 }
-/* line 266, bpmn-js-properties-panel/styles/properties.less */
+/* line 266, bpmn-js-properties-panel\styles\properties.less */
 .pp-entry-link {
   cursor: pointer;
   color: #52B415;
 }
-/* line 271, bpmn-js-properties-panel/styles/properties.less */
+/* line 271, bpmn-js-properties-panel\styles\properties.less */
 .pp-icon-warning:before {
   font-family: "bpmn-js-pp";
   font-style: normal;
@@ -1066,30 +1085,30 @@ label.pp-hidden {
   -moz-osx-font-smoothing: grayscale;
   content: '\E806';
 }
-/* line 1, bpmn-js-properties-panel/styles/header.less */
+/* line 1, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header {
   padding: 15px;
   padding-bottom: 5px;
 }
-/* line 5, bpmn-js-properties-panel/styles/header.less */
+/* line 5, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header > .label {
   font-size: 120%;
   font-weight: bolder;
 }
-/* line 10, bpmn-js-properties-panel/styles/header.less */
+/* line 10, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header > .search {
   display: none;
   margin-top: 5px;
   position: relative;
 }
-/* line 15, bpmn-js-properties-panel/styles/header.less */
+/* line 15, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header > .search input {
   position: relative;
   border-radius: 15px;
   width: 100%;
   z-index: 1;
 }
-/* line 22, bpmn-js-properties-panel/styles/header.less */
+/* line 22, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header > .search button {
   position: absolute;
   top: 0;
@@ -1099,11 +1118,11 @@ label.pp-hidden {
   background-color: transparent;
   z-index: 2;
 }
-/* line 30, bpmn-js-properties-panel/styles/header.less */
+/* line 30, bpmn-js-properties-panel\styles\header.less */
 .djs-properties-header > .search button:before {
   content: '\E805';
 }
-/* line 1, bpmn-js-properties-panel/styles/groups.less */
+/* line 1, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group {
   padding: 6px 15px 6px 15px;
   position: relative;
@@ -1111,11 +1130,11 @@ label.pp-hidden {
   overflow: hidden;
   transition: max-height 0.218s ease-in-out, padding-top 0.218s ease-in-out, padding-bottom 0.218s ease-in-out;
 }
-/* line 10, bpmn-js-properties-panel/styles/groups.less */
+/* line 10, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group:empty {
   display: none;
 }
-/* line 14, bpmn-js-properties-panel/styles/groups.less */
+/* line 14, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group > .group-toggle {
   position: absolute;
   top: 0;
@@ -1125,11 +1144,11 @@ label.pp-hidden {
   cursor: pointer;
   transition: background-color 0.218s linear;
 }
-/* line 22, bpmn-js-properties-panel/styles/groups.less */
+/* line 22, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group > .group-toggle:hover {
   background-color: #8fc071;
 }
-/* line 27, bpmn-js-properties-panel/styles/groups.less */
+/* line 27, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group > .group-label {
   font-weight: bolder;
   display: inline-block;
@@ -1141,23 +1160,23 @@ label.pp-hidden {
   transition: margin 0.218s linear;
   font-style: italic;
 }
-/* line 71, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 71, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-group > .group-label[for] {
   cursor: pointer;
 }
-/* line 74, bpmn-js-properties-panel/styles/_mixins.less */
+/* line 74, bpmn-js-properties-panel\styles\_mixins.less */
 .djs-properties-group > .group-label.pp-hidden {
   display: none;
 }
-/* line 36, bpmn-js-properties-panel/styles/groups.less */
+/* line 36, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group:hover > .group-toggle {
   background-color: #ccc;
 }
-/* line 38, bpmn-js-properties-panel/styles/groups.less */
+/* line 38, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group:hover > .group-toggle:hover {
   background-color: #8fc071;
 }
-/* line 43, bpmn-js-properties-panel/styles/groups.less */
+/* line 43, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group.group-closed {
   max-height: 20px;
   border-top: none;
@@ -1166,43 +1185,43 @@ label.pp-hidden {
   padding-top: 0;
   padding-bottom: 0;
 }
-/* line 51, bpmn-js-properties-panel/styles/groups.less */
+/* line 51, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group.group-closed > div {
   visibility: hidden;
 }
-/* line 55, bpmn-js-properties-panel/styles/groups.less */
+/* line 55, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group.group-closed > .group-label {
   margin-top: 2px;
   margin-bottom: 2px;
 }
-/* line 60, bpmn-js-properties-panel/styles/groups.less */
+/* line 60, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group.group-closed:hover > .group-label {
   color: #52B415;
 }
-/* line 65, bpmn-js-properties-panel/styles/groups.less */
+/* line 65, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group + .djs-properties-group {
   border-top: 1px dotted #ccc;
 }
-/* line 69, bpmn-js-properties-panel/styles/groups.less */
+/* line 69, bpmn-js-properties-panel\styles\groups.less */
 .djs-properties-group:last-child {
   padding-bottom: 9px;
 }
-/* line 2, bpmn-js-properties-panel/styles/listeners.less */
+/* line 2, bpmn-js-properties-panel\styles\listeners.less */
 .cam-add-listener > button {
   position: relative;
   margin-left: 10px;
 }
-/* line 8, bpmn-js-properties-panel/styles/listeners.less */
+/* line 8, bpmn-js-properties-panel\styles\listeners.less */
 [data-list-entry-container] > .djs-listener-area {
   border: 1px solid #ccc;
   margin: 10px 1px;
   padding: 10px;
 }
-/* line 14, bpmn-js-properties-panel/styles/listeners.less */
+/* line 14, bpmn-js-properties-panel\styles\listeners.less */
 .djs-listener-area {
   position: relative;
 }
-/* line 16, bpmn-js-properties-panel/styles/listeners.less */
+/* line 16, bpmn-js-properties-panel\styles\listeners.less */
 .djs-listener-area > button {
   position: absolute;
   right: 0;
@@ -1210,57 +1229,57 @@ label.pp-hidden {
   border: none;
   background: none;
 }
-/* line 25, bpmn-js-properties-panel/styles/listeners.less */
+/* line 25, bpmn-js-properties-panel\styles\listeners.less */
 .djs-listener-area + .djs-listener-area {
   margin-top: 20px;
 }
-/* line 1, bpmn-js-properties-panel/styles/tabs.less */
+/* line 1, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar {
   border-bottom: 1px solid #ccc;
   padding: 0 15px;
 }
-/* line 5, bpmn-js-properties-panel/styles/tabs.less */
+/* line 5, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar .scroll-tabs-button {
   cursor: pointer;
   font-size: 16px;
   padding: 3px 4px 3px 4px;
   color: #666;
 }
-/* line 11, bpmn-js-properties-panel/styles/tabs.less */
+/* line 11, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar .scroll-tabs-button:hover {
   font-weight: bold;
 }
-/* line 15, bpmn-js-properties-panel/styles/tabs.less */
+/* line 15, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar .scroll-tabs-button.scroll-tabs-left {
   float: left;
   margin-left: -15px;
 }
-/* line 20, bpmn-js-properties-panel/styles/tabs.less */
+/* line 20, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar .scroll-tabs-button.scroll-tabs-right {
   float: right;
   margin-right: -15px;
 }
-/* line 27, bpmn-js-properties-panel/styles/tabs.less */
+/* line 27, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab-bar:not(.scroll-tabs-overflow) .scroll-tabs-button {
   display: none;
 }
-/* line 33, bpmn-js-properties-panel/styles/tabs.less */
+/* line 33, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links {
   margin: 5px 0 -1px 0;
   padding: 0;
   white-space: nowrap;
   overflow: hidden;
 }
-/* line 39, bpmn-js-properties-panel/styles/tabs.less */
+/* line 39, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li {
   display: inline-block;
   margin: 0;
 }
-/* line 43, bpmn-js-properties-panel/styles/tabs.less */
+/* line 43, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li.pp-hidden {
   display: none;
 }
-/* line 47, bpmn-js-properties-panel/styles/tabs.less */
+/* line 47, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li > a {
   display: inline-block;
   font-size: 12px;
@@ -1272,26 +1291,26 @@ ul.djs-properties-tabs-links > li > a {
   color: #666;
   text-decoration: none;
 }
-/* line 62, bpmn-js-properties-panel/styles/tabs.less */
+/* line 62, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li > a:hover {
   color: #4d4d4d;
 }
-/* line 68, bpmn-js-properties-panel/styles/tabs.less */
+/* line 68, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li + li {
   margin-left: 4px;
 }
-/* line 74, bpmn-js-properties-panel/styles/tabs.less */
+/* line 74, bpmn-js-properties-panel\styles\tabs.less */
 ul.djs-properties-tabs-links > li.pp-active a {
   padding-bottom: 5px;
   border-top: 2px solid #52B415;
   border-bottom: none;
 }
-/* line 83, bpmn-js-properties-panel/styles/tabs.less */
+/* line 83, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab,
 .djs-properties-tab.pp-hidden {
   display: none;
 }
-/* line 88, bpmn-js-properties-panel/styles/tabs.less */
+/* line 88, bpmn-js-properties-panel\styles\tabs.less */
 .djs-properties-tab.pp-active {
   display: block;
 }

@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({
     extended: true
@@ -13,6 +14,7 @@ MongoClient = require("mongodb").MongoClient,
 
 var dbUtil = require("./database");
 console.log(dbUtil)
+app.use("/dist", express.static(__dirname + "/dist"))
 
 
 app.get("/getThumbnails", function(req, res) {
@@ -370,7 +372,6 @@ app.get('/save', function(req, res) {
     res.send('hello world');
 });
 
-app.use("/", express.static(__dirname + "/dist"))
 
-app.listen(3000);
-console.log('Express server listening on port 3000');
+app.listen(80,"0.0.0.0");
+console.log('Express server listening on port 80');

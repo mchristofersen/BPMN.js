@@ -18,7 +18,7 @@ var $ = require("jquery"),
 
 $("#js-execute-diagram").click(function(e) {
   if (isBranch){
-    $.getJSON("http://localhost:3000/branch",{flowName:bpmnModeler.get("canvas").getRootElement().id,user:user},function (resp){
+    $.getJSON("http://127.0.0.1/branch",{flowName:bpmnModeler.get("canvas").getRootElement().id,user:user},function (resp){
       var xml = resp[0]["xml"];
       varDict = {$log:[]}
       var process = WF.processXML(resp)
@@ -26,7 +26,7 @@ $("#js-execute-diagram").click(function(e) {
       WF.doStep("start")
     })
   }else{
-    $.getJSON("http://localhost:3000/flow",{flowName:bpmnModeler.get("canvas").getRootElement().id},function (resp){
+    $.getJSON("http://127.0.0.1/flow",{flowName:bpmnModeler.get("canvas").getRootElement().id},function (resp){
       var xml = resp[0]["xml"];
       varDict = {$log:[]}
       var process = WF.processXML(resp)
@@ -66,7 +66,7 @@ module.exports.doStep = function(stepId) {
             case "bpmn:EndEvent":
               var ele = WF.bpmns[WF.bpmns.length-1][step["id"]].flowId;
                 if (ele){
-                      $.getJSON("http://localhost:3000/flow",{flowName:ele},function (resp){
+                      $.getJSON("http://127.0.0.1/flow",{flowName:ele},function (resp){
                         var xml = resp[0]["xml"];
                         var process = WF.processXML(resp)
                         WF.bpmns = [process]
@@ -114,7 +114,7 @@ module.exports.doStep = function(stepId) {
             case "bpmn:SubProcess":
                 var flowName = step['flowId']
                 bus.fire("subflow.view",flowName)
-                $.getJSON("http://localhost:3000/flow",{flowName:step["flowId"]},function (resp){
+                $.getJSON("http://127.0.0.1/flow",{flowName:step["flowId"]},function (resp){
                   // var xml = resp[0]["xml"];
                   debugger
                   WF.bpmns[WF.bpmns.length - 1].suspendedStep = step

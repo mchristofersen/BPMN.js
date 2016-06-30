@@ -9,6 +9,7 @@
     global.flows = {};
     global.branches = {};
     var Navbus = require("./lib/navBus/navBus");
+    var mwfConverter = require("./lib/mwfConverter");
 
 
     WF = require('./workflow.js');
@@ -60,6 +61,8 @@
         }
     });
 
+
+
     global.subflowViewer = new Modeler({
         container: subflowCanvas,
         propertiesPanel: {
@@ -67,12 +70,8 @@
         },
         additionalModules: [
             propertiesPanelModule,
-            propertiesProviderModule,
-            CliModule
+            propertiesProviderModule
         ],
-        cli: {
-            bindTo: 'cli'
-        },
         moddleExtensions: {
             camunda: camundaModdleDescriptor,
             ext: extModdleDescriptor
@@ -218,7 +217,7 @@
                     format: true
                 }, function(err, svg) {
                     $.ajax({
-                            url: "http://localhost:3000/flow",
+                            url: "/flow",
                             method: "POST",
                             data: {
                                 flowName: name,
@@ -240,7 +239,9 @@
     }
 
     function addDropShadows() {
-        var svg = d3.select("#js-canvas > div > div > svg");
+      var svgs = d3.selectAll("svg");
+      svgs.each(function (d,i){
+        var svg = d3.select(this);
         var defs = svg.select("defs")
 
         var filter = defs.append("filter")
@@ -275,6 +276,8 @@
                 d3.select(this)
                     .style("filter", "url(#drop-shadow)")
             })
+                })
+
     }
 
     function openDiagram(xml) {
@@ -349,7 +352,7 @@
             format: true
         }, function(err, svg) {
             //  $.ajax({
-            //      url: "http://localhost:3000/svg",
+            //      url: "/svg",
             //      method: "POST",
             //      data: {
             //          svg: svg,
@@ -377,12 +380,14 @@
             var reader = new FileReader();
 
             reader.onload = function(e) {
-
                 var json = e.target.result;
                 try {
                     flow = JSON.parse(json);
+                    console.log(flow.repr_title);
+                    global.flowName = flow.repr_title
                     $("#flowPreviews").hide();
-                    callback(false)
+                    // bpmnModeler.on("diagram.init",mwfConverter)
+                    callback()
                 } catch (err) {
                     console.log(err)
                     callback(xml);
@@ -400,8 +405,13 @@
             e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
         }
 
-        // container.get(0).addEventListener('dragover', handleDragOver, false);
-        // container.get(0).addEventListener('drop', handleFileSelect, false);
+        container.get(0).addEventListener('dragover', handleDragOver, false);
+        container.get(0).addEventListener('drop', handleFileSelect, false);
+    }
+
+    function importMWF(){
+      db.createNewDiagram(mwfConverter);
+
     }
 
 
@@ -413,12 +423,13 @@
             'Looks like you use an older browser that does not support drag and drop. ' +
             'Try using Chrome, Firefox or the Internet Explorer > 10.');
     } else {
-        registerFileDrop(container, openDiagram);
+      console.log(db.createNewDiagram)
+        registerFileDrop(container, importMWF);
     }
 
     function deleteFlow() {
         $.ajax({
-            url: "http://localhost:3000/flow",
+            url: "/flow",
             method: "delete",
             data: {
                 flowName: flowName
@@ -430,7 +441,7 @@
 
     getXML = function(flowName) {
         flowName = flowName;
-        var conn = isBranch ? "http://localhost:3000/branch" : "http://localhost:3000/flow";
+        var conn = isBranch ? "/branch" : "/flow";
         $.ajax({
             url: conn,
             method: "get",
@@ -449,7 +460,7 @@
     branch = function(flowName) {
         var user = cookie.get("user");
         $.ajax({
-            url: "http://localhost:3000/branch",
+            url: "/branch",
             method: "post",
             data: {
                 flowName: flowName,
@@ -468,7 +479,7 @@
         var user = cookie.get("user");
         var id = branches[flowName]["id"]
         $.ajax({
-            url: "http://localhost:3000/branch",
+            url: "/branch",
             method: "delete",
             data: {
                 flowName: flowName,
@@ -514,7 +525,7 @@
 
     global.getThumbnails = function() {
         $.ajax({
-            url: "http://localhost:3000/getThumbnails",
+            url: "/getThumbnails",
             contentType: "text/json",
             method: "GET",
             success: function(json) {
@@ -544,7 +555,7 @@
                                     isBranch = true;
                                     branch(elem.flowName);
                                 })
-                        })
+                        }).call(zoom)
                     if (elem.flowName != "") {
                         d3.select(`#${elem.flowName}Preview`)
                             .append("svg")
@@ -628,7 +639,7 @@
                             })
 
                             toggleDiff();
-
+                            addDropShadows();
                         });
                         $("#finalizeMerge").click(function(e) {
                             db.finalizeMerge(xml, flowName, user, diff, rightModeler)
@@ -642,7 +653,7 @@
     global.getBranches = function() {
         $("#flowBranches").html("");
         $.ajax({
-            url: "http://localhost:3000/getBranches",
+            url: "/getBranches",
             contentType: "text/json",
             method: "GET",
             data: {
@@ -908,7 +919,6 @@
         $('#js-create-diagram').click(function(e) {
             e.stopPropagation();
             e.preventDefault();
-            bus.fire("open.diagram",[])
             db.createNewDiagram();
 
         });

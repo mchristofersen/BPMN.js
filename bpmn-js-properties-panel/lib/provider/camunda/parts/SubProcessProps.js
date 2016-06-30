@@ -17,16 +17,19 @@ module.exports = function(group, element, bpmnFactory) {
   //   return;
   // }
 	if (element.businessObject.eventDefinitions && (!element.eventDefinitionType || element.eventDefinitionType=="bpmn:SignalEventDefinition") && is(element,"bpmn:EndEvent")){
+    var flowOpts = [{name:"NotSet",value:"NotSet"}]
+    Object.keys(flows).each(function (idx,elem){
+flowOpts.push({name:idx,value:idx});
+})
 		group.entries.push(entryFactory.selectBox({
 	    id : 'flowId',
 	    description : 'Raw Javascript',
 	    label : 'Subflow',
 	    modelProperty : 'flowId',
-			selectOptions: Object.keys(flows).map(function (idx,elem){
-return {name:idx,value:idx};
-})}))
-	}
-
+			selectOptions: flowOpts
+    })
+    )
+}
 	if (is(element,"bpmn:SubProcess")){
 		group.entries.push(entryFactory.selectBox({
 	    id : 'flowId',

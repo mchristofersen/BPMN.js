@@ -12,15 +12,21 @@ function Database(bpmnModeler) {
     this.moddle = bpmnModeler.moddle;
 }
 
-module.exports.createNewDiagram = function() {
+
+module.exports.createNewDiagram = function(callback) {
+  if (!callback){
     var name = prompt("Enter Workflow Name:");
-    var flowName = name;
+    global.flowName = name;
+  }else {
+    var name = global.flowName;
+  }
+
     $("#flows").hide();
     var container = $('#js-drop-zone');
-
+    $(".content").addClass("main")
     var modeling = bpmnModeler.get("modeling");
     var processElement = elementRegistry.get("Process_1");
-
+    bus.fire("open.diagram",[])
     bpmnModeler.createDiagram(function(done) {
         // when
         var processElement = elementRegistry.get("Process_1");
@@ -29,7 +35,6 @@ module.exports.createNewDiagram = function() {
         });
         container
             .removeClass('with-error')
-            .addClass("main")
             .addClass('with-diagram');
         bpmnModeler.saveXML({
             format: true
@@ -38,7 +43,7 @@ module.exports.createNewDiagram = function() {
                 format: true
             }, function(err, svg) {
                 $.ajax({
-                    url: "http://localhost:3000/flow",
+                    url: "/flow",
                     method: "POST",
                     data: {
                         flowName: name,
@@ -46,6 +51,10 @@ module.exports.createNewDiagram = function() {
                         svg: svg
                     }
                 }).done(function(resp) {
+                  if (callback){
+                    callback.call();
+                    console.log("trying")
+                  }
                     console.log(resp);
                 })
             });
@@ -142,7 +151,7 @@ module.exports.finalizeMerge = function(xml, flowName, user, diff, rightModeler)
         format: true
     }, function(err, svg) {
         $.ajax({
-            url: "http://localhost:3000/merge",
+            url: "/merge",
             method: "post",
             data: {
                 id: id,
@@ -154,14 +163,14 @@ module.exports.finalizeMerge = function(xml, flowName, user, diff, rightModeler)
             }
         }).done(function(resp) {
             isBranch = false;
-            bus.fire("closed.diagram",[])
+            bus.fire("close.diagram",[])
         })
     });
 
 }
 
 module.exports.saveDiagram = function(done) {
-    var conn = isBranch ? "http://localhost:3000/branch/update" : "http://localhost:3000/flow/update";
+    var conn = isBranch ? "/branch/update" : "/flow/update";
     var elementRegistry = bpmnModeler.get("elementRegistry")
     bpmnModeler.saveXML({
         format: true

@@ -43,11 +43,6 @@ g.preview > svg {
 }
 .fiddle {
     background: RGBa(255,255,255,0.9);
-    // &> #previewPane {
-    //   height: 100%;
-    //   width: 100%;
-    //   background: "white";
-    // }
     & > #previewOverlay {
         height: 95%;
         width: 100%;
@@ -256,29 +251,47 @@ div.btn.btn-info.curtain {
         color: #3F51B5;
     }
 }
-// .overlay.expanded:hover {
-//   background:#F5F5F5;
-// }
 
-#leftDiff,#rightDiff {
+
+#leftDiffCanvas,#rightDiffCanvas {
   border:3px solid black;
   border-radius: 3px;
+  width: 100%;
+height: 100%;
+}
+#mainPage {
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background: #ffffff;
+  position:absolute;
 }
 
-#differ,#mainPage {
-  display:flex;
-  position:fixed;
-  flex-direction:column;
+#differ {
+  position:absolute;
   &> #diffHeader {
-    flex:1 !important;
-    min-height: 5% !important;
+    display:fixed;
+    top:0;
+    width:100%;
+    height: 5% ;
   }
   &> div{
-    flex: 10;
+    position: absolute;
     background: transparent;
-    min-height:45%
     height: 100%;
-    width: 100%;
+    width: 50%;
+    overflow:hidden;
+    &#leftDiff {
+      left:0;
+      top:5%;
+      border:2px solid black;
+    }
+    &#rightDiff {
+      left:50%;
+      top:5%;
+      border:2px solid black;
+    }
     &> .bjs-container {
       position: absolute !important;
     }
@@ -358,7 +371,7 @@ a:link {
     text-decoration: none;
 }
 .content {
-    position: relative;
+      position: relative;
     width: 100%;
     height: 100%;
     padding-top: 10%;
