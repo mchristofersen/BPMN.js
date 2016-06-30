@@ -86,6 +86,8 @@
     var modeling = bpmnModeler.get('modeling');
     var canvas = bpmnModeler.get("canvas");
     var eventBus = bpmnModeler.get("eventBus");
+    global.eventBus = eventBus;
+    global.modeling = modeling;
     var propertiesPanel = bpmnJS.get('propertiesPanel');
     bpmnModeler.propertiesPanel = propertiesPanel;
     bpmnModeler.modeling = modeling;
@@ -886,7 +888,6 @@
             $("#renderedPage").parent().hide();
             WF.doStep(suspendedStep["outgoing"][0]["id"])
         })
-        $(".fiddle").hide();
 
         $("#flowsTab").click(function(e) {
             $("#flowBranches").hide();

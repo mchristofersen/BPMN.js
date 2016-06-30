@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var fs = require("fs");
 app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({
@@ -16,6 +17,15 @@ var dbUtil = require("./database");
 console.log(dbUtil)
 app.use("/dist", express.static(__dirname + "/dist"))
 
+
+app.get("/processMap", function (req,res){
+  var file = fs.readFileSync(__dirname+"\\app\\processMap.txt", 'utf8')
+  var rows = file.split("\n");
+  var dict = rows.map(function (elem){
+    return elem.split(",")
+  })
+  res.json(dict)
+})
 
 app.get("/getThumbnails", function(req, res) {
   dbUtil.read("bpmn",{},{

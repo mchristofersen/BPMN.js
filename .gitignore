@@ -1,3 +1,4 @@
 cdist/
 tmp/
 /node_modules/grunt-browserify
+/app/processMap.txt

@@ -550,28 +550,30 @@ a:link {
   position: absolute;
   transition: all 300ms;
   width: 260px;
+  height: 100%;
+  top: 0;
   right: 0px;
   z-index: 10;
   border-left: 1px solid #ccc;
   overflow: auto;
 }
-/* line 445, styles/app.less */
+/* line 447, styles/app.less */
 .content #js-properties-panel:empty,
 .content #subflow-properties-panel:empty {
   border-left: 0;
   display: none;
 }
-/* line 450, styles/app.less */
+/* line 452, styles/app.less */
 .content #js-properties-panel:hover,
 .content #subflow-properties-panel:hover {
   right: 0;
 }
-/* line 453, styles/app.less */
+/* line 455, styles/app.less */
 .content #js-properties-panel > .djs-properties-panel,
 .content #subflow-properties-panel > .djs-properties-panel {
   padding-bottom: 70px;
 }
-/* line 458, styles/app.less */
+/* line 460, styles/app.less */
 .buttons {
   position: fixed;
   bottom: 20px;
@@ -580,49 +582,49 @@ a:link {
   margin: 0;
   list-style: none;
 }
-/* line 465, styles/app.less */
+/* line 467, styles/app.less */
 .buttons > li {
   display: inline-block;
   margin-right: 10px;
 }
-/* line 468, styles/app.less */
+/* line 470, styles/app.less */
 .buttons > li > a {
   background: #DDD;
   border: solid 1px #666;
   display: inline-block;
   padding: 5px;
 }
-/* line 475, styles/app.less */
+/* line 477, styles/app.less */
 .buttons a {
   opacity: 0.8;
 }
-/* line 478, styles/app.less */
+/* line 480, styles/app.less */
 .buttons a.active {
   opacity: 1.0;
 }
-/* line 483, styles/app.less */
+/* line 485, styles/app.less */
 .ui-autocomplete {
   background: white;
   color: black;
   list-style: none;
 }
-/* line 488, styles/app.less */
+/* line 490, styles/app.less */
 .ui-autocomplete > li > a {
   color: black !important;
   font-size: 1em;
 }
-/* line 495, styles/app.less */
+/* line 497, styles/app.less */
 #js-create-diagram {
   color: #FFEB3B;
 }
-/* line 499, styles/app.less */
+/* line 501, styles/app.less */
 .note {
   z-index: 100000000;
   background: #CFD8DC;
   width: 100%;
   color: white;
 }
-/* line 505, styles/app.less */
+/* line 507, styles/app.less */
 #flowPreviews {
   position: absolute;
   top: 5%;
@@ -638,7 +640,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 519, styles/app.less */
+/* line 521, styles/app.less */
 #flowPreviews > div {
   flex: 1;
   transition: all 300ms;
@@ -653,20 +655,20 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 522, styles/app.less */
+/* line 524, styles/app.less */
 #flowPreviews > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 537, styles/app.less */
+/* line 539, styles/app.less */
 #flowPreviews > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 546, styles/app.less */
+/* line 548, styles/app.less */
 #flowBranches {
   position: absolute;
   top: 5%;
@@ -682,7 +684,7 @@ a:link {
   flex-wrap: wrap;
   align-items: stretch;
 }
-/* line 560, styles/app.less */
+/* line 562, styles/app.less */
 #flowBranches > div {
   flex: 1;
   transition: all 300ms;
@@ -697,33 +699,33 @@ a:link {
   display: flex;
   flex-direction: column;
 }
-/* line 563, styles/app.less */
+/* line 565, styles/app.less */
 #flowBranches > div:hover {
   -webkit-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   -moz-box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.33);
   box-shadow: 4px 4px 5px 4px rgba(69, 90, 100, 0.77);
 }
-/* line 578, styles/app.less */
+/* line 580, styles/app.less */
 #flowBranches > div > svg {
   flex: 1;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
-/* line 589, styles/app.less */
+/* line 591, styles/app.less */
 .flowHeader {
   display: flex;
   align-content: center;
   position: relative;
   top: -15px;
 }
-/* line 594, styles/app.less */
+/* line 596, styles/app.less */
 .flowHeader > div {
   flex: 2;
   display: block !important;
   height: 100%;
 }
-/* line 599, styles/app.less */
+/* line 601, styles/app.less */
 .flowHeader > h1 {
   flex: 1;
   margin: 0;

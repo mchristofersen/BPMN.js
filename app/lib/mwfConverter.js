@@ -10,6 +10,7 @@ module.exports = function (){
     try{
       if (/motv-so.*$/.test(e.stencil.id)){
         var formatted = "motv-so";
+        console.log(e);
       }else{
         var formatted = e.stencil.id;
       }
@@ -32,20 +33,23 @@ module.exports = function (){
           var ns = "bpmn:ScriptTask";
           try{
             var temp = cli.create(ns,e.bounds.lowerRight.x+","+e.bounds.lowerRight.y,flowName);
+            elementRegistry.updateId(temp,e.resourceId)
             // var newElement = elementRegistry.get(temp)
-
-            newNodes[e.resourceId]=temp;
-            newToOldConnections[temp] = e.outgoing;
+            var modeling = bpmnModeler.get("modeling")
+            newNodes[e.resourceId]=e.resourceId;
+            newToOldConnections[e.resourceId] = e.outgoing;
             try{
-              cli.setLabel(temp, e.properties.name)
-              var element = elementRegistry.get(temp)
+              cli.setLabel(e.resourceId, e.properties.name)
+              var element = elementRegistry.get(e.resourceId)
               var script = e.properties.text
-              element.businessObject.di.bounds.height = 40
-              element.businessObject.di.bounds.y += 20
+              element.height = 40
               element.businessObject.resultVariable = e.properties.var
               element.businessObject.scriptFormat = e.properties.lang
               element.businessObject.script = script;
-              console.log(element.businessObject);
+              // modeling.updateProperties(element,{
+              //   id:e.resourceId
+              // })
+              // console.log(element.businessObject);
               // modeling.updateProperties(element,{
               //   script:script
               // })
@@ -64,6 +68,44 @@ module.exports = function (){
           break;
         case "goto-reference":
           var ns = "bpmn:IntermediateThrowEvent";
+          try{
+            var temp = cli.create(ns,e.bounds.lowerRight.x+","+e.bounds.lowerRight.y,flowName);
+            // var newElement = elementRegistry.get(temp)
+            // console.log(e)
+            elementRegistry.updateId(temp,e.resourceId)
+            newNodes[e.resourceId]=e.resourceId;
+            newToOldConnections[e.resourceId] = e.outgoing;
+            try{
+              // cli.setLabel(temp, e.name)
+              var element = elementRegistry.get(e.resourceId)
+              var modeling = bpmnModeler.get("modeling")
+              // element.eventDefinitionType = "bpmn:LinkEventDefinition"
+              var moddle = bpmnModeler.get("moddle")
+              var link = moddle.create("bpmn:LinkEventDefinition",{
+                source:temp,
+                name:e.properties.target
+              })
+              // link.$parent = elementRegistry.get(flowName)
+
+              modeling.updateProperties(element, {
+                eventDefinitions: [link]
+              })
+              // bpmnModeler._emit("shape.changed",temp)
+              // modeling.updateProperties(element, {
+              //   eventDefinitionType: "bpmn:LinkEventDefinition"
+              // })
+              console.log(element);
+              // modeling.updateProperties(element,{
+              //   script:script
+              // })
+            }catch (err){
+              console.log(err)
+            }
+
+          }catch (err){
+              console.log(ns);
+              console.error(err);
+          }
           break;
         case "reference":
         case "subproc-transfer":
@@ -75,6 +117,30 @@ module.exports = function (){
         case "motv-wizard-information":
         case "motv-wizard-selector":
           var ns = "bpmn:UserTask";
+          try{
+            var temp = cli.create(ns,e.bounds.lowerRight.x+","+e.bounds.lowerRight.y,flowName);
+            // var newElement = elementRegistry.get(temp)
+            elementRegistry.updateId(temp,e.resourceId)
+            newNodes[e.resourceId]=e.resourceId;
+            newToOldConnections[e.resourceId] = e.outgoing;
+            try{
+              cli.setLabel(e.resourceId, e.properties.name)
+              var modeling = bpmnModeler.get("modeling")
+              var element = elementRegistry.get(e.resourceId)
+              var text = e.properties.header + e.properties.text + e.properties.footer
+              // modeling.updateProperties(element,{
+              //   id:e.resourceId
+              // })
+              // console.log(element.businessObject);
+              element.businessObject.html = text;
+            }catch (err){
+              console.log(err)
+            }
+
+          }catch (err){
+              console.log(ns);
+              console.error(err);
+          }
           break;
         case "motv-wizard-wait":
           var ns = "bpmn:ReceiveTask"
@@ -83,6 +149,7 @@ module.exports = function (){
           var ns = "bpmn:SendTask";
           break;
         case "subflow":
+          console.log(e)
           var ns = "bpmn:SubProcess";
           break;
         case "Association_Undirected":
@@ -97,18 +164,26 @@ module.exports = function (){
           break;
 
       }
-      if (ns != "" && ns!= "bpmn:ScriptTask"){
+      if (ns != "" && ns!= "bpmn:ScriptTask" && ns!= "bpmn:UserTask"){
         try{
           var temp = cli.create(ns,e.bounds.lowerRight.x+","+e.bounds.lowerRight.y,flowName);
-          // var newElement = elementRegistry.get(temp)
+          elementRegistry.updateId(temp,e.resourceId)
+          var newElement = elementRegistry.get(e.resourceId)
+          var modeling = bpmnModeler.get("modeling")
+          var element = elementRegistry.get(e.resourceId)
+          // modeling.updateProperties(element,{
+          //   id:e.resourceId
+          // })
+          newNodes[e.resourceId]=e.resourceId;
+          newToOldConnections[e.resourceId] = e.outgoing;
+          if (ns != "bpmn:ExclusiveGateway"){
+            try{
+              cli.setLabel(e.resourceId, e.properties.name)
+            }catch (err){
 
-          newNodes[e.resourceId]=temp;
-          newToOldConnections[temp] = e.outgoing;
-          try{
-            cli.setLabel(temp, e.properties.name)
-          }catch (err){
-
+            }
           }
+
 
         }catch (err){
             console.log(ns);
