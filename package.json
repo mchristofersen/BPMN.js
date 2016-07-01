@@ -29,15 +29,16 @@
     "load-grunt-tasks": "~0.3.0"
   },
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "bootstrap-material-design": "^0.5.10",
     "bpmn-js": "^0.15.2",
     "bpmn-js-cli": "^0.14.0",
     "bpmn-js-differ": "^0.2.0",
-    "bpmn-js-properties-panel": "^0.7.0",
-    "camunda-bpmn-moddle": "^0.5.1",
+    "bpmn-moddle": "^0.12.1",
     "co": "^4.6.0",
     "d3": "^3.5.17",
     "diagram-js": "^0.15.2",
+    "diagram-js-origin": "^0.14.0",
     "express": "^4.13.4",
     "gcloud": "^0.36.0",
     "inherits": "^2.0.1",
@@ -49,6 +50,7 @@
     "mongodb": "^2.0.1",
     "mongoose": "^4.5.2",
     "oop": "0.0.3",
+    "request": "^2.72.0",
     "x2js": "^2.0.1",
     "xml2js": "^0.4.16"
   }

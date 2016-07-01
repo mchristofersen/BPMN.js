@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var fs = require("fs");
+var $ = require("jquery");
 app.use(bodyParser({limit: '50mb'}));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({
@@ -21,21 +22,31 @@ app.use("/dist", express.static(__dirname + "/dist"))
 app.get("/processMap", function (req,res){
   var file = fs.readFileSync(__dirname+"\\app\\processMap.txt", 'utf8')
   var rows = file.split("\n");
-  var dict = rows.map(function (elem){
+  var processArr = rows.map(function (elem){
     return elem.split(",")
   })
-  res.json(dict)
+  var jsonDict = {}
+  processArr.forEach(function (elem){
+    jsonDict[elem[0]] = elem[1]
+  })
+  res.json(jsonDict)
 })
 
 app.get("/getThumbnails", function(req, res) {
+  var date = new Date();
+  var seconds = date.getSeconds();
+  console.log(seconds)
   dbUtil.read("bpmn",{},{
       flowName: 1,
       svg: 1,
-      xml: 1,
+      // xml: 1,
       version: 1,
       changes: 1,
       updatedTime: 1
   },res)
+  var after = new Date();
+  var af = date.getSeconds();
+  console.log(af);
 })
 
 app.get("/getBranches", function(req, res) {
@@ -383,5 +394,5 @@ app.get('/save', function(req, res) {
 });
 
 
-app.listen(80,"0.0.0.0");
+app.listen(80,'0.0.0.0');
 console.log('Express server listening on port 80');
